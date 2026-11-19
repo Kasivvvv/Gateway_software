@@ -1,0 +1,124 @@
+{
+    "version": "1.9",
+    "configurations": [
+        {
+            "name": "default",
+            "id": "",
+            "device": "ATSAMV71Q21B",
+            "imagePath": "./out/gateway_abstract_layer/default.elf",
+            "toolProperties": "default-tool-base",
+            "tool": "EDBG",
+            "packs": [
+                {
+                    "name": "SAMV71_DFP",
+                    "vendor": "Microchip",
+                    "version": "4.13.257"
+                },
+                {
+                    "name": "CMSIS",
+                    "vendor": "ARM",
+                    "version": "6.3.0"
+                }
+            ],
+            "fileSet": "default",
+            "toolchain": "default-XC32",
+            "userVariables": "default-uservariables"
+        }
+    ],
+    "propertyGroups": [
+        {
+            "name": "default-uservariables",
+            "type": "uservariables",
+            "properties": {}
+        },
+        {
+            "name": "default-XC32",
+            "type": "toolchain",
+            "provider": "microchip.toolchains:xc32@6.00",
+            "properties": {
+                "linker.heap-size": "512",
+                "compiler.extra-include-directories": [
+                    "config.mcc/src",
+                    "config.mcc/src/config/default",
+                    "config.mcc/src/config/default/library",
+                    "config.mcc/src/config/default/library/tcpip/src",
+                    "config.mcc/src/config/default/library/tcpip/src/common",
+                    "config.mcc/src/packs/ATSAMV71Q21B_DFP",
+                    "config.mcc/src/packs/CMSIS",
+                    "config.mcc/src/packs/CMSIS/CMSIS/Core/Include"
+                ],
+                "compiler++.extra-include-directories": [
+                    "config.mcc/src",
+                    "config.mcc/src/config/default",
+                    "config.mcc/src/packs/ATSAMV71Q21B_DFP",
+                    "config.mcc/src/packs/CMSIS",
+                    "config.mcc/src/packs/CMSIS/CMSIS/Core/Include"
+                ],
+                "linker.no-device-startup-code": "true",
+                "C32Global.mstacktcm": "false",
+                "compiler.isolate-each-function": "true",
+                "compiler.optimization-level": "-O1",
+                "compiler.place-data-into-section": "true",
+                "linker.remove-unused-sections": "true",
+                "compiler++.isolate-each-function": "true",
+                "compiler++.optimization-level": "-O1"
+            }
+        },
+        {
+            "name": "default-tool-base",
+            "type": "tool",
+            "properties": {}
+        }
+    ],
+    "fileSets": [
+        {
+            "name": "default",
+            "files": [
+                {
+                    "include": "**/*",
+                    "exclude": "**/@(build|_build|out|cmake|.vscode|tests|third_party|tools)/**/*"
+                },
+                "config.mcc/src/config/default/bsp/bsp.c",
+                "config.mcc/src/main.c",
+                "config.mcc/src/config/default/initialization.c",
+                "config.mcc/src/config/default/interrupts.c",
+                "config.mcc/src/config/default/exceptions.c",
+                "config.mcc/src/config/default/ATSAMV71Q21B.ld",
+                "config.mcc/src/config/default/stdio/xc32_monitor.c",
+                "config.mcc/src/config/default/peripheral/clk/plib_clk.c",
+                "config.mcc/src/config/default/peripheral/pio/plib_pio.c",
+                "config.mcc/src/config/default/peripheral/nvic/plib_nvic.c",
+                "config.mcc/src/config/default/startup_xc32.c",
+                "config.mcc/src/config/default/libc_syscalls.c",
+                "config.mcc/src/config/default/peripheral/efc/plib_efc.c",
+                "config.mcc/src/config/default/system/int/src/sys_int.c",
+                "config.mcc/src/config/default/system/cache/sys_cache.c",
+                "config.mcc/src/config/default/driver/gmac/src/dynamic/drv_gmac.c",
+                "config.mcc/src/config/default/driver/ethphy/src/dynamic/drv_ethphy.c",
+                "config.mcc/src/config/default/driver/ethphy/src/dynamic/drv_extphy_ksz8061.c",
+                "config.mcc/src/config/default/driver/miim/src/dynamic/drv_miim.c",
+                "config.mcc/src/config/default/driver/miim/src/dynamic/drv_miim_gmac.c",
+                "config.mcc/src/config/default/driver/gmac/src/dynamic/drv_gmac_lib_same7x_v7x.c",
+                "config.mcc/src/config/default/peripheral/mpu/plib_mpu.c",
+                "config.mcc/src/config/default/peripheral/tc/plib_tc0.c",
+                "config.mcc/src/config/default/system/time/src/sys_time.c",
+                "config.mcc/src/app.c",
+                "config.mcc/src/config/default/tasks.c",
+                "config.mcc/src/config/default/library/tcpip/src/tcpip_heap_alloc.c",
+                "config.mcc/src/config/default/library/tcpip/src/tcpip_heap_internal.c",
+                "config.mcc/src/config/default/library/tcpip/src/dhcp.c",
+                "config.mcc/src/config/default/library/tcpip/src/dns.c",
+                "config.mcc/src/config/default/library/tcpip/src/helpers.c",
+                "config.mcc/src/config/default/library/tcpip/src/hash_fnv.c",
+                "config.mcc/src/config/default/library/tcpip/src/oahash.c",
+                "config.mcc/src/config/default/library/tcpip/src/tcpip_helpers.c",
+                "config.mcc/src/config/default/library/tcpip/src/tcpip_manager.c",
+                "config.mcc/src/config/default/library/tcpip/src/tcpip_notify.c",
+                "config.mcc/src/config/default/library/tcpip/src/tcpip_packet.c",
+                "config.mcc/src/config/default/system/sys_time_h2_adapter.c",
+                "config.mcc/src/config/default/driver/at24/src/drv_at24.c",
+                "config.mcc/src/config/default/peripheral/twihs/master/plib_twihs0_master.c"
+            ]
+        }
+    ]
+}

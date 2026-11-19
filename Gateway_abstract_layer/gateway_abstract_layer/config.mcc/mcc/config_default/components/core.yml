@@ -1,0 +1,2589 @@
+configVersion: 1.0.0
+componentName: core
+coreVersion: 5.9.2
+device: ATSAMV71Q21B
+library: []
+dependency:
+- dependencyPackage: class com.microchip.mcc.harmony.HarmonyModule
+  name: core
+  type: module
+  version: ''
+- dependencyPackage: ''
+  name: csp
+  type: package
+  version: v3.26.0
+customDataClassName: com.microchip.utils_mh3.utils.persistence.CustomModuleData
+data:
+  attachments: {}
+  elementPosition: {}
+  symbols:
+    MCAN1_CLOCK_ENABLE:
+      attributes:
+        id: MCAN1_CLOCK_ENABLE
+        label: MCAN1
+      type: Boolean
+    PMC_PCER1:
+      attributes:
+        id: PMC_PCER1
+        label: PMC_PCER1
+      children:
+      - children:
+        - attributes:
+            id: core
+            value: '128'
+          type: Dynamic
+        type: Values
+      type: Hex
+    PIN_46_FUNCTION_TYPE:
+      attributes:
+        id: PIN_46_FUNCTION_TYPE
+        label: Type
+      type: String
+    PIN_46_FUNCTION_NAME:
+      attributes:
+        id: PIN_46_FUNCTION_NAME
+        label: Name
+      type: String
+    PIOA_OER_VALUE:
+      attributes:
+        id: PIOA_OER_VALUE
+        label: PIOA_OER
+      children:
+      - children:
+        - attributes:
+            id: core
+            value: '8388608'
+          type: Dynamic
+        type: Values
+      type: Hex
+    PIN_46_DIR:
+      attributes:
+        id: PIN_46_DIR
+        label: Direction
+      type: String
+    PIOA_SODR_VALUE:
+      attributes:
+        id: PIOA_SODR_VALUE
+        label: PIOA_SODR
+      children:
+      - children:
+        - attributes:
+            id: core
+            value: '8388608'
+          type: Dynamic
+        type: Values
+      type: Hex
+    PIN_46_LAT:
+      attributes:
+        id: PIN_46_LAT
+        label: Initial Latch Value
+      type: String
+    PIN_86_FUNCTION_TYPE:
+      attributes:
+        id: PIN_86_FUNCTION_TYPE
+        label: Type
+      type: String
+    PIN_86_FUNCTION_NAME:
+      attributes:
+        id: PIN_86_FUNCTION_NAME
+        label: Name
+      type: String
+    PIOC_OER_VALUE:
+      attributes:
+        id: PIOC_OER_VALUE
+        label: PIOC_OER
+      children:
+      - children:
+        - attributes:
+            id: core
+            value: '66048'
+          type: Dynamic
+        type: Values
+      type: Hex
+    PIN_86_DIR:
+      attributes:
+        id: PIN_86_DIR
+        label: Direction
+      type: String
+    PIOC_SODR_VALUE:
+      attributes:
+        id: PIOC_SODR_VALUE
+        label: PIOC_SODR
+      children:
+      - children:
+        - attributes:
+            id: core
+            value: '512'
+          type: Dynamic
+        type: Values
+      type: Hex
+    PIN_86_LAT:
+      attributes:
+        id: PIN_86_LAT
+        label: Initial Latch Value
+      type: String
+    PIN_75_FUNCTION_TYPE:
+      attributes:
+        id: PIN_75_FUNCTION_TYPE
+        label: Type
+      type: String
+    PIN_75_FUNCTION_NAME:
+      attributes:
+        id: PIN_75_FUNCTION_NAME
+        label: Name
+      type: String
+    PIOA_PUER_VALUE:
+      attributes:
+        id: PIOA_PUER_VALUE
+        label: PIOA_PUER
+      children:
+      - children:
+        - attributes:
+            id: core
+            value: '512'
+          type: Dynamic
+        type: Values
+      type: Hex
+    PIN_75_PU:
+      attributes:
+        id: PIN_75_PU
+        label: Pull Up
+      type: String
+    PIN_75_DIR:
+      attributes:
+        id: PIN_75_DIR
+        label: Direction
+      type: String
+    PIO_CCFG_SYSIO_VALUE:
+      attributes:
+        id: PIO_CCFG_SYSIO_VALUE
+        label: CCFG_SYSIO
+      children:
+      - children:
+        - attributes:
+            id: core
+            value: '4096'
+          type: Dynamic
+        type: Values
+      type: Hex
+    PIN_87_FUNCTION_TYPE:
+      attributes:
+        id: PIN_87_FUNCTION_TYPE
+        label: Type
+      type: String
+    PIN_87_FUNCTION_NAME:
+      attributes:
+        id: PIN_87_FUNCTION_NAME
+        label: Name
+      type: String
+    PIOB_PUER_VALUE:
+      attributes:
+        id: PIOB_PUER_VALUE
+        label: PIOB_PUER
+      children:
+      - children:
+        - attributes:
+            id: core
+            value: '4096'
+          type: Dynamic
+        type: Values
+      type: Hex
+    PIN_87_PU:
+      attributes:
+        id: PIN_87_PU
+        label: Pull Up
+      type: String
+    PIOB_OER_VALUE:
+      attributes:
+        id: PIOB_OER_VALUE
+        label: PIOB_OER
+      children:
+      - children:
+        - attributes:
+            id: core
+            value: '0'
+          type: Dynamic
+        type: Values
+      type: Hex
+    PIN_87_DIR:
+      attributes:
+        id: PIN_87_DIR
+        label: Direction
+      type: String
+    PIN_100_FUNCTION_TYPE:
+      attributes:
+        id: PIN_100_FUNCTION_TYPE
+        label: Type
+      type: String
+    PIN_100_FUNCTION_NAME:
+      attributes:
+        id: PIN_100_FUNCTION_NAME
+        label: Name
+      type: String
+    PIN_100_DIR:
+      attributes:
+        id: PIN_100_DIR
+        label: Direction
+      type: String
+    PIN_97_FUNCTION_TYPE:
+      attributes:
+        id: PIN_97_FUNCTION_TYPE
+        label: Type
+      children:
+      - children:
+        - attributes:
+            id: core
+            value: MCAN1_CANTX1
+          type: Dynamic
+        type: Values
+      type: String
+    PIOC_PDR_VALUE:
+      attributes:
+        id: PIOC_PDR_VALUE
+        label: PIOC_PDR
+      children:
+      - children:
+        - attributes:
+            id: core
+            value: '20480'
+          type: Dynamic
+        type: Values
+      type: Hex
+    PIOC_ABCDSR1_VALUE:
+      attributes:
+        id: PIOC_ABCDSR1_VALUE
+        label: PIOC_ABCDSR1
+      children:
+      - children:
+        - attributes:
+            id: core
+            value: '0'
+          type: Dynamic
+        type: Values
+      type: Hex
+    PIOC_ABCDSR2_VALUE:
+      attributes:
+        id: PIOC_ABCDSR2_VALUE
+        label: PIOC_ABCDSR2
+      children:
+      - children:
+        - attributes:
+            id: core
+            value: '20480'
+          type: Dynamic
+        type: Values
+      type: Hex
+    PIN_97_PERIPHERAL_FUNCTION:
+      attributes:
+        id: PIN_97_PERIPHERAL_FUNCTION
+        label: Peripheral Selection
+      children:
+      - children:
+        - attributes:
+            id: core
+            value: C
+          type: Dynamic
+        type: Values
+      type: String
+    PIN_97_FUNCTION_NAME:
+      attributes:
+        id: PIN_97_FUNCTION_NAME
+        label: Name
+      children:
+      - children:
+        - attributes:
+            id: core
+            value: CAN1_TX
+          type: Dynamic
+        type: Values
+      type: String
+    PIN_17_FUNCTION_TYPE:
+      attributes:
+        id: PIN_17_FUNCTION_TYPE
+        label: Type
+      children:
+      - children:
+        - attributes:
+            id: core
+            value: MCAN1_CANRX1
+          type: Dynamic
+        type: Values
+      type: String
+    PIN_17_PERIPHERAL_FUNCTION:
+      attributes:
+        id: PIN_17_PERIPHERAL_FUNCTION
+        label: Peripheral Selection
+      children:
+      - children:
+        - attributes:
+            id: core
+            value: C
+          type: Dynamic
+        type: Values
+      type: String
+    PIN_17_FUNCTION_NAME:
+      attributes:
+        id: PIN_17_FUNCTION_NAME
+        label: Name
+      children:
+      - children:
+        - attributes:
+            id: core
+            value: CAN1_RX
+          type: Dynamic
+        type: Values
+      type: String
+    PMC_USB_USBDIV:
+      attributes:
+        id: PMC_USB_USBDIV
+        label: Divider for USB_48M
+      children:
+      - children:
+        - attributes:
+            value: '16'
+          type: User
+        type: Values
+      type: Integer
+    PMC_SCER_PCK6:
+      attributes:
+        id: PMC_SCER_PCK6
+        label: Programmable Clock 6 Output Enable
+      children:
+      - children:
+        - attributes:
+            id: core
+            value: 'false'
+          type: Dynamic
+        type: Values
+      type: Boolean
+    PMC_SCER_PCK7:
+      attributes:
+        id: PMC_SCER_PCK7
+        label: Programmable Clock 7 Output Enable
+      children:
+      - children:
+        - attributes:
+            id: core
+            value: 'false'
+          type: Dynamic
+        type: Values
+      type: Boolean
+    TWIHS0_CLOCK_FREQUENCY:
+      attributes:
+        id: TWIHS0_CLOCK_FREQUENCY
+        label: TWIHS0_CLOCK_FREQUENCY
+      children:
+      - children:
+        - attributes:
+            id: core
+            value: '150000000'
+          type: Dynamic
+        type: Values
+      type: Integer
+    ISI_CLOCK_FREQUENCY:
+      attributes:
+        id: ISI_CLOCK_FREQUENCY
+        label: ISI_CLOCK_FREQUENCY
+      children:
+      - children:
+        - attributes:
+            id: core
+            value: '150000000'
+          type: Dynamic
+        type: Values
+      type: Integer
+    AES_CLOCK_FREQUENCY:
+      attributes:
+        id: AES_CLOCK_FREQUENCY
+        label: AES_CLOCK_FREQUENCY
+      children:
+      - children:
+        - attributes:
+            id: core
+            value: '150000000'
+          type: Dynamic
+        type: Values
+      type: Integer
+    PWM0_CLOCK_FREQUENCY:
+      attributes:
+        id: PWM0_CLOCK_FREQUENCY
+        label: PWM0_CLOCK_FREQUENCY
+      children:
+      - children:
+        - attributes:
+            id: core
+            value: '150000000'
+          type: Dynamic
+        type: Values
+      type: Integer
+    SMC_CLOCK_FREQUENCY:
+      attributes:
+        id: SMC_CLOCK_FREQUENCY
+        label: SMC_CLOCK_FREQUENCY
+      children:
+      - children:
+        - attributes:
+            id: core
+            value: '150000000'
+          type: Dynamic
+        type: Values
+      type: Integer
+    AFEC0_CLOCK_FREQUENCY:
+      attributes:
+        id: AFEC0_CLOCK_FREQUENCY
+        label: AFEC0_CLOCK_FREQUENCY
+      children:
+      - children:
+        - attributes:
+            id: core
+            value: '150000000'
+          type: Dynamic
+        type: Values
+      type: Integer
+    QSPI_CLOCK_FREQUENCY:
+      attributes:
+        id: QSPI_CLOCK_FREQUENCY
+        label: QSPI_CLOCK_FREQUENCY
+      children:
+      - children:
+        - attributes:
+            id: core
+            value: '150000000'
+          type: Dynamic
+        type: Values
+      type: Integer
+    SPI0_CLOCK_FREQUENCY:
+      attributes:
+        id: SPI0_CLOCK_FREQUENCY
+        label: SPI0_CLOCK_FREQUENCY
+      children:
+      - children:
+        - attributes:
+            id: core
+            value: '150000000'
+          type: Dynamic
+        type: Values
+      type: Integer
+    ICM_CLOCK_FREQUENCY:
+      attributes:
+        id: ICM_CLOCK_FREQUENCY
+        label: ICM_CLOCK_FREQUENCY
+      children:
+      - children:
+        - attributes:
+            id: core
+            value: '150000000'
+          type: Dynamic
+        type: Values
+      type: Integer
+    PIOE_CLOCK_FREQUENCY:
+      attributes:
+        id: PIOE_CLOCK_FREQUENCY
+        label: PIOE_CLOCK_FREQUENCY
+      children:
+      - children:
+        - attributes:
+            id: core
+            value: '150000000'
+          type: Dynamic
+        type: Values
+      type: Integer
+    PIOB_CLOCK_FREQUENCY:
+      attributes:
+        id: PIOB_CLOCK_FREQUENCY
+        label: PIOB_CLOCK_FREQUENCY
+      children:
+      - children:
+        - attributes:
+            id: core
+            value: '150000000'
+          type: Dynamic
+        type: Values
+      type: Integer
+    ACC_CLOCK_FREQUENCY:
+      attributes:
+        id: ACC_CLOCK_FREQUENCY
+        label: ACC_CLOCK_FREQUENCY
+      children:
+      - children:
+        - attributes:
+            id: core
+            value: '150000000'
+          type: Dynamic
+        type: Values
+      type: Integer
+    PIOC_CLOCK_FREQUENCY:
+      attributes:
+        id: PIOC_CLOCK_FREQUENCY
+        label: PIOC_CLOCK_FREQUENCY
+      children:
+      - children:
+        - attributes:
+            id: core
+            value: '150000000'
+          type: Dynamic
+        type: Values
+      type: Integer
+    XDMAC_CLOCK_FREQUENCY:
+      attributes:
+        id: XDMAC_CLOCK_FREQUENCY
+        label: XDMAC_CLOCK_FREQUENCY
+      children:
+      - children:
+        - attributes:
+            id: core
+            value: '150000000'
+          type: Dynamic
+        type: Values
+      type: Integer
+    GMAC_CLOCK_FREQUENCY:
+      attributes:
+        id: GMAC_CLOCK_FREQUENCY
+        label: GMAC_CLOCK_FREQUENCY
+      children:
+      - children:
+        - attributes:
+            id: core
+            value: '150000000'
+          type: Dynamic
+        type: Values
+      type: Integer
+    PWM1_CLOCK_FREQUENCY:
+      attributes:
+        id: PWM1_CLOCK_FREQUENCY
+        label: PWM1_CLOCK_FREQUENCY
+      children:
+      - children:
+        - attributes:
+            id: core
+            value: '150000000'
+          type: Dynamic
+        type: Values
+      type: Integer
+    PIOD_CLOCK_FREQUENCY:
+      attributes:
+        id: PIOD_CLOCK_FREQUENCY
+        label: PIOD_CLOCK_FREQUENCY
+      children:
+      - children:
+        - attributes:
+            id: core
+            value: '150000000'
+          type: Dynamic
+        type: Values
+      type: Integer
+    SPI1_CLOCK_FREQUENCY:
+      attributes:
+        id: SPI1_CLOCK_FREQUENCY
+        label: SPI1_CLOCK_FREQUENCY
+      children:
+      - children:
+        - attributes:
+            id: core
+            value: '150000000'
+          type: Dynamic
+        type: Values
+      type: Integer
+    DACC_CLOCK_FREQUENCY:
+      attributes:
+        id: DACC_CLOCK_FREQUENCY
+        label: DACC_CLOCK_FREQUENCY
+      children:
+      - children:
+        - attributes:
+            id: core
+            value: '150000000'
+          type: Dynamic
+        type: Values
+      type: Integer
+    AFEC1_CLOCK_FREQUENCY:
+      attributes:
+        id: AFEC1_CLOCK_FREQUENCY
+        label: AFEC1_CLOCK_FREQUENCY
+      children:
+      - children:
+        - attributes:
+            id: core
+            value: '150000000'
+          type: Dynamic
+        type: Values
+      type: Integer
+    TWIHS2_CLOCK_FREQUENCY:
+      attributes:
+        id: TWIHS2_CLOCK_FREQUENCY
+        label: TWIHS2_CLOCK_FREQUENCY
+      children:
+      - children:
+        - attributes:
+            id: core
+            value: '150000000'
+          type: Dynamic
+        type: Values
+      type: Integer
+    HSMCI_CLOCK_FREQUENCY:
+      attributes:
+        id: HSMCI_CLOCK_FREQUENCY
+        label: HSMCI_CLOCK_FREQUENCY
+      children:
+      - children:
+        - attributes:
+            id: core
+            value: '150000000'
+          type: Dynamic
+        type: Values
+      type: Integer
+    MLB_CLOCK_FREQUENCY:
+      attributes:
+        id: MLB_CLOCK_FREQUENCY
+        label: MLB_CLOCK_FREQUENCY
+      children:
+      - children:
+        - attributes:
+            id: core
+            value: '150000000'
+          type: Dynamic
+        type: Values
+      type: Integer
+    PIOA_CLOCK_FREQUENCY:
+      attributes:
+        id: PIOA_CLOCK_FREQUENCY
+        label: PIOA_CLOCK_FREQUENCY
+      children:
+      - children:
+        - attributes:
+            id: core
+            value: '150000000'
+          type: Dynamic
+        type: Values
+      type: Integer
+    TRNG_CLOCK_FREQUENCY:
+      attributes:
+        id: TRNG_CLOCK_FREQUENCY
+        label: TRNG_CLOCK_FREQUENCY
+      children:
+      - children:
+        - attributes:
+            id: core
+            value: '150000000'
+          type: Dynamic
+        type: Values
+      type: Integer
+    TWIHS1_CLOCK_FREQUENCY:
+      attributes:
+        id: TWIHS1_CLOCK_FREQUENCY
+        label: TWIHS1_CLOCK_FREQUENCY
+      children:
+      - children:
+        - attributes:
+            id: core
+            value: '150000000'
+          type: Dynamic
+        type: Values
+      type: Integer
+    SSC_CLOCK_FREQUENCY:
+      attributes:
+        id: SSC_CLOCK_FREQUENCY
+        label: SSC_CLOCK_FREQUENCY
+      children:
+      - children:
+        - attributes:
+            id: core
+            value: '150000000'
+          type: Dynamic
+        type: Values
+      type: Integer
+    MASTER_CLOCK_FREQUENCY:
+      attributes:
+        id: MASTER_CLOCK_FREQUENCY
+        label: Master Clock Frequency (HZ)
+      children:
+      - children:
+        - attributes:
+            value: '150000000'
+          type: User
+        type: Values
+      type: String
+    SYSTICK_PERIOD:
+      attributes:
+        id: SYSTICK_PERIOD
+        label: SysTick Period
+      children:
+      - children:
+        - attributes:
+            id: core
+            value: '0x493E0'
+          type: Dynamic
+        type: Values
+      type: String
+    SYSTICK_PERIOD_US:
+      attributes:
+        id: SYSTICK_PERIOD_US
+        label: SYSTICK_PERIOD_US
+      children:
+      - children:
+        - attributes:
+            id: core
+            value: '1000'
+          type: Dynamic
+        type: Values
+      type: Integer
+    CPU_CLOCK_FREQUENCY:
+      attributes:
+        id: CPU_CLOCK_FREQUENCY
+        label: Processor Clock Frequency (HZ)
+      children:
+      - children:
+        - attributes:
+            value: '300000000'
+          type: User
+        type: Values
+      type: String
+    SYSTICK_CLOCK_FREQUENCY:
+      attributes:
+        id: SYSTICK_CLOCK_FREQUENCY
+        label: System Tick Frequency (HZ)
+      children:
+      - children:
+        - attributes:
+            value: '150000000'
+          type: User
+        type: Values
+      type: String
+    I2S0_CLOCK_FREQUENCY:
+      attributes:
+        id: I2S0_CLOCK_FREQUENCY
+        label: I2S0 Frequency (HZ)
+      children:
+      - children:
+        - attributes:
+            value: '32000'
+          type: User
+        type: Values
+      type: String
+    PCK0_CLOCK_FREQUENCY:
+      attributes:
+        id: PCK0_CLOCK_FREQUENCY
+        label: 'Programmable clock #0 Frequency (HZ)'
+      children:
+      - children:
+        - attributes:
+            value: '32000'
+          type: User
+        type: Values
+      type: String
+    PCK2_CLOCK_FREQUENCY:
+      attributes:
+        id: PCK2_CLOCK_FREQUENCY
+        label: 'Programmable clock #2 Frequency (HZ)'
+      children:
+      - children:
+        - attributes:
+            value: '32000'
+          type: User
+        type: Values
+      type: String
+    PCK3_CLOCK_FREQUENCY:
+      attributes:
+        id: PCK3_CLOCK_FREQUENCY
+        label: 'Programmable clock #3 Frequency (HZ)'
+      children:
+      - children:
+        - attributes:
+            value: '32000'
+          type: User
+        type: Values
+      type: String
+    PCK4_CLOCK_FREQUENCY:
+      attributes:
+        id: PCK4_CLOCK_FREQUENCY
+        label: 'Programmable clock #4 Frequency (HZ)'
+      children:
+      - children:
+        - attributes:
+            value: '32000'
+          type: User
+        type: Values
+      type: String
+    MCAN1_CLOCK_FREQUENCY:
+      attributes:
+        id: MCAN1_CLOCK_FREQUENCY
+        label: MCAN1_CLOCK_FREQUENCY
+      children:
+      - children:
+        - attributes:
+            id: core
+            value: '0'
+          type: Dynamic
+        type: Values
+      type: Integer
+    PCK5_CLOCK_FREQUENCY:
+      attributes:
+        id: PCK5_CLOCK_FREQUENCY
+        label: 'Programmable clock #5 Frequency (HZ)'
+      children:
+      - children:
+        - attributes:
+            value: '150000000'
+          type: User
+        type: Values
+      type: String
+    PMC_PCK5_CSS:
+      attributes:
+        id: PMC_PCK5_CSS
+        label: Programmable Clock Source Selection
+      children:
+      - children:
+        - attributes:
+            value: MCK
+          type: User
+        type: Values
+      type: Combo
+    GMAC_CLOCK_ENABLE:
+      attributes:
+        id: GMAC_CLOCK_ENABLE
+        label: GMAC
+      children:
+      - children:
+        - attributes:
+            id: drvGmac
+            value: 'true'
+          type: Dynamic
+        type: Values
+      type: Boolean
+    GMAC_INTERRUPT_ENABLE_UPDATE:
+      attributes:
+        id: GMAC_INTERRUPT_ENABLE_UPDATE
+        label: NVIC Peripheral Enable/Disable Update
+      children:
+      - children:
+        - attributes:
+            id: core
+            value: 'false'
+          type: Dynamic
+        type: Values
+      type: Boolean
+    NVIC_39_0_ENABLE:
+      attributes:
+        id: NVIC_39_0_ENABLE
+        label: Enable Ethernet MAC Interrupt
+      children:
+      - children:
+        - attributes:
+            id: core
+            value: 'true'
+          type: Dynamic
+        type: Values
+      type: Boolean
+    GMAC_INTERRUPT_ENABLE:
+      attributes:
+        id: GMAC_INTERRUPT_ENABLE
+        label: Vector Peripheral Enable
+      children:
+      - children:
+        - attributes:
+            id: drvGmac
+            value: 'true'
+          type: Dynamic
+        type: Values
+      type: Boolean
+    NVIC_39_0_HANDLER:
+      attributes:
+        id: NVIC_39_0_HANDLER
+        label: Handler
+      children:
+      - children:
+        - attributes:
+            id: core
+            value: GMAC_InterruptHandler
+          type: Dynamic
+        type: Values
+      type: String
+    GMAC_INTERRUPT_HANDLER:
+      attributes:
+        id: GMAC_INTERRUPT_HANDLER
+        label: Vector Peripheral Handler
+      children:
+      - children:
+        - attributes:
+            id: drvGmac
+            value: GMAC_InterruptHandler
+          type: Dynamic
+        type: Values
+      type: String
+    NVIC_39_0_HANDLER_LOCK:
+      attributes:
+        id: NVIC_39_0_HANDLER_LOCK
+        label: Handler Lock
+      children:
+      - children:
+        - attributes:
+            id: core
+            value: 'true'
+          type: Dynamic
+        type: Values
+      type: Boolean
+    GMAC_INTERRUPT_HANDLER_LOCK:
+      attributes:
+        id: GMAC_INTERRUPT_HANDLER_LOCK
+        label: Vector Peripheral Handler Lock
+      children:
+      - children:
+        - attributes:
+            id: drvGmac
+            value: 'true'
+          type: Dynamic
+        type: Values
+      type: Boolean
+    PIN_129_FUNCTION_TYPE:
+      attributes:
+        id: PIN_129_FUNCTION_TYPE
+        label: Type
+      children:
+      - children:
+        - attributes:
+            id: readOnly
+          children:
+          - type: Value
+            value: 'false'
+          type: Boolean
+        type: Attributes
+      type: String
+    PIOA_PDR_VALUE:
+      attributes:
+        id: PIOA_PDR_VALUE
+        label: PIOA_PDR
+      children:
+      - children:
+        - attributes:
+            id: core
+            value: '24'
+          type: Dynamic
+        type: Values
+      type: Hex
+    PIOA_ABCDSR1_VALUE:
+      attributes:
+        id: PIOA_ABCDSR1_VALUE
+        label: PIOA_ABCDSR1
+      children:
+      - children:
+        - attributes:
+            id: core
+            value: '0'
+          type: Dynamic
+        type: Values
+      type: Hex
+    PIOA_ABCDSR2_VALUE:
+      attributes:
+        id: PIOA_ABCDSR2_VALUE
+        label: PIOA_ABCDSR2
+      children:
+      - children:
+        - attributes:
+            id: core
+            value: '0'
+          type: Dynamic
+        type: Values
+      type: Hex
+    PIN_129_PERIPHERAL_FUNCTION:
+      attributes:
+        id: PIN_129_PERIPHERAL_FUNCTION
+        label: Peripheral Selection
+      children:
+      - children:
+        - attributes:
+            id: readOnly
+          children:
+          - type: Value
+            value: 'false'
+          type: Boolean
+        type: Attributes
+      type: String
+    PIN_129_FUNCTION_NAME:
+      attributes:
+        id: PIN_129_FUNCTION_NAME
+        label: Name
+      children:
+      - children:
+        - attributes:
+            id: readOnly
+          children:
+          - type: Value
+            value: 'false'
+          type: Boolean
+        type: Attributes
+      type: String
+    PIN_129_DIR:
+      attributes:
+        id: PIN_129_DIR
+        label: Direction
+      children:
+      - children:
+        - attributes:
+            id: readOnly
+          children:
+          - type: Value
+            value: 'false'
+          type: Boolean
+        type: Attributes
+      type: String
+    PIN_1_FUNCTION_TYPE:
+      attributes:
+        id: PIN_1_FUNCTION_TYPE
+        label: Type
+      children:
+      - children:
+        - attributes:
+            id: core
+            value: GMAC_GTXCK
+          type: Dynamic
+        type: Values
+      type: String
+    PIOD_PDR_VALUE:
+      attributes:
+        id: PIOD_PDR_VALUE
+        label: PIOD_PDR
+      children:
+      - children:
+        - attributes:
+            id: core
+            value: '1023'
+          type: Dynamic
+        type: Values
+      type: Hex
+    PIOD_ABCDSR1_VALUE:
+      attributes:
+        id: PIOD_ABCDSR1_VALUE
+        label: PIOD_ABCDSR1
+      children:
+      - children:
+        - attributes:
+            id: core
+            value: '0'
+          type: Dynamic
+        type: Values
+      type: Hex
+    PIOD_ABCDSR2_VALUE:
+      attributes:
+        id: PIOD_ABCDSR2_VALUE
+        label: PIOD_ABCDSR2
+      children:
+      - children:
+        - attributes:
+            id: core
+            value: '0'
+          type: Dynamic
+        type: Values
+      type: Hex
+    PIN_1_PERIPHERAL_FUNCTION:
+      attributes:
+        id: PIN_1_PERIPHERAL_FUNCTION
+        label: Peripheral Selection
+      children:
+      - children:
+        - attributes:
+            id: core
+            value: A
+          type: Dynamic
+        type: Values
+      type: String
+    PIN_125_FUNCTION_TYPE:
+      attributes:
+        id: PIN_125_FUNCTION_TYPE
+        label: Type
+      children:
+      - children:
+        - attributes:
+            id: core
+            value: GMAC_GRX0
+          type: Dynamic
+        type: Values
+      type: String
+    PIN_125_PERIPHERAL_FUNCTION:
+      attributes:
+        id: PIN_125_PERIPHERAL_FUNCTION
+        label: Peripheral Selection
+      children:
+      - children:
+        - attributes:
+            id: core
+            value: A
+          type: Dynamic
+        type: Values
+      type: String
+    PIN_121_FUNCTION_TYPE:
+      attributes:
+        id: PIN_121_FUNCTION_TYPE
+        label: Type
+      children:
+      - children:
+        - attributes:
+            id: core
+            value: GMAC_GRX1
+          type: Dynamic
+        type: Values
+      type: String
+    PIN_121_PERIPHERAL_FUNCTION:
+      attributes:
+        id: PIN_121_PERIPHERAL_FUNCTION
+        label: Peripheral Selection
+      children:
+      - children:
+        - attributes:
+            id: core
+            value: A
+          type: Dynamic
+        type: Values
+      type: String
+    PIN_132_FUNCTION_TYPE:
+      attributes:
+        id: PIN_132_FUNCTION_TYPE
+        label: Type
+      children:
+      - children:
+        - attributes:
+            id: core
+            value: GMAC_GTXEN
+          type: Dynamic
+        type: Values
+      type: String
+    PIN_132_PERIPHERAL_FUNCTION:
+      attributes:
+        id: PIN_132_PERIPHERAL_FUNCTION
+        label: Peripheral Selection
+      children:
+      - children:
+        - attributes:
+            id: core
+            value: A
+          type: Dynamic
+        type: Values
+      type: String
+    PIN_131_FUNCTION_TYPE:
+      attributes:
+        id: PIN_131_FUNCTION_TYPE
+        label: Type
+      children:
+      - children:
+        - attributes:
+            id: core
+            value: GMAC_GTX0
+          type: Dynamic
+        type: Values
+      type: String
+    PIN_131_PERIPHERAL_FUNCTION:
+      attributes:
+        id: PIN_131_PERIPHERAL_FUNCTION
+        label: Peripheral Selection
+      children:
+      - children:
+        - attributes:
+            id: core
+            value: A
+          type: Dynamic
+        type: Values
+      type: String
+    PIN_113_FUNCTION_TYPE:
+      attributes:
+        id: PIN_113_FUNCTION_TYPE
+        label: Type
+      children:
+      - children:
+        - attributes:
+            id: core
+            value: GMAC_GMDC
+          type: Dynamic
+        type: Values
+      type: String
+    PIN_113_PERIPHERAL_FUNCTION:
+      attributes:
+        id: PIN_113_PERIPHERAL_FUNCTION
+        label: Peripheral Selection
+      children:
+      - children:
+        - attributes:
+            id: core
+            value: A
+          type: Dynamic
+        type: Values
+      type: String
+    PIN_128_FUNCTION_TYPE:
+      attributes:
+        id: PIN_128_FUNCTION_TYPE
+        label: Type
+      children:
+      - children:
+        - attributes:
+            id: core
+            value: GMAC_GTX1
+          type: Dynamic
+        type: Values
+      type: String
+    PIN_128_PERIPHERAL_FUNCTION:
+      attributes:
+        id: PIN_128_PERIPHERAL_FUNCTION
+        label: Peripheral Selection
+      children:
+      - children:
+        - attributes:
+            id: core
+            value: A
+          type: Dynamic
+        type: Values
+      type: String
+    PIN_110_FUNCTION_TYPE:
+      attributes:
+        id: PIN_110_FUNCTION_TYPE
+        label: Type
+      children:
+      - children:
+        - attributes:
+            id: core
+            value: GMAC_GMDIO
+          type: Dynamic
+        type: Values
+      type: String
+    PIN_110_PERIPHERAL_FUNCTION:
+      attributes:
+        id: PIN_110_PERIPHERAL_FUNCTION
+        label: Peripheral Selection
+      children:
+      - children:
+        - attributes:
+            id: core
+            value: A
+          type: Dynamic
+        type: Values
+      type: String
+    PIN_119_FUNCTION_TYPE:
+      attributes:
+        id: PIN_119_FUNCTION_TYPE
+        label: Type
+      children:
+      - children:
+        - attributes:
+            id: core
+            value: GMAC_GRXER
+          type: Dynamic
+        type: Values
+      type: String
+    PIN_119_PERIPHERAL_FUNCTION:
+      attributes:
+        id: PIN_119_PERIPHERAL_FUNCTION
+        label: Peripheral Selection
+      children:
+      - children:
+        - attributes:
+            id: core
+            value: A
+          type: Dynamic
+        type: Values
+      type: String
+    PIN_126_FUNCTION_TYPE:
+      attributes:
+        id: PIN_126_FUNCTION_TYPE
+        label: Type
+      children:
+      - children:
+        - attributes:
+            id: core
+            value: GMAC_GRXDV
+          type: Dynamic
+        type: Values
+      type: String
+    PIN_126_PERIPHERAL_FUNCTION:
+      attributes:
+        id: PIN_126_PERIPHERAL_FUNCTION
+        label: Peripheral Selection
+      children:
+      - children:
+        - attributes:
+            id: core
+            value: A
+          type: Dynamic
+        type: Values
+      type: String
+    SysTick_INTERRUPT_ENABLE_UPDATE:
+      attributes:
+        id: SysTick_INTERRUPT_ENABLE_UPDATE
+        label: NVIC Peripheral Enable/Disable Update
+      children:
+      - children:
+        - attributes:
+            id: core
+            value: 'true'
+          type: Dynamic
+        type: Values
+      type: Boolean
+    NVIC_-1_0_ENABLE:
+      attributes:
+        id: NVIC_-1_0_ENABLE
+        label: Enable System Tick Timer Interrupt
+      children:
+      - children:
+        - attributes:
+            id: core
+            value: 'false'
+          type: Dynamic
+        type: Values
+      type: Boolean
+    SysTick_INTERRUPT_ENABLE:
+      attributes:
+        id: SysTick_INTERRUPT_ENABLE
+        label: Vector Peripheral Enable
+      children:
+      - children:
+        - attributes:
+            id: core
+            value: 'false'
+          type: Dynamic
+        type: Values
+      type: Boolean
+    NVIC_-1_0_HANDLER_LOCK:
+      attributes:
+        id: NVIC_-1_0_HANDLER_LOCK
+        label: Handler Lock
+      children:
+      - children:
+        - attributes:
+            id: core
+            value: 'false'
+          type: Dynamic
+        type: Values
+      type: Boolean
+    SysTick_INTERRUPT_HANDLER_LOCK:
+      attributes:
+        id: SysTick_INTERRUPT_HANDLER_LOCK
+        label: Vector Peripheral Handler Lock
+      children:
+      - children:
+        - attributes:
+            id: core
+            value: 'false'
+          type: Dynamic
+        type: Values
+      type: Boolean
+    USE_SYSTICK_INTERRUPT:
+      attributes:
+        id: USE_SYSTICK_INTERRUPT
+        label: Enable Interrupt
+      children:
+      - children:
+        - attributes:
+            id: readOnly
+          children:
+          - type: Value
+            value: 'false'
+          type: Boolean
+        type: Attributes
+      - children:
+        - attributes:
+            id: core
+            value: 'false'
+          type: Dynamic
+        type: Values
+      type: Boolean
+    systickEnable:
+      attributes:
+        id: systickEnable
+        label: Enable SysTick
+      children:
+      - children:
+        - attributes:
+            id: core
+            value: 'false'
+          type: Dynamic
+        type: Values
+      type: Boolean
+    PLIB_MPU_H:
+      attributes:
+        id: PLIB_MPU_H
+      children:
+      - children:
+        - attributes:
+            id: enabled
+          children:
+          - type: Value
+            value: 'true'
+          type: Boolean
+        type: Attributes
+      type: File
+    PLIB_MPU_LOCAL_H:
+      attributes:
+        id: PLIB_MPU_LOCAL_H
+      children:
+      - children:
+        - attributes:
+            id: enabled
+          children:
+          - type: Value
+            value: 'true'
+          type: Boolean
+        type: Attributes
+      type: File
+    PLIB_MPU_C:
+      attributes:
+        id: PLIB_MPU_C
+      children:
+      - children:
+        - attributes:
+            id: enabled
+          children:
+          - type: Value
+            value: 'true'
+          type: Boolean
+        type: Attributes
+      type: File
+    MPU_SYSTEM_DEFINITIONS_H:
+      attributes:
+        id: MPU_SYSTEM_DEFINITIONS_H
+      children:
+      - children:
+        - attributes:
+            id: enabled
+          children:
+          - type: Value
+            value: 'true'
+          type: Boolean
+        type: Attributes
+      type: File
+    CoreUseMPU:
+      attributes:
+        id: CoreUseMPU
+        label: Enable MPU?
+      children:
+      - children:
+        - attributes:
+            id: drvGmac
+            value: 'true'
+          type: Dynamic
+        type: Values
+      type: Boolean
+    MPU_Region_0_Enable:
+      attributes:
+        id: MPU_Region_0_Enable
+        label: Enable MPU Region0
+      children:
+      - children:
+        - attributes:
+            id: core
+            value: 'true'
+          type: Dynamic
+        type: Values
+      type: Boolean
+    MPU_Region_0_Address:
+      attributes:
+        id: MPU_Region_0_Address
+        label: Base Address
+      children:
+      - children:
+        - attributes:
+            id: core
+            value: '0'
+          type: Dynamic
+        type: Values
+      type: Hex
+    MPU_Region_0_Access:
+      attributes:
+        id: MPU_Region_0_Access
+        label: Data Access Permission
+      children:
+      - children:
+        - attributes:
+            id: core
+            value: '3'
+          type: Dynamic
+        type: Values
+      type: KeyValueSet
+    MPU_Region_0_Length:
+      attributes:
+        id: MPU_Region_0_Length
+        label: Region Length
+      children:
+      - children:
+        - attributes:
+            id: core
+            value: 4MB
+          type: Dynamic
+        type: Values
+      type: String
+    MPU_Region_0_Size:
+      attributes:
+        id: MPU_Region_0_Size
+        label: Size
+      children:
+      - children:
+        - attributes:
+            id: core
+            value: '17'
+          type: Dynamic
+        type: Values
+      type: KeyValueSet
+    MPU_Region_0_Share:
+      attributes:
+        id: MPU_Region_0_Share
+        label: Shareable Attribute
+      children:
+      - children:
+        - attributes:
+            id: core
+            value: 'false'
+          type: Dynamic
+        type: Values
+      type: Boolean
+    MPU_Region_0_Type:
+      attributes:
+        id: MPU_Region_0_Type
+        label: Memory Type and Cache policy
+      children:
+      - children:
+        - attributes:
+            id: core
+            value: '5'
+          type: Dynamic
+        type: Values
+      type: KeyValueSet
+    MPU_Region_0_Execute:
+      attributes:
+        id: MPU_Region_0_Execute
+        label: Instruction Access Permission
+      children:
+      - children:
+        - attributes:
+            id: core
+            value: 'true'
+          type: Dynamic
+        type: Values
+      type: Boolean
+    MPU_Region_Name0:
+      attributes:
+        id: MPU_Region_Name0
+        label: Region Name
+      children:
+      - children:
+        - attributes:
+            id: core
+            value: ITCM
+          type: Dynamic
+        type: Values
+      type: String
+    MPU_Region_1_Enable:
+      attributes:
+        id: MPU_Region_1_Enable
+        label: Enable MPU Region1
+      children:
+      - children:
+        - attributes:
+            id: core
+            value: 'true'
+          type: Dynamic
+        type: Values
+      type: Boolean
+    MPU_Region_1_Address:
+      attributes:
+        id: MPU_Region_1_Address
+        label: Base Address
+      children:
+      - children:
+        - attributes:
+            id: core
+            value: '536870912'
+          type: Dynamic
+        type: Values
+      type: Hex
+    MPU_Region_1_Execute:
+      attributes:
+        id: MPU_Region_1_Execute
+        label: Instruction Access Permission
+      children:
+      - children:
+        - attributes:
+            id: core
+            value: 'true'
+          type: Dynamic
+        type: Values
+      type: Boolean
+    MPU_Region_1_Length:
+      attributes:
+        id: MPU_Region_1_Length
+        label: Region Length
+      children:
+      - children:
+        - attributes:
+            id: core
+            value: 4MB
+          type: Dynamic
+        type: Values
+      type: String
+    MPU_Region_1_Size:
+      attributes:
+        id: MPU_Region_1_Size
+        label: Size
+      children:
+      - children:
+        - attributes:
+            id: core
+            value: '17'
+          type: Dynamic
+        type: Values
+      type: KeyValueSet
+    MPU_Region_1_Type:
+      attributes:
+        id: MPU_Region_1_Type
+        label: Memory Type and Cache policy
+      children:
+      - children:
+        - attributes:
+            id: core
+            value: '5'
+          type: Dynamic
+        type: Values
+      type: KeyValueSet
+    MPU_Region_1_Access:
+      attributes:
+        id: MPU_Region_1_Access
+        label: Data Access Permission
+      children:
+      - children:
+        - attributes:
+            id: core
+            value: '3'
+          type: Dynamic
+        type: Values
+      type: KeyValueSet
+    MPU_Region_1_Share:
+      attributes:
+        id: MPU_Region_1_Share
+        label: Shareable Attribute
+      children:
+      - children:
+        - attributes:
+            id: core
+            value: 'false'
+          type: Dynamic
+        type: Values
+      type: Boolean
+    MPU_Region_Name1:
+      attributes:
+        id: MPU_Region_Name1
+        label: Region Name
+      children:
+      - children:
+        - attributes:
+            id: core
+            value: DTCM
+          type: Dynamic
+        type: Values
+      type: String
+    MPU_Region_2_Enable:
+      attributes:
+        id: MPU_Region_2_Enable
+        label: Enable MPU Region2
+      children:
+      - children:
+        - attributes:
+            id: core
+            value: 'true'
+          type: Dynamic
+        type: Values
+      type: Boolean
+    MPU_Region_2_Share:
+      attributes:
+        id: MPU_Region_2_Share
+        label: Shareable Attribute
+      children:
+      - children:
+        - attributes:
+            id: core
+            value: 'false'
+          type: Dynamic
+        type: Values
+      type: Boolean
+    MPU_Region_2_Address:
+      attributes:
+        id: MPU_Region_2_Address
+        label: Base Address
+      children:
+      - children:
+        - attributes:
+            id: core
+            value: '541065216'
+          type: Dynamic
+        type: Values
+      type: Hex
+    MPU_Region_2_Access:
+      attributes:
+        id: MPU_Region_2_Access
+        label: Data Access Permission
+      children:
+      - children:
+        - attributes:
+            id: core
+            value: '3'
+          type: Dynamic
+        type: Values
+      type: KeyValueSet
+    MPU_Region_2_Execute:
+      attributes:
+        id: MPU_Region_2_Execute
+        label: Instruction Access Permission
+      children:
+      - children:
+        - attributes:
+            id: core
+            value: 'true'
+          type: Dynamic
+        type: Values
+      type: Boolean
+    MPU_Region_2_Type:
+      attributes:
+        id: MPU_Region_2_Type
+        label: Memory Type and Cache policy
+      children:
+      - children:
+        - attributes:
+            id: core
+            value: '4'
+          type: Dynamic
+        type: Values
+      type: KeyValueSet
+    MPU_Region_2_Length:
+      attributes:
+        id: MPU_Region_2_Length
+        label: Region Length
+      children:
+      - children:
+        - attributes:
+            id: core
+            value: 8MB
+          type: Dynamic
+        type: Values
+      type: String
+    MPU_Region_2_Size:
+      attributes:
+        id: MPU_Region_2_Size
+        label: Size
+      children:
+      - children:
+        - attributes:
+            id: core
+            value: '18'
+          type: Dynamic
+        type: Values
+      type: KeyValueSet
+    MPU_Region_Name2:
+      attributes:
+        id: MPU_Region_Name2
+        label: Region Name
+      children:
+      - children:
+        - attributes:
+            id: core
+            value: SRAM
+          type: Dynamic
+        type: Values
+      type: String
+    MPU_Region_3_Enable:
+      attributes:
+        id: MPU_Region_3_Enable
+        label: Enable MPU Region3
+      children:
+      - children:
+        - attributes:
+            id: core
+            value: 'true'
+          type: Dynamic
+        type: Values
+      type: Boolean
+    MPU_Region_3_Access:
+      attributes:
+        id: MPU_Region_3_Access
+        label: Data Access Permission
+      children:
+      - children:
+        - attributes:
+            id: core
+            value: '3'
+          type: Dynamic
+        type: Values
+      type: KeyValueSet
+    MPU_Region_3_Address:
+      attributes:
+        id: MPU_Region_3_Address
+        label: Base Address
+      children:
+      - children:
+        - attributes:
+            id: core
+            value: '1610612736'
+          type: Dynamic
+        type: Values
+      type: Hex
+    MPU_Region_3_Execute:
+      attributes:
+        id: MPU_Region_3_Execute
+        label: Instruction Access Permission
+      children:
+      - children:
+        - attributes:
+            id: core
+            value: 'true'
+          type: Dynamic
+        type: Values
+      type: Boolean
+    MPU_Region_3_Length:
+      attributes:
+        id: MPU_Region_3_Length
+        label: Region Length
+      children:
+      - children:
+        - attributes:
+            id: core
+            value: 256MB
+          type: Dynamic
+        type: Values
+      type: String
+    MPU_Region_3_Size:
+      attributes:
+        id: MPU_Region_3_Size
+        label: Size
+      children:
+      - children:
+        - attributes:
+            id: core
+            value: '23'
+          type: Dynamic
+        type: Values
+      type: KeyValueSet
+    MPU_Region_3_Type:
+      attributes:
+        id: MPU_Region_3_Type
+        label: Memory Type and Cache policy
+      children:
+      - children:
+        - attributes:
+            id: core
+            value: '0'
+          type: Dynamic
+        type: Values
+      type: KeyValueSet
+    MPU_Region_3_Share:
+      attributes:
+        id: MPU_Region_3_Share
+        label: Shareable Attribute
+      children:
+      - children:
+        - attributes:
+            id: core
+            value: 'false'
+          type: Dynamic
+        type: Values
+      type: Boolean
+    MPU_Region_Name3:
+      attributes:
+        id: MPU_Region_Name3
+        label: Region Name
+      children:
+      - children:
+        - attributes:
+            id: core
+            value: EBI_SMC
+          type: Dynamic
+        type: Values
+      type: String
+    MPU_Region_4_Enable:
+      attributes:
+        id: MPU_Region_4_Enable
+        label: Enable MPU Region4
+      children:
+      - children:
+        - attributes:
+            id: core
+            value: 'true'
+          type: Dynamic
+        type: Values
+      type: Boolean
+    MPU_Region_4_Access:
+      attributes:
+        id: MPU_Region_4_Access
+        label: Data Access Permission
+      children:
+      - children:
+        - attributes:
+            id: core
+            value: '3'
+          type: Dynamic
+        type: Values
+      type: KeyValueSet
+    MPU_Region_4_Length:
+      attributes:
+        id: MPU_Region_4_Length
+        label: Region Length
+      children:
+      - children:
+        - attributes:
+            id: core
+            value: 256MB
+          type: Dynamic
+        type: Values
+      type: String
+    MPU_Region_4_Size:
+      attributes:
+        id: MPU_Region_4_Size
+        label: Size
+      children:
+      - children:
+        - attributes:
+            id: core
+            value: '23'
+          type: Dynamic
+        type: Values
+      type: KeyValueSet
+    MPU_Region_4_Share:
+      attributes:
+        id: MPU_Region_4_Share
+        label: Shareable Attribute
+      children:
+      - children:
+        - attributes:
+            id: core
+            value: 'false'
+          type: Dynamic
+        type: Values
+      type: Boolean
+    MPU_Region_4_Execute:
+      attributes:
+        id: MPU_Region_4_Execute
+        label: Instruction Access Permission
+      children:
+      - children:
+        - attributes:
+            id: core
+            value: 'true'
+          type: Dynamic
+        type: Values
+      type: Boolean
+    MPU_Region_4_Address:
+      attributes:
+        id: MPU_Region_4_Address
+        label: Base Address
+      children:
+      - children:
+        - attributes:
+            id: core
+            value: '2147483648'
+          type: Dynamic
+        type: Values
+      type: Hex
+    MPU_Region_4_Type:
+      attributes:
+        id: MPU_Region_4_Type
+        label: Memory Type and Cache policy
+      children:
+      - children:
+        - attributes:
+            id: core
+            value: '0'
+          type: Dynamic
+        type: Values
+      type: KeyValueSet
+    MPU_Region_Name4:
+      attributes:
+        id: MPU_Region_Name4
+        label: Region Name
+      children:
+      - children:
+        - attributes:
+            id: core
+            value: QSPI
+          type: Dynamic
+        type: Values
+      type: String
+    CoreMPU_DEFAULT:
+      attributes:
+        id: CoreMPU_DEFAULT
+        label: Use Recommended settings
+      children:
+      - children:
+        - attributes:
+            id: drvGmac
+            value: 'true'
+          type: Dynamic
+        type: Values
+      type: Boolean
+    MPU_Region_5_Enable:
+      attributes:
+        id: MPU_Region_5_Enable
+        label: Enable MPU Region5
+      children:
+      - children:
+        - attributes:
+            id: drvGmac
+            value: 'true'
+          type: Dynamic
+        type: Values
+      type: Boolean
+    MPU_Region_Name5:
+      attributes:
+        id: MPU_Region_Name5
+        label: Region Name
+      children:
+      - children:
+        - attributes:
+            id: drvGmac
+            value: GMAC Descriptor
+          type: Dynamic
+        type: Values
+      type: String
+    MPU_Region_5_Type:
+      attributes:
+        id: MPU_Region_5_Type
+        label: Memory Type and Cache policy
+      children:
+      - children:
+        - attributes:
+            id: drvGmac
+            value: '5'
+          type: Dynamic
+        type: Values
+      type: KeyValueSet
+    MPU_Region_5_Length:
+      attributes:
+        id: MPU_Region_5_Length
+        label: Region Length
+      children:
+      - children:
+        - attributes:
+            id: core
+            value: 4KB
+          type: Dynamic
+        type: Values
+      type: String
+    MPU_Region_5_Size:
+      attributes:
+        id: MPU_Region_5_Size
+        label: Size
+      children:
+      - children:
+        - attributes:
+            id: drvGmac
+            value: '7'
+          type: Dynamic
+        type: Values
+      type: KeyValueSet
+    MPU_Region_5_Access:
+      attributes:
+        id: MPU_Region_5_Access
+        label: Data Access Permission
+      children:
+      - children:
+        - attributes:
+            id: drvGmac
+            value: '3'
+          type: Dynamic
+        type: Values
+      type: KeyValueSet
+    MPU_Region_5_Address:
+      attributes:
+        id: MPU_Region_5_Address
+        label: Base Address
+      children:
+      - children:
+        - attributes:
+            id: drvGmac
+            value: '541454336'
+          type: Dynamic
+        type: Values
+      type: Hex
+    TC0_CH0_INTERRUPT_ENABLE_UPDATE:
+      attributes:
+        id: TC0_CH0_INTERRUPT_ENABLE_UPDATE
+        label: NVIC Peripheral Enable/Disable Update
+      children:
+      - children:
+        - attributes:
+            id: core
+            value: 'false'
+          type: Dynamic
+        type: Values
+      type: Boolean
+    NVIC_23_0_ENABLE:
+      attributes:
+        id: NVIC_23_0_ENABLE
+        label: Enable Timer/Counter 0 Channel 0 Interrupt
+      children:
+      - children:
+        - attributes:
+            id: core
+            value: 'true'
+          type: Dynamic
+        type: Values
+      type: Boolean
+    TC0_CH0_INTERRUPT_ENABLE:
+      attributes:
+        id: TC0_CH0_INTERRUPT_ENABLE
+        label: Vector Peripheral Enable
+      children:
+      - children:
+        - attributes:
+            id: tc0
+            value: 'true'
+          type: Dynamic
+        type: Values
+      type: Boolean
+    NVIC_23_0_HANDLER:
+      attributes:
+        id: NVIC_23_0_HANDLER
+        label: Handler
+      children:
+      - children:
+        - attributes:
+            id: core
+            value: TC0_CH0_InterruptHandler
+          type: Dynamic
+        type: Values
+      type: String
+    TC0_CH0_INTERRUPT_HANDLER:
+      attributes:
+        id: TC0_CH0_INTERRUPT_HANDLER
+        label: Vector Peripheral Handler
+      children:
+      - children:
+        - attributes:
+            id: tc0
+            value: TC0_CH0_InterruptHandler
+          type: Dynamic
+        type: Values
+      type: String
+    NVIC_23_0_HANDLER_LOCK:
+      attributes:
+        id: NVIC_23_0_HANDLER_LOCK
+        label: Handler Lock
+      children:
+      - children:
+        - attributes:
+            id: core
+            value: 'true'
+          type: Dynamic
+        type: Values
+      type: Boolean
+    TC0_CH0_INTERRUPT_HANDLER_LOCK:
+      attributes:
+        id: TC0_CH0_INTERRUPT_HANDLER_LOCK
+        label: Vector Peripheral Handler Lock
+      children:
+      - children:
+        - attributes:
+            id: tc0
+            value: 'true'
+          type: Dynamic
+        type: Values
+      type: Boolean
+    TC0_CH0_CLOCK_FREQUENCY:
+      attributes:
+        id: TC0_CH0_CLOCK_FREQUENCY
+        label: TC0_CH0_CLOCK_FREQUENCY
+      children:
+      - children:
+        - attributes:
+            id: core
+            value: '150000000'
+          type: Dynamic
+        type: Values
+      type: Integer
+    PMC_PCER0:
+      attributes:
+        id: PMC_PCER0
+        label: PMC_PCER0
+      children:
+      - children:
+        - attributes:
+            id: core
+            value: '9116672'
+          type: Dynamic
+        type: Values
+      type: Hex
+    TC0_CHANNEL0_CLOCK_ENABLE:
+      attributes:
+        id: TC0_CHANNEL0_CLOCK_ENABLE
+        label: TC0_CHANNEL0
+      children:
+      - children:
+        - attributes:
+            id: tc0
+            value: 'true'
+          type: Dynamic
+        type: Values
+      type: Boolean
+    TC0_CHANNEL1_CLOCK_ENABLE:
+      attributes:
+        id: TC0_CHANNEL1_CLOCK_ENABLE
+        label: TC0_CHANNEL1
+      children:
+      - children:
+        - attributes:
+            id: tc0
+            value: 'false'
+          type: Dynamic
+        type: Values
+      type: Boolean
+    TC0_CH1_INTERRUPT_ENABLE_UPDATE:
+      attributes:
+        id: TC0_CH1_INTERRUPT_ENABLE_UPDATE
+        label: NVIC Peripheral Enable/Disable Update
+      children:
+      - children:
+        - attributes:
+            id: core
+            value: 'true'
+          type: Dynamic
+        type: Values
+      type: Boolean
+    NVIC_24_0_ENABLE:
+      attributes:
+        id: NVIC_24_0_ENABLE
+        label: Enable Timer/Counter 0 Channel 1 Interrupt
+      children:
+      - children:
+        - attributes:
+            id: core
+            value: 'false'
+          type: Dynamic
+        type: Values
+      type: Boolean
+    TC0_CH1_INTERRUPT_ENABLE:
+      attributes:
+        id: TC0_CH1_INTERRUPT_ENABLE
+        label: Vector Peripheral Enable
+      children:
+      - children:
+        - attributes:
+            id: tc0
+            value: 'false'
+          type: Dynamic
+        type: Values
+      type: Boolean
+    NVIC_24_0_HANDLER:
+      attributes:
+        id: NVIC_24_0_HANDLER
+        label: Handler
+      children:
+      - children:
+        - attributes:
+            id: core
+            value: TC0_CH1_Handler
+          type: Dynamic
+        type: Values
+      type: String
+    TC0_CH1_INTERRUPT_HANDLER:
+      attributes:
+        id: TC0_CH1_INTERRUPT_HANDLER
+        label: Vector Peripheral Handler
+      children:
+      - children:
+        - attributes:
+            id: tc0
+            value: TC0_CH1_Handler
+          type: Dynamic
+        type: Values
+      type: String
+    NVIC_24_0_HANDLER_LOCK:
+      attributes:
+        id: NVIC_24_0_HANDLER_LOCK
+        label: Handler Lock
+      children:
+      - children:
+        - attributes:
+            id: core
+            value: 'false'
+          type: Dynamic
+        type: Values
+      type: Boolean
+    TC0_CH1_INTERRUPT_HANDLER_LOCK:
+      attributes:
+        id: TC0_CH1_INTERRUPT_HANDLER_LOCK
+        label: Vector Peripheral Handler Lock
+      children:
+      - children:
+        - attributes:
+            id: tc0
+            value: 'false'
+          type: Dynamic
+        type: Values
+      type: Boolean
+    TC0_CHANNEL2_CLOCK_ENABLE:
+      attributes:
+        id: TC0_CHANNEL2_CLOCK_ENABLE
+        label: TC0_CHANNEL2
+      children:
+      - children:
+        - attributes:
+            id: tc0
+            value: 'false'
+          type: Dynamic
+        type: Values
+      type: Boolean
+    TC0_CH2_INTERRUPT_ENABLE_UPDATE:
+      attributes:
+        id: TC0_CH2_INTERRUPT_ENABLE_UPDATE
+        label: NVIC Peripheral Enable/Disable Update
+      children:
+      - children:
+        - attributes:
+            id: core
+            value: 'true'
+          type: Dynamic
+        type: Values
+      type: Boolean
+    NVIC_25_0_ENABLE:
+      attributes:
+        id: NVIC_25_0_ENABLE
+        label: Enable Timer/Counter 0 Channel 2 Interrupt
+      children:
+      - children:
+        - attributes:
+            id: core
+            value: 'false'
+          type: Dynamic
+        type: Values
+      type: Boolean
+    TC0_CH2_INTERRUPT_ENABLE:
+      attributes:
+        id: TC0_CH2_INTERRUPT_ENABLE
+        label: Vector Peripheral Enable
+      children:
+      - children:
+        - attributes:
+            id: tc0
+            value: 'false'
+          type: Dynamic
+        type: Values
+      type: Boolean
+    NVIC_25_0_HANDLER:
+      attributes:
+        id: NVIC_25_0_HANDLER
+        label: Handler
+      children:
+      - children:
+        - attributes:
+            id: core
+            value: TC0_CH2_Handler
+          type: Dynamic
+        type: Values
+      type: String
+    TC0_CH2_INTERRUPT_HANDLER:
+      attributes:
+        id: TC0_CH2_INTERRUPT_HANDLER
+        label: Vector Peripheral Handler
+      children:
+      - children:
+        - attributes:
+            id: tc0
+            value: TC0_CH2_Handler
+          type: Dynamic
+        type: Values
+      type: String
+    NVIC_25_0_HANDLER_LOCK:
+      attributes:
+        id: NVIC_25_0_HANDLER_LOCK
+        label: Handler Lock
+      children:
+      - children:
+        - attributes:
+            id: core
+            value: 'false'
+          type: Dynamic
+        type: Values
+      type: Boolean
+    TC0_CH2_INTERRUPT_HANDLER_LOCK:
+      attributes:
+        id: TC0_CH2_INTERRUPT_HANDLER_LOCK
+        label: Vector Peripheral Handler Lock
+      children:
+      - children:
+        - attributes:
+            id: tc0
+            value: 'false'
+          type: Dynamic
+        type: Values
+      type: Boolean
+    PIN_91_FUNCTION_TYPE:
+      attributes:
+        id: PIN_91_FUNCTION_TYPE
+        label: Type
+      children:
+      - children:
+        - attributes:
+            id: core
+            value: TWIHS0_TWD0
+          type: Dynamic
+        type: Values
+      type: String
+    PIN_91_PERIPHERAL_FUNCTION:
+      attributes:
+        id: PIN_91_PERIPHERAL_FUNCTION
+        label: Peripheral Selection
+      children:
+      - children:
+        - attributes:
+            id: core
+            value: A
+          type: Dynamic
+        type: Values
+      type: String
+    PIN_91_FUNCTION_NAME:
+      attributes:
+        id: PIN_91_FUNCTION_NAME
+        label: Name
+      children:
+      - children:
+        - attributes:
+            id: core
+            value: AT24MAC402_I2C_SDA
+          type: Dynamic
+        type: Values
+      type: String
+    PIN_77_FUNCTION_TYPE:
+      attributes:
+        id: PIN_77_FUNCTION_TYPE
+        label: Type
+      children:
+      - children:
+        - attributes:
+            id: core
+            value: TWIHS0_TWCK0
+          type: Dynamic
+        type: Values
+      type: String
+    PIN_77_PERIPHERAL_FUNCTION:
+      attributes:
+        id: PIN_77_PERIPHERAL_FUNCTION
+        label: Peripheral Selection
+      children:
+      - children:
+        - attributes:
+            id: core
+            value: A
+          type: Dynamic
+        type: Values
+      type: String
+    PIN_77_FUNCTION_NAME:
+      attributes:
+        id: PIN_77_FUNCTION_NAME
+        label: Name
+      children:
+      - children:
+        - attributes:
+            id: core
+            value: AT24MAC402_I2C_SCL
+          type: Dynamic
+        type: Values
+      type: String
+    TWIHS0_CLOCK_ENABLE:
+      attributes:
+        id: TWIHS0_CLOCK_ENABLE
+        label: TWIHS0
+      children:
+      - children:
+        - attributes:
+            id: twihs0
+            value: 'true'
+          type: Dynamic
+        type: Values
+      type: Boolean
+    TWIHS0_INTERRUPT_ENABLE_UPDATE:
+      attributes:
+        id: TWIHS0_INTERRUPT_ENABLE_UPDATE
+        label: NVIC Peripheral Enable/Disable Update
+      children:
+      - children:
+        - attributes:
+            id: core
+            value: 'false'
+          type: Dynamic
+        type: Values
+      type: Boolean
+    NVIC_19_0_ENABLE:
+      attributes:
+        id: NVIC_19_0_ENABLE
+        label: Enable Two Wire Interface 0 HS Interrupt
+      children:
+      - children:
+        - attributes:
+            id: core
+            value: 'true'
+          type: Dynamic
+        type: Values
+      type: Boolean
+    TWIHS0_INTERRUPT_ENABLE:
+      attributes:
+        id: TWIHS0_INTERRUPT_ENABLE
+        label: Vector Peripheral Enable
+      children:
+      - children:
+        - attributes:
+            id: twihs0
+            value: 'true'
+          type: Dynamic
+        type: Values
+      type: Boolean
+    NVIC_19_0_HANDLER:
+      attributes:
+        id: NVIC_19_0_HANDLER
+        label: Handler
+      children:
+      - children:
+        - attributes:
+            id: core
+            value: TWIHS0_InterruptHandler
+          type: Dynamic
+        type: Values
+      type: String
+    TWIHS0_INTERRUPT_HANDLER:
+      attributes:
+        id: TWIHS0_INTERRUPT_HANDLER
+        label: Vector Peripheral Handler
+      children:
+      - children:
+        - attributes:
+            id: twihs0
+            value: TWIHS0_InterruptHandler
+          type: Dynamic
+        type: Values
+      type: String
+    NVIC_19_0_HANDLER_LOCK:
+      attributes:
+        id: NVIC_19_0_HANDLER_LOCK
+        label: Handler Lock
+      children:
+      - children:
+        - attributes:
+            id: core
+            value: 'true'
+          type: Dynamic
+        type: Values
+      type: Boolean
+    TWIHS0_INTERRUPT_HANDLER_LOCK:
+      attributes:
+        id: TWIHS0_INTERRUPT_HANDLER_LOCK
+        label: Vector Peripheral Handler Lock
+      children:
+      - children:
+        - attributes:
+            id: twihs0
+            value: 'true'
+          type: Dynamic
+        type: Values
+      type: Boolean
+  userData:
+    children:
+    - attributes:
+        canvasHeight: '0'
+        canvasWidth: '0'
+      type: GraphSettings
+    - children:
+      - attributes:
+          id: profile0
+          name: Main
+        type: Profile
+      type: PowerProfiles
+    type: UserData

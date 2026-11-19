@@ -1,0 +1,16 @@
+{
+    "cmake.sourceDirectory": "/Users/kasiawcislo/Documents/Studia/Magisterka/Gateway_software/Gateway_abstract_layer/gateway_abstract_layer/cmake/gateway_abstract_layer/default",
+    "mplab.clangd.arguments": [
+        "--header-insertion=never"
+    ],
+    "mplab.clangd.compileCommandsDir": "${workspaceFolder}/_build/gateway_abstract_layer/default",
+    "mplab.clangd.path": "/Applications/microchip/xc32/v6.00/bin/xc32-clangd",
+    "C_Cpp.intelliSenseEngine": "disabled",
+    "memory-inspector.debugTypes": [
+        "arm-debugger",
+        "embedded-debug",
+        "gdb",
+        "gdbtarget",
+        "mplab-core-da"
+    ]
+}

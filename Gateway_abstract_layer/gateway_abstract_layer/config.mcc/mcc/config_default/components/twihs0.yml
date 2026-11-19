@@ -1,0 +1,134 @@
+configVersion: 1.0.0
+componentName: twihs0
+coreVersion: 5.9.2
+device: ATSAMV71Q21B
+library: []
+dependency:
+- dependencyPackage: class com.microchip.mcc.harmony.HarmonyModule
+  name: twihs0
+  type: module
+  version: ''
+- dependencyPackage: ''
+  name: csp
+  type: package
+  version: v3.26.0
+customDataClassName: com.microchip.utils_mh3.utils.persistence.CustomModuleData
+data:
+  attachments:
+    children:
+    - children:
+      - attributes:
+          id: TWIHS0_I2C
+        children:
+        - children:
+          - attributes:
+              id: targetComponentID
+            children:
+            - type: Value
+              value: drv_at24
+            type: String
+          - attributes:
+              id: targetAttachmentID
+            children:
+            - type: Value
+              value: drv_at24_I2C_dependency
+            type: String
+          type: Attributes
+        type: DirectCapability
+      type: Attachments
+    type: twihs0
+  elementPosition: {}
+  symbols:
+    I2C_CLOCK_SPEED:
+      attributes:
+        id: I2C_CLOCK_SPEED
+        label: Clock Speed (Hz)
+      type: Integer
+    I2C_CLOCK_SPEED_HZ:
+      attributes:
+        id: I2C_CLOCK_SPEED_HZ
+        label: Clock Speed (Hz)
+      type: Integer
+    I2C_PLIB_API_PREFIX:
+      attributes:
+        id: I2C_PLIB_API_PREFIX
+        label: I2C_PLIB_API_PREFIX
+      type: String
+    TWIHS_CLK_SRC_FREQ:
+      attributes:
+        id: TWIHS_CLK_SRC_FREQ
+        label: Source Clock Frequency (Hz)
+      type: Integer
+    TWIHS_CR_THRCLR:
+      attributes:
+        id: TWIHS_CR_THRCLR
+        label: TWIHS_CR_THRCLR
+      type: Boolean
+    TWIHS_CWGR_CHDIV:
+      attributes:
+        id: TWIHS_CWGR_CHDIV
+        label: TWIHS_CWGR_CHDIV
+      type: Integer
+    TWIHS_CWGR_CLDIV:
+      attributes:
+        id: TWIHS_CWGR_CLDIV
+        label: TWIHS_CWGR_CLDIV
+      type: Integer
+    TWIHS_INSTANCE_NAME:
+      attributes:
+        id: TWIHS_INSTANCE_NAME
+        label: TWIHS_INSTANCE_NAME
+      type: String
+    TWIHS_INTERRUPT_MODE:
+      attributes:
+        id: TWIHS_INTERRUPT_MODE
+        label: Enable Interrupts ?
+      children:
+      - children:
+        - attributes:
+            id: twihs0
+            value: 'true'
+          type: Dynamic
+        type: Values
+      type: Boolean
+    TWIHS_INTERRUPT_UPDATE:
+      attributes:
+        id: TWIHS_INTERRUPT_UPDATE
+        label: Interrupt Update
+      type: Boolean
+    TWIHS_OPMODE:
+      attributes:
+        id: TWIHS_OPMODE
+        label: TWIHS Operation Mode
+      children:
+      - children:
+        - attributes:
+            id: readOnly
+          children:
+          - type: Value
+            value: 'true'
+          type: Boolean
+        type: Attributes
+      - children:
+        - attributes:
+            id: twihs0
+            value: MASTER
+          type: Dynamic
+        type: Values
+      type: Combo
+    TWIHS_SLAVE_ADDRESS:
+      attributes:
+        id: TWIHS_SLAVE_ADDRESS
+        label: I2C Slave Address (7-bit)
+      type: Hex
+    TWIHS_SMR_NACKEN:
+      attributes:
+        id: TWIHS_SMR_NACKEN
+        label: TWIHS_SMR_NACKEN
+      type: Boolean
+    TWIHS_TIMEOUT_COUNT_VAL:
+      attributes:
+        id: TWIHS_TIMEOUT_COUNT_VAL
+        label: TWIHS_TIMEOUT_COUNT_VAL
+      type: Integer
+  userData: {}
