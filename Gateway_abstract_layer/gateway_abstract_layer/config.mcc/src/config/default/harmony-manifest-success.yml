@@ -4,8 +4,8 @@
 
 
 project: config_default
-creation_date: 2026-11-20T00:07:14.849+01:00[Europe/Warsaw]    # ISO 8601 format: https://www.w3.org/TR/NOTE-datetime
-operating_system: Mac OS X
+creation_date: 2026-11-20T11:46:05.912+01:00[Europe/Belgrade]    # ISO 8601 format: https://www.w3.org/TR/NOTE-datetime
+operating_system: Windows 11
 mcc_mode: VSCodePlugin            # [IDE|Standalone|Headless]
 mcc_version: v5.7.2
 mcc_core_version: v5.9.2

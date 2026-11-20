@@ -62,9 +62,67 @@
 // *****************************************************************************
 
 
+/*** Macros for MARK_T4 pin ***/
+#define MARK_T4_Set()               (PIOC_REGS->PIO_SODR = ((uint32_t)1U<<30U))
+#define MARK_T4_Clear()             (PIOC_REGS->PIO_CODR = ((uint32_t)1U<<30U))
+#define MARK_T4_Toggle()            (PIOC_REGS->PIO_ODSR ^= ((uint32_t)1U<<30U))
+#define MARK_T4_OutputEnable()      (PIOC_REGS->PIO_OER = ((uint32_t)1U<<30U))
+#define MARK_T4_InputEnable()       (PIOC_REGS->PIO_ODR = ((uint32_t)1U<<30U))
+#define MARK_T4_Get()               ((PIOC_REGS->PIO_PDSR >> 30U) & 0x1U)
+#define MARK_T4_PIN                  PIO_PIN_PC30
+
 /*** Macros for CAN1_RX pin ***/
 #define CAN1_RX_Get()               ((PIOC_REGS->PIO_PDSR >> 12U) & 0x1U)
 #define CAN1_RX_PIN                  PIO_PIN_PC12
+
+/*** Macros for MARK_T2 pin ***/
+#define MARK_T2_Set()               (PIOB_REGS->PIO_SODR = ((uint32_t)1U<<2U))
+#define MARK_T2_Clear()             (PIOB_REGS->PIO_CODR = ((uint32_t)1U<<2U))
+#define MARK_T2_Toggle()            (PIOB_REGS->PIO_ODSR ^= ((uint32_t)1U<<2U))
+#define MARK_T2_OutputEnable()      (PIOB_REGS->PIO_OER = ((uint32_t)1U<<2U))
+#define MARK_T2_InputEnable()       (PIOB_REGS->PIO_ODR = ((uint32_t)1U<<2U))
+#define MARK_T2_Get()               ((PIOB_REGS->PIO_PDSR >> 2U) & 0x1U)
+#define MARK_T2_PIN                  PIO_PIN_PB2
+
+/*** Macros for MARK_T1 pin ***/
+#define MARK_T1_Set()               (PIOB_REGS->PIO_SODR = ((uint32_t)1U<<3U))
+#define MARK_T1_Clear()             (PIOB_REGS->PIO_CODR = ((uint32_t)1U<<3U))
+#define MARK_T1_Toggle()            (PIOB_REGS->PIO_ODSR ^= ((uint32_t)1U<<3U))
+#define MARK_T1_OutputEnable()      (PIOB_REGS->PIO_OER = ((uint32_t)1U<<3U))
+#define MARK_T1_InputEnable()       (PIOB_REGS->PIO_ODR = ((uint32_t)1U<<3U))
+#define MARK_T1_Get()               ((PIOB_REGS->PIO_PDSR >> 3U) & 0x1U)
+#define MARK_T1_PIN                  PIO_PIN_PB3
+
+/*** Macros for UART_Rx pin ***/
+#define UART_Rx_Get()               ((PIOA_REGS->PIO_PDSR >> 21U) & 0x1U)
+#define UART_Rx_PIN                  PIO_PIN_PA21
+
+/*** Macros for MARK_BUFFER pin ***/
+#define MARK_BUFFER_Set()               (PIOA_REGS->PIO_SODR = ((uint32_t)1U<<25U))
+#define MARK_BUFFER_Clear()             (PIOA_REGS->PIO_CODR = ((uint32_t)1U<<25U))
+#define MARK_BUFFER_Toggle()            (PIOA_REGS->PIO_ODSR ^= ((uint32_t)1U<<25U))
+#define MARK_BUFFER_OutputEnable()      (PIOA_REGS->PIO_OER = ((uint32_t)1U<<25U))
+#define MARK_BUFFER_InputEnable()       (PIOA_REGS->PIO_ODR = ((uint32_t)1U<<25U))
+#define MARK_BUFFER_Get()               ((PIOA_REGS->PIO_PDSR >> 25U) & 0x1U)
+#define MARK_BUFFER_PIN                  PIO_PIN_PA25
+
+/*** Macros for MARK_STATE pin ***/
+#define MARK_STATE_Set()               (PIOA_REGS->PIO_SODR = ((uint32_t)1U<<5U))
+#define MARK_STATE_Clear()             (PIOA_REGS->PIO_CODR = ((uint32_t)1U<<5U))
+#define MARK_STATE_Toggle()            (PIOA_REGS->PIO_ODSR ^= ((uint32_t)1U<<5U))
+#define MARK_STATE_OutputEnable()      (PIOA_REGS->PIO_OER = ((uint32_t)1U<<5U))
+#define MARK_STATE_InputEnable()       (PIOA_REGS->PIO_ODR = ((uint32_t)1U<<5U))
+#define MARK_STATE_Get()               ((PIOA_REGS->PIO_PDSR >> 5U) & 0x1U)
+#define MARK_STATE_PIN                  PIO_PIN_PA5
+
+/*** Macros for MARK_LOOP pin ***/
+#define MARK_LOOP_Set()               (PIOC_REGS->PIO_SODR = ((uint32_t)1U<<28U))
+#define MARK_LOOP_Clear()             (PIOC_REGS->PIO_CODR = ((uint32_t)1U<<28U))
+#define MARK_LOOP_Toggle()            (PIOC_REGS->PIO_ODSR ^= ((uint32_t)1U<<28U))
+#define MARK_LOOP_OutputEnable()      (PIOC_REGS->PIO_OER = ((uint32_t)1U<<28U))
+#define MARK_LOOP_InputEnable()       (PIOC_REGS->PIO_ODR = ((uint32_t)1U<<28U))
+#define MARK_LOOP_Get()               ((PIOC_REGS->PIO_PDSR >> 28U) & 0x1U)
+#define MARK_LOOP_PIN                  PIO_PIN_PC28
 
 /*** Macros for AT24MAC402_I2C_SCL pin ***/
 #define AT24MAC402_I2C_SCL_Get()               ((PIOA_REGS->PIO_PDSR >> 4U) & 0x1U)
@@ -77,6 +135,19 @@
 /*** Macros for CAN1_TX pin ***/
 #define CAN1_TX_Get()               ((PIOC_REGS->PIO_PDSR >> 14U) & 0x1U)
 #define CAN1_TX_PIN                  PIO_PIN_PC14
+
+/*** Macros for MARK_T3 pin ***/
+#define MARK_T3_Set()               (PIOA_REGS->PIO_SODR = ((uint32_t)1U<<0U))
+#define MARK_T3_Clear()             (PIOA_REGS->PIO_CODR = ((uint32_t)1U<<0U))
+#define MARK_T3_Toggle()            (PIOA_REGS->PIO_ODSR ^= ((uint32_t)1U<<0U))
+#define MARK_T3_OutputEnable()      (PIOA_REGS->PIO_OER = ((uint32_t)1U<<0U))
+#define MARK_T3_InputEnable()       (PIOA_REGS->PIO_ODR = ((uint32_t)1U<<0U))
+#define MARK_T3_Get()               ((PIOA_REGS->PIO_PDSR >> 0U) & 0x1U)
+#define MARK_T3_PIN                  PIO_PIN_PA0
+
+/*** Macros for UART_Tx pin ***/
+#define UART_Tx_Get()               ((PIOB_REGS->PIO_PDSR >> 4U) & 0x1U)
+#define UART_Tx_PIN                  PIO_PIN_PB4
 
 
 // *****************************************************************************

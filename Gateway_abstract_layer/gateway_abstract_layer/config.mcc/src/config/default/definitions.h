@@ -63,14 +63,15 @@
 #include "bsp/bsp.h"
 #include "driver/at24/drv_at24.h"
 #include "peripheral/twihs/master/plib_twihs0_master.h"
+#include "peripheral/usart/plib_usart1.h"
+#include "library/tcpip/tcpip.h"
+#include "system/sys_time_h2_adapter.h"
+#include "system/sys_random_h2_adapter.h"
 #include "system/int/sys_int.h"
 #include "system/ports/sys_ports.h"
 #include "system/cache/sys_cache.h"
 #include "osal/osal.h"
 #include "system/debug/sys_debug.h"
-#include "library/tcpip/tcpip.h"
-#include "system/sys_time_h2_adapter.h"
-#include "system/sys_random_h2_adapter.h"
 #include "app.h"
 
 

@@ -1,0 +1,413 @@
+configVersion: 1.0.0
+componentName: usart1
+coreVersion: 5.9.2
+device: ATSAMV71Q21B
+library: []
+dependency:
+- dependencyPackage: class com.microchip.mcc.harmony.HarmonyModule
+  name: usart1
+  type: module
+  version: ''
+- dependencyPackage: ''
+  name: csp
+  type: package
+  version: v3.26.0
+customDataClassName: com.microchip.utils_mh3.utils.persistence.CustomModuleData
+data:
+  attachments: {}
+  elementPosition: {}
+  symbols:
+    BAUD_RATE:
+      attributes:
+        id: BAUD_RATE
+        label: Baud Rate
+      type: Integer
+    BRG_FP_VALUE:
+      attributes:
+        id: BRG_FP_VALUE
+        label: BRG_FP_VALUE
+      type: Integer
+    BRG_VALUE:
+      attributes:
+        id: BRG_VALUE
+        label: BRG_VALUE
+      type: Integer
+    RECEIVE_DATA_REGISTER:
+      attributes:
+        id: RECEIVE_DATA_REGISTER
+        label: RECEIVE_DATA_REGISTER
+      type: String
+    SPI_CHARSIZE_BITS_8_BIT_MASK:
+      attributes:
+        id: SPI_CHARSIZE_BITS_8_BIT_MASK
+        label: SPI_CHARSIZE_BITS_8_BIT_MASK
+      type: String
+    SPI_CLOCK_PHASE_LEADING_MASK:
+      attributes:
+        id: SPI_CLOCK_PHASE_LEADING_MASK
+        label: SPI_CLOCK_PHASE_LEADING_MASK
+      type: String
+    SPI_CLOCK_PHASE_TRAILING_MASK:
+      attributes:
+        id: SPI_CLOCK_PHASE_TRAILING_MASK
+        label: SPI_CLOCK_PHASE_TRAILING_MASK
+      type: String
+    SPI_CLOCK_POLARITY_HIGH_MASK:
+      attributes:
+        id: SPI_CLOCK_POLARITY_HIGH_MASK
+        label: SPI_CLOCK_POLARITY_HIGH_MASK
+      type: String
+    SPI_CLOCK_POLARITY_LOW_MASK:
+      attributes:
+        id: SPI_CLOCK_POLARITY_LOW_MASK
+        label: SPI_CLOCK_POLARITY_LOW_MASK
+      type: String
+    SPI_PLIB_API_PREFIX:
+      attributes:
+        id: SPI_PLIB_API_PREFIX
+        label: SPI_PLIB_API_PREFIX
+      type: String
+    TRANSMIT_DATA_REGISTER:
+      attributes:
+        id: TRANSMIT_DATA_REGISTER
+        label: TRANSMIT_DATA_REGISTER
+      type: String
+    USART_CLK_SRC:
+      attributes:
+        id: USART_CLK_SRC
+        label: Select Clock Source
+      type: KeyValueSet
+    USART_CLOCK_FREQ:
+      attributes:
+        id: USART_CLOCK_FREQ
+        label: Source Clock Frequency
+      type: Integer
+    USART_DATA_5_BIT_MASK:
+      attributes:
+        id: USART_DATA_5_BIT_MASK
+        label: USART_DATA_5_BIT_MASK
+      type: String
+    USART_DATA_6_BIT_MASK:
+      attributes:
+        id: USART_DATA_6_BIT_MASK
+        label: USART_DATA_6_BIT_MASK
+      type: String
+    USART_DATA_7_BIT_MASK:
+      attributes:
+        id: USART_DATA_7_BIT_MASK
+        label: USART_DATA_7_BIT_MASK
+      type: String
+    USART_DATA_8_BIT_MASK:
+      attributes:
+        id: USART_DATA_8_BIT_MASK
+        label: USART_DATA_8_BIT_MASK
+      type: String
+    USART_DATA_9_BIT_MASK:
+      attributes:
+        id: USART_DATA_9_BIT_MASK
+        label: USART_DATA_9_BIT_MASK
+      type: String
+    USART_DATA_BITS:
+      attributes:
+        id: USART_DATA_BITS
+        label: USART_DATA_BITS
+      type: String
+    USART_FRAMING_ERROR_VALUE:
+      attributes:
+        id: USART_FRAMING_ERROR_VALUE
+        label: USART_FRAMING_ERROR_VALUE
+      type: String
+    USART_HEADER1:
+      attributes:
+        id: USART_HEADER1
+      children:
+      - children:
+        - attributes:
+            id: source
+          children:
+          - type: Value
+            value: ../peripheral/usart_6089/templates/plib_usart_ring_buffer.h.ftl
+          type: String
+        type: Attributes
+      type: File
+    USART_INSTANCE_NAME:
+      attributes:
+        id: USART_INSTANCE_NAME
+        label: USART_INSTANCE_NAME
+      type: String
+    USART_INTERRUPT_MODE:
+      attributes:
+        id: USART_INTERRUPT_MODE
+        label: Interrupt Mode
+      type: Boolean
+    USART_INTERRUPT_MODE_ENABLE:
+      attributes:
+        id: USART_INTERRUPT_MODE_ENABLE
+        label: Enable Interrrupts ?
+      children:
+      - children:
+        - attributes:
+            id: usart1
+            value: 'true'
+          type: Dynamic
+        type: Values
+      type: Boolean
+    USART_LIN_LINBK_INTERRUPT_ENABLE:
+      attributes:
+        id: USART_LIN_LINBK_INTERRUPT_ENABLE
+        label: LIN Header-Break Receive/Transmit Interrupt
+      type: Boolean
+    USART_LIN_LINID_INTERRUPT_ENABLE:
+      attributes:
+        id: USART_LIN_LINID_INTERRUPT_ENABLE
+        label: LIN ID Receive/Transmit Interrupt
+      type: Boolean
+    USART_LIN_LINMR_CHKDIS:
+      attributes:
+        id: USART_LIN_LINMR_CHKDIS
+        label: Checksum Disable
+      type: Boolean
+    USART_LIN_LINMR_CHKTYP:
+      attributes:
+        id: USART_LIN_LINMR_CHKTYP
+        label: Select Checksum Type
+      type: KeyValueSet
+    USART_LIN_LINMR_DLC:
+      attributes:
+        id: USART_LIN_LINMR_DLC
+        label: Response Data Length (bytes)
+      type: Integer
+    USART_LIN_LINMR_DLM:
+      attributes:
+        id: USART_LIN_LINMR_DLM
+        label: Select Data Length Mode
+      type: KeyValueSet
+    USART_LIN_LINMR_FSDIS:
+      attributes:
+        id: USART_LIN_LINMR_FSDIS
+        label: Frame Slot Mode Disable
+      type: Boolean
+    USART_LIN_LINMR_PARDIS:
+      attributes:
+        id: USART_LIN_LINMR_PARDIS
+        label: Identifier Parity Disable
+      type: Boolean
+    USART_LIN_LINMR_SYNCDIS:
+      attributes:
+        id: USART_LIN_LINMR_SYNCDIS
+        label: Synchronization Disable
+      type: Boolean
+    USART_LIN_LINMR_WKUPTYP:
+      attributes:
+        id: USART_LIN_LINMR_WKUPTYP
+        label: Select Wakeup Signal Type
+      type: KeyValueSet
+    USART_LIN_LINTC_INTERRUPT_ENABLE:
+      attributes:
+        id: USART_LIN_LINTC_INTERRUPT_ENABLE
+        label: LIN Data Transfer Complete Interrupt
+      type: Boolean
+    USART_LIN_OPERATING_MODE:
+      attributes:
+        id: USART_LIN_OPERATING_MODE
+        label: Operating Mode
+      type: KeyValueSet
+    USART_MODE:
+      attributes:
+        id: USART_MODE
+        label: Mode
+      type: KeyValueSet
+    USART_MR_CHRL:
+      attributes:
+        id: USART_MR_CHRL
+        label: Data
+      type: KeyValueSet
+    USART_MR_MODE9:
+      attributes:
+        id: USART_MR_MODE9
+        label: 9 Bit Data Width
+      type: Boolean
+    USART_MR_NBSTOP:
+      attributes:
+        id: USART_MR_NBSTOP
+        label: Stop
+      type: KeyValueSet
+    USART_MR_OVER:
+      attributes:
+        id: USART_MR_OVER
+        label: OverSampling
+      type: KeyValueSet
+    USART_MR_PAR:
+      attributes:
+        id: USART_MR_PAR
+        label: Parity
+      type: Combo
+    USART_OPERATING_MODE:
+      attributes:
+        id: USART_OPERATING_MODE
+        label: Operating Mode
+      children:
+      - children:
+        - attributes:
+            value: '2'
+          type: User
+        type: Values
+      type: KeyValueSet
+    USART_OVERRUN_ERROR_VALUE:
+      attributes:
+        id: USART_OVERRUN_ERROR_VALUE
+        label: USART_OVERRUN_ERROR_VALUE
+      type: String
+    USART_PARITY_ERROR_VALUE:
+      attributes:
+        id: USART_PARITY_ERROR_VALUE
+        label: USART_PARITY_ERROR_VALUE
+      type: String
+    USART_PARITY_EVEN_MASK:
+      attributes:
+        id: USART_PARITY_EVEN_MASK
+        label: USART_PARITY_EVEN_MASK
+      type: String
+    USART_PARITY_MARK_MASK:
+      attributes:
+        id: USART_PARITY_MARK_MASK
+        label: USART_PARITY_MARK_MASK
+      type: String
+    USART_PARITY_MULTIDROP_MASK:
+      attributes:
+        id: USART_PARITY_MULTIDROP_MASK
+        label: USART_PARITY_MULTIDROP_MASK
+      type: String
+    USART_PARITY_NONE_MASK:
+      attributes:
+        id: USART_PARITY_NONE_MASK
+        label: USART_PARITY_NONE_MASK
+      type: String
+    USART_PARITY_ODD_MASK:
+      attributes:
+        id: USART_PARITY_ODD_MASK
+        label: USART_PARITY_ODD_MASK
+      type: String
+    USART_PARITY_SPACE_MASK:
+      attributes:
+        id: USART_PARITY_SPACE_MASK
+        label: USART_PARITY_SPACE_MASK
+      type: String
+    USART_PERIPHERAL_DMA_SUPPORT:
+      attributes:
+        id: USART_PERIPHERAL_DMA_SUPPORT
+        label: USART_PERIPHERAL_DMA_SUPPORT
+      type: Boolean
+    USART_PLIB_API_PREFIX:
+      attributes:
+        id: USART_PLIB_API_PREFIX
+        label: USART_PLIB_API_PREFIX
+      type: String
+    USART_RING_BUFFER_ENABLE:
+      attributes:
+        id: USART_RING_BUFFER_ENABLE
+        label: Enable Ring Buffer ?
+      type: Boolean
+    USART_RING_BUFFER_MODE_ENABLE:
+      attributes:
+        id: USART_RING_BUFFER_MODE_ENABLE
+        label: Enable Ring Buffer ?
+      children:
+      - children:
+        - attributes:
+            id: usart1
+            value: 'true'
+          type: Dynamic
+        type: Values
+      type: Boolean
+    USART_RX_RING_BUFFER_SIZE:
+      attributes:
+        id: USART_RX_RING_BUFFER_SIZE
+        label: RX Ring Buffer Size
+      type: Integer
+    USART_SOURCE1:
+      attributes:
+        id: USART_SOURCE1
+      children:
+      - children:
+        - attributes:
+            id: source
+          children:
+          - type: Value
+            value: ../peripheral/usart_6089/templates/plib_usart_ring_buffer.c.ftl
+          type: String
+        type: Attributes
+      type: File
+    USART_SPI_BAUD_RATE:
+      attributes:
+        id: USART_SPI_BAUD_RATE
+        label: Baud Rate in Hz
+      type: Integer
+    USART_SPI_BITS_PER_TRANSFER:
+      attributes:
+        id: USART_SPI_BITS_PER_TRANSFER
+        label: Bits Per Transfer
+      type: KeyValueSet
+    USART_SPI_BRG_VALUE:
+      attributes:
+        id: USART_SPI_BRG_VALUE
+        label: USART_SPI_BRG_VALUE
+      children:
+      - children:
+        - attributes:
+            id: usart1
+            value: '150'
+          type: Dynamic
+        type: Values
+      type: Integer
+    USART_SPI_CHIP_SELECT:
+      attributes:
+        id: USART_SPI_CHIP_SELECT
+        label: Peripheral Chip Select
+      type: KeyValueSet
+    USART_SPI_CLOCK_PHASE:
+      attributes:
+        id: USART_SPI_CLOCK_PHASE
+        label: Clock Phase
+      type: KeyValueSet
+    USART_SPI_CLOCK_POLARITY:
+      attributes:
+        id: USART_SPI_CLOCK_POLARITY
+        label: Clock Polarity
+      type: KeyValueSet
+    USART_SPI_DUMMY_DATA:
+      attributes:
+        id: USART_SPI_DUMMY_DATA
+        label: Dummy Data
+      type: Hex
+    USART_SPI_INTERRUPT_MODE:
+      attributes:
+        id: USART_SPI_INTERRUPT_MODE
+        label: Interrupt Mode
+      type: Boolean
+    USART_STOP_1_5_BIT_MASK:
+      attributes:
+        id: USART_STOP_1_5_BIT_MASK
+        label: USART_STOP_1_5_BIT_MASK
+      type: String
+    USART_STOP_1_BIT_MASK:
+      attributes:
+        id: USART_STOP_1_BIT_MASK
+        label: USART_STOP_1_BIT_MASK
+      type: String
+    USART_STOP_2_BIT_MASK:
+      attributes:
+        id: USART_STOP_2_BIT_MASK
+        label: USART_STOP_2_BIT_MASK
+      type: String
+    USART_TX_RING_BUFFER_SIZE:
+      attributes:
+        id: USART_TX_RING_BUFFER_SIZE
+        label: TX Ring Buffer Size
+      type: Integer
+    USART_USE_FRACTIONAL_BAUD:
+      attributes:
+        id: USART_USE_FRACTIONAL_BAUD
+        label: Use fractional baud?
+      type: Boolean
+  userData: {}

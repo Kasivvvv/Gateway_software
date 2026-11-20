@@ -47,6 +47,7 @@ set(gateway_abstract_layer_default_default_XC32_FILE_TYPE_compile
     "${CMAKE_CURRENT_SOURCE_DIR}/../../../config.mcc/src/config/default/peripheral/pio/plib_pio.c"
     "${CMAKE_CURRENT_SOURCE_DIR}/../../../config.mcc/src/config/default/peripheral/tc/plib_tc0.c"
     "${CMAKE_CURRENT_SOURCE_DIR}/../../../config.mcc/src/config/default/peripheral/twihs/master/plib_twihs0_master.c"
+    "${CMAKE_CURRENT_SOURCE_DIR}/../../../config.mcc/src/config/default/peripheral/usart/plib_usart1.c"
     "${CMAKE_CURRENT_SOURCE_DIR}/../../../config.mcc/src/config/default/startup_xc32.c"
     "${CMAKE_CURRENT_SOURCE_DIR}/../../../config.mcc/src/config/default/stdio/xc32_monitor.c"
     "${CMAKE_CURRENT_SOURCE_DIR}/../../../config.mcc/src/config/default/system/cache/sys_cache.c"

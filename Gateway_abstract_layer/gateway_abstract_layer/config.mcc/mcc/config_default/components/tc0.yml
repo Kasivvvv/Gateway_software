@@ -534,6 +534,13 @@ data:
       attributes:
         id: TC1_CLOCK_FREQ
         label: Clock Frequency (Hz)
+      children:
+      - children:
+        - attributes:
+            id: tc0
+            value: '150000000'
+          type: Dynamic
+        type: Values
       type: Integer
     TC1_CMP_CMR_ETRGEDG:
       attributes:
@@ -645,6 +652,9 @@ data:
             id: tc0
             value: 'false'
           type: Dynamic
+        - attributes:
+            value: 'true'
+          type: User
         type: Values
       type: Boolean
     TC1_EXT_CLOCK:
@@ -674,6 +684,9 @@ data:
             id: tc0
             value: 'false'
           type: Dynamic
+        - attributes:
+            value: 'true'
+          type: User
         type: Values
       type: Boolean
     TC1_OPERATING_MODE:
@@ -706,7 +719,7 @@ data:
       - children:
         - attributes:
             id: tc0
-            value: '0'
+            value: '29'
           type: Dynamic
         type: Values
       type: Long
@@ -717,15 +730,32 @@ data:
       children:
       - children:
         - attributes:
+            id: max
+          children:
+          - type: Value
+            value: '436906.66'
+          type: Float
+        type: Attributes
+      - children:
+        - attributes:
             id: tc0
             value: '0.0'
           type: Dynamic
+        - attributes:
+            value: '200.0'
+          type: User
         type: Values
       type: Float
     TC1_TIMER_UNIT:
       attributes:
         id: TC1_TIMER_UNIT
         label: Timer Period Unit
+      children:
+      - children:
+        - attributes:
+            value: nanosecond
+          type: User
+        type: Values
       type: Combo
     TC2_CAPTURE_CMR_LDBSTOP:
       attributes:

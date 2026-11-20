@@ -1,0 +1,3 @@
+C:/Users/katarzynawcislo/Documents/Zabijcie_mnie/Gateway_software/build/CMakeFiles/RUN_TESTS.dir
+C:/Users/katarzynawcislo/Documents/Zabijcie_mnie/Gateway_software/build/CMakeFiles/ALL_BUILD.dir
+C:/Users/katarzynawcislo/Documents/Zabijcie_mnie/Gateway_software/build/CMakeFiles/ZERO_CHECK.dir

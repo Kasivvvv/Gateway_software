@@ -7,7 +7,7 @@
             "device": "ATSAMV71Q21B",
             "imagePath": "./out/gateway_abstract_layer/default.elf",
             "toolProperties": "default-tool-base",
-            "tool": "EDBG",
+            "tool": "Simulator",
             "packs": [
                 {
                     "name": "SAMV71_DFP",
@@ -34,7 +34,7 @@
         {
             "name": "default-XC32",
             "type": "toolchain",
-            "provider": "microchip.toolchains:xc32@6.00",
+            "provider": "microchip.toolchains:xc32@5.10",
             "properties": {
                 "linker.heap-size": "512",
                 "compiler.extra-include-directories": [
@@ -117,7 +117,8 @@
                 "config.mcc/src/config/default/library/tcpip/src/tcpip_packet.c",
                 "config.mcc/src/config/default/system/sys_time_h2_adapter.c",
                 "config.mcc/src/config/default/driver/at24/src/drv_at24.c",
-                "config.mcc/src/config/default/peripheral/twihs/master/plib_twihs0_master.c"
+                "config.mcc/src/config/default/peripheral/twihs/master/plib_twihs0_master.c",
+                "config.mcc/src/config/default/peripheral/usart/plib_usart1.c"
             ]
         }
     ]

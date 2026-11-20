@@ -1,0 +1,856 @@
+configVersion: 1.0.0
+componentName: tcpipStack
+coreVersion: 5.9.2
+device: ATSAMV71Q21B
+library: []
+dependency:
+- dependencyPackage: class com.microchip.mcc.harmony.HarmonyModule
+  name: tcpipStack
+  type: module
+  version: ''
+- dependencyPackage: ''
+  name: net
+  type: package
+  version: v3.14.6
+customDataClassName: com.microchip.utils_mh3.utils.persistence.CustomModuleData
+data:
+  attachments: {}
+  elementPosition:
+    attributes:
+      id: __ROOTVIEW
+    children:
+    - children:
+      - attributes:
+          id: tcpipStack
+          x: '205'
+          y: '142'
+        type: ElementPosition
+      type: ElementPositions
+    type: ComponentGraph
+  symbols:
+    TCPIP_DEVICE_FAMILY:
+      attributes:
+        id: TCPIP_DEVICE_FAMILY
+        label: TCPIP_DEVICE_FAMILY
+      type: String
+    TCPIP_HEAP_POOL_ENTRIES_NUMBER:
+      attributes:
+        id: TCPIP_HEAP_POOL_ENTRIES_NUMBER
+        label: Number of Heap Pool Entries
+      type: Integer
+    TCPIP_HEAP_POOL_ENTRY_BLOCKS_IDX0:
+      attributes:
+        id: TCPIP_HEAP_POOL_ENTRY_BLOCKS_IDX0
+        label: Number of Pre-allocated Blocks with this Size
+      type: Integer
+    TCPIP_HEAP_POOL_ENTRY_BLOCKS_IDX1:
+      attributes:
+        id: TCPIP_HEAP_POOL_ENTRY_BLOCKS_IDX1
+        label: Number of Pre-allocated Blocks with this Size
+      type: Integer
+    TCPIP_HEAP_POOL_ENTRY_BLOCKS_IDX10:
+      attributes:
+        id: TCPIP_HEAP_POOL_ENTRY_BLOCKS_IDX10
+        label: Number of Pre-allocated Blocks with this Size
+      type: Integer
+    TCPIP_HEAP_POOL_ENTRY_BLOCKS_IDX11:
+      attributes:
+        id: TCPIP_HEAP_POOL_ENTRY_BLOCKS_IDX11
+        label: Number of Pre-allocated Blocks with this Size
+      type: Integer
+    TCPIP_HEAP_POOL_ENTRY_BLOCKS_IDX12:
+      attributes:
+        id: TCPIP_HEAP_POOL_ENTRY_BLOCKS_IDX12
+        label: Number of Pre-allocated Blocks with this Size
+      type: Integer
+    TCPIP_HEAP_POOL_ENTRY_BLOCKS_IDX13:
+      attributes:
+        id: TCPIP_HEAP_POOL_ENTRY_BLOCKS_IDX13
+        label: Number of Pre-allocated Blocks with this Size
+      type: Integer
+    TCPIP_HEAP_POOL_ENTRY_BLOCKS_IDX14:
+      attributes:
+        id: TCPIP_HEAP_POOL_ENTRY_BLOCKS_IDX14
+        label: Number of Pre-allocated Blocks with this Size
+      type: Integer
+    TCPIP_HEAP_POOL_ENTRY_BLOCKS_IDX15:
+      attributes:
+        id: TCPIP_HEAP_POOL_ENTRY_BLOCKS_IDX15
+        label: Number of Pre-allocated Blocks with this Size
+      type: Integer
+    TCPIP_HEAP_POOL_ENTRY_BLOCKS_IDX16:
+      attributes:
+        id: TCPIP_HEAP_POOL_ENTRY_BLOCKS_IDX16
+        label: Number of Pre-allocated Blocks with this Size
+      type: Integer
+    TCPIP_HEAP_POOL_ENTRY_BLOCKS_IDX17:
+      attributes:
+        id: TCPIP_HEAP_POOL_ENTRY_BLOCKS_IDX17
+        label: Number of Pre-allocated Blocks with this Size
+      type: Integer
+    TCPIP_HEAP_POOL_ENTRY_BLOCKS_IDX18:
+      attributes:
+        id: TCPIP_HEAP_POOL_ENTRY_BLOCKS_IDX18
+        label: Number of Pre-allocated Blocks with this Size
+      type: Integer
+    TCPIP_HEAP_POOL_ENTRY_BLOCKS_IDX19:
+      attributes:
+        id: TCPIP_HEAP_POOL_ENTRY_BLOCKS_IDX19
+        label: Number of Pre-allocated Blocks with this Size
+      type: Integer
+    TCPIP_HEAP_POOL_ENTRY_BLOCKS_IDX2:
+      attributes:
+        id: TCPIP_HEAP_POOL_ENTRY_BLOCKS_IDX2
+        label: Number of Pre-allocated Blocks with this Size
+      type: Integer
+    TCPIP_HEAP_POOL_ENTRY_BLOCKS_IDX3:
+      attributes:
+        id: TCPIP_HEAP_POOL_ENTRY_BLOCKS_IDX3
+        label: Number of Pre-allocated Blocks with this Size
+      type: Integer
+    TCPIP_HEAP_POOL_ENTRY_BLOCKS_IDX4:
+      attributes:
+        id: TCPIP_HEAP_POOL_ENTRY_BLOCKS_IDX4
+        label: Number of Pre-allocated Blocks with this Size
+      type: Integer
+    TCPIP_HEAP_POOL_ENTRY_BLOCKS_IDX5:
+      attributes:
+        id: TCPIP_HEAP_POOL_ENTRY_BLOCKS_IDX5
+        label: Number of Pre-allocated Blocks with this Size
+      type: Integer
+    TCPIP_HEAP_POOL_ENTRY_BLOCKS_IDX6:
+      attributes:
+        id: TCPIP_HEAP_POOL_ENTRY_BLOCKS_IDX6
+        label: Number of Pre-allocated Blocks with this Size
+      type: Integer
+    TCPIP_HEAP_POOL_ENTRY_BLOCKS_IDX7:
+      attributes:
+        id: TCPIP_HEAP_POOL_ENTRY_BLOCKS_IDX7
+        label: Number of Pre-allocated Blocks with this Size
+      type: Integer
+    TCPIP_HEAP_POOL_ENTRY_BLOCKS_IDX8:
+      attributes:
+        id: TCPIP_HEAP_POOL_ENTRY_BLOCKS_IDX8
+        label: Number of Pre-allocated Blocks with this Size
+      type: Integer
+    TCPIP_HEAP_POOL_ENTRY_BLOCKS_IDX9:
+      attributes:
+        id: TCPIP_HEAP_POOL_ENTRY_BLOCKS_IDX9
+        label: Number of Pre-allocated Blocks with this Size
+      type: Integer
+    TCPIP_HEAP_POOL_ENTRY_EXP_BLOCKS_IDX0:
+      attributes:
+        id: TCPIP_HEAP_POOL_ENTRY_EXP_BLOCKS_IDX0
+        label: Number of Blocks to Dynamically Expand for this Pool Entry
+      type: Integer
+    TCPIP_HEAP_POOL_ENTRY_EXP_BLOCKS_IDX1:
+      attributes:
+        id: TCPIP_HEAP_POOL_ENTRY_EXP_BLOCKS_IDX1
+        label: Number of Blocks to Dynamically Expand for this Pool Entry
+      type: Integer
+    TCPIP_HEAP_POOL_ENTRY_EXP_BLOCKS_IDX10:
+      attributes:
+        id: TCPIP_HEAP_POOL_ENTRY_EXP_BLOCKS_IDX10
+        label: Number of Blocks to Dynamically Expand for this Pool Entry
+      type: Integer
+    TCPIP_HEAP_POOL_ENTRY_EXP_BLOCKS_IDX11:
+      attributes:
+        id: TCPIP_HEAP_POOL_ENTRY_EXP_BLOCKS_IDX11
+        label: Number of Blocks to Dynamically Expand for this Pool Entry
+      type: Integer
+    TCPIP_HEAP_POOL_ENTRY_EXP_BLOCKS_IDX12:
+      attributes:
+        id: TCPIP_HEAP_POOL_ENTRY_EXP_BLOCKS_IDX12
+        label: Number of Blocks to Dynamically Expand for this Pool Entry
+      type: Integer
+    TCPIP_HEAP_POOL_ENTRY_EXP_BLOCKS_IDX13:
+      attributes:
+        id: TCPIP_HEAP_POOL_ENTRY_EXP_BLOCKS_IDX13
+        label: Number of Blocks to Dynamically Expand for this Pool Entry
+      type: Integer
+    TCPIP_HEAP_POOL_ENTRY_EXP_BLOCKS_IDX14:
+      attributes:
+        id: TCPIP_HEAP_POOL_ENTRY_EXP_BLOCKS_IDX14
+        label: Number of Blocks to Dynamically Expand for this Pool Entry
+      type: Integer
+    TCPIP_HEAP_POOL_ENTRY_EXP_BLOCKS_IDX15:
+      attributes:
+        id: TCPIP_HEAP_POOL_ENTRY_EXP_BLOCKS_IDX15
+        label: Number of Blocks to Dynamically Expand for this Pool Entry
+      type: Integer
+    TCPIP_HEAP_POOL_ENTRY_EXP_BLOCKS_IDX16:
+      attributes:
+        id: TCPIP_HEAP_POOL_ENTRY_EXP_BLOCKS_IDX16
+        label: Number of Blocks to Dynamically Expand for this Pool Entry
+      type: Integer
+    TCPIP_HEAP_POOL_ENTRY_EXP_BLOCKS_IDX17:
+      attributes:
+        id: TCPIP_HEAP_POOL_ENTRY_EXP_BLOCKS_IDX17
+        label: Number of Blocks to Dynamically Expand for this Pool Entry
+      type: Integer
+    TCPIP_HEAP_POOL_ENTRY_EXP_BLOCKS_IDX18:
+      attributes:
+        id: TCPIP_HEAP_POOL_ENTRY_EXP_BLOCKS_IDX18
+        label: Number of Blocks to Dynamically Expand for this Pool Entry
+      type: Integer
+    TCPIP_HEAP_POOL_ENTRY_EXP_BLOCKS_IDX19:
+      attributes:
+        id: TCPIP_HEAP_POOL_ENTRY_EXP_BLOCKS_IDX19
+        label: Number of Blocks to Dynamically Expand for this Pool Entry
+      type: Integer
+    TCPIP_HEAP_POOL_ENTRY_EXP_BLOCKS_IDX2:
+      attributes:
+        id: TCPIP_HEAP_POOL_ENTRY_EXP_BLOCKS_IDX2
+        label: Number of Blocks to Dynamically Expand for this Pool Entry
+      type: Integer
+    TCPIP_HEAP_POOL_ENTRY_EXP_BLOCKS_IDX3:
+      attributes:
+        id: TCPIP_HEAP_POOL_ENTRY_EXP_BLOCKS_IDX3
+        label: Number of Blocks to Dynamically Expand for this Pool Entry
+      type: Integer
+    TCPIP_HEAP_POOL_ENTRY_EXP_BLOCKS_IDX4:
+      attributes:
+        id: TCPIP_HEAP_POOL_ENTRY_EXP_BLOCKS_IDX4
+        label: Number of Blocks to Dynamically Expand for this Pool Entry
+      type: Integer
+    TCPIP_HEAP_POOL_ENTRY_EXP_BLOCKS_IDX5:
+      attributes:
+        id: TCPIP_HEAP_POOL_ENTRY_EXP_BLOCKS_IDX5
+        label: Number of Blocks to Dynamically Expand for this Pool Entry
+      type: Integer
+    TCPIP_HEAP_POOL_ENTRY_EXP_BLOCKS_IDX6:
+      attributes:
+        id: TCPIP_HEAP_POOL_ENTRY_EXP_BLOCKS_IDX6
+        label: Number of Blocks to Dynamically Expand for this Pool Entry
+      type: Integer
+    TCPIP_HEAP_POOL_ENTRY_EXP_BLOCKS_IDX7:
+      attributes:
+        id: TCPIP_HEAP_POOL_ENTRY_EXP_BLOCKS_IDX7
+        label: Number of Blocks to Dynamically Expand for this Pool Entry
+      type: Integer
+    TCPIP_HEAP_POOL_ENTRY_EXP_BLOCKS_IDX8:
+      attributes:
+        id: TCPIP_HEAP_POOL_ENTRY_EXP_BLOCKS_IDX8
+        label: Number of Blocks to Dynamically Expand for this Pool Entry
+      type: Integer
+    TCPIP_HEAP_POOL_ENTRY_EXP_BLOCKS_IDX9:
+      attributes:
+        id: TCPIP_HEAP_POOL_ENTRY_EXP_BLOCKS_IDX9
+        label: Number of Blocks to Dynamically Expand for this Pool Entry
+      type: Integer
+    TCPIP_HEAP_POOL_ENTRY_SIZE_IDX0:
+      attributes:
+        id: TCPIP_HEAP_POOL_ENTRY_SIZE_IDX0
+        label: Size of the Block, Bytes
+      type: Integer
+    TCPIP_HEAP_POOL_ENTRY_SIZE_IDX1:
+      attributes:
+        id: TCPIP_HEAP_POOL_ENTRY_SIZE_IDX1
+        label: Size of the Block, Bytes
+      type: Integer
+    TCPIP_HEAP_POOL_ENTRY_SIZE_IDX10:
+      attributes:
+        id: TCPIP_HEAP_POOL_ENTRY_SIZE_IDX10
+        label: Size of the Block, Bytes
+      type: Integer
+    TCPIP_HEAP_POOL_ENTRY_SIZE_IDX11:
+      attributes:
+        id: TCPIP_HEAP_POOL_ENTRY_SIZE_IDX11
+        label: Size of the Block, Bytes
+      type: Integer
+    TCPIP_HEAP_POOL_ENTRY_SIZE_IDX12:
+      attributes:
+        id: TCPIP_HEAP_POOL_ENTRY_SIZE_IDX12
+        label: Size of the Block, Bytes
+      type: Integer
+    TCPIP_HEAP_POOL_ENTRY_SIZE_IDX13:
+      attributes:
+        id: TCPIP_HEAP_POOL_ENTRY_SIZE_IDX13
+        label: Size of the Block, Bytes
+      type: Integer
+    TCPIP_HEAP_POOL_ENTRY_SIZE_IDX14:
+      attributes:
+        id: TCPIP_HEAP_POOL_ENTRY_SIZE_IDX14
+        label: Size of the Block, Bytes
+      type: Integer
+    TCPIP_HEAP_POOL_ENTRY_SIZE_IDX15:
+      attributes:
+        id: TCPIP_HEAP_POOL_ENTRY_SIZE_IDX15
+        label: Size of the Block, Bytes
+      type: Integer
+    TCPIP_HEAP_POOL_ENTRY_SIZE_IDX16:
+      attributes:
+        id: TCPIP_HEAP_POOL_ENTRY_SIZE_IDX16
+        label: Size of the Block, Bytes
+      type: Integer
+    TCPIP_HEAP_POOL_ENTRY_SIZE_IDX17:
+      attributes:
+        id: TCPIP_HEAP_POOL_ENTRY_SIZE_IDX17
+        label: Size of the Block, Bytes
+      type: Integer
+    TCPIP_HEAP_POOL_ENTRY_SIZE_IDX18:
+      attributes:
+        id: TCPIP_HEAP_POOL_ENTRY_SIZE_IDX18
+        label: Size of the Block, Bytes
+      type: Integer
+    TCPIP_HEAP_POOL_ENTRY_SIZE_IDX19:
+      attributes:
+        id: TCPIP_HEAP_POOL_ENTRY_SIZE_IDX19
+        label: Size of the Block, Bytes
+      type: Integer
+    TCPIP_HEAP_POOL_ENTRY_SIZE_IDX2:
+      attributes:
+        id: TCPIP_HEAP_POOL_ENTRY_SIZE_IDX2
+        label: Size of the Block, Bytes
+      type: Integer
+    TCPIP_HEAP_POOL_ENTRY_SIZE_IDX3:
+      attributes:
+        id: TCPIP_HEAP_POOL_ENTRY_SIZE_IDX3
+        label: Size of the Block, Bytes
+      type: Integer
+    TCPIP_HEAP_POOL_ENTRY_SIZE_IDX4:
+      attributes:
+        id: TCPIP_HEAP_POOL_ENTRY_SIZE_IDX4
+        label: Size of the Block, Bytes
+      type: Integer
+    TCPIP_HEAP_POOL_ENTRY_SIZE_IDX5:
+      attributes:
+        id: TCPIP_HEAP_POOL_ENTRY_SIZE_IDX5
+        label: Size of the Block, Bytes
+      type: Integer
+    TCPIP_HEAP_POOL_ENTRY_SIZE_IDX6:
+      attributes:
+        id: TCPIP_HEAP_POOL_ENTRY_SIZE_IDX6
+        label: Size of the Block, Bytes
+      type: Integer
+    TCPIP_HEAP_POOL_ENTRY_SIZE_IDX7:
+      attributes:
+        id: TCPIP_HEAP_POOL_ENTRY_SIZE_IDX7
+        label: Size of the Block, Bytes
+      type: Integer
+    TCPIP_HEAP_POOL_ENTRY_SIZE_IDX8:
+      attributes:
+        id: TCPIP_HEAP_POOL_ENTRY_SIZE_IDX8
+        label: Size of the Block, Bytes
+      type: Integer
+    TCPIP_HEAP_POOL_ENTRY_SIZE_IDX9:
+      attributes:
+        id: TCPIP_HEAP_POOL_ENTRY_SIZE_IDX9
+        label: Size of the Block, Bytes
+      type: Integer
+    TCPIP_PACKET_LOG_ENABLE:
+      attributes:
+        id: TCPIP_PACKET_LOG_ENABLE
+        label: Enable Packet Logger
+      type: Boolean
+    TCPIP_PKT_LOG_SIZE:
+      attributes:
+        id: TCPIP_PKT_LOG_SIZE
+        label: Number of Entries in the Packet Logger
+      type: Integer
+    TCPIP_RTOS_TASK_PRIORITY:
+      attributes:
+        id: TCPIP_RTOS_TASK_PRIORITY
+        label: Task Priority
+      type: Integer
+    TCPIP_RTOS_TASK_STACK_SIZE:
+      attributes:
+        id: TCPIP_RTOS_TASK_STACK_SIZE
+        label: Stack Size (in bytes)
+      type: Integer
+    TCPIP_STACK_ALIAS_INTERFACE_SUPPORT:
+      attributes:
+        id: TCPIP_STACK_ALIAS_INTERFACE_SUPPORT
+        label: Enable Alias Interfaces Support
+      type: Boolean
+    TCPIP_STACK_CALLOC_FUNC:
+      attributes:
+        id: TCPIP_STACK_CALLOC_FUNC
+        label: Stack allocation function, calloc style
+      type: String
+    TCPIP_STACK_CONFIGURATION_SAVE_RESTORE:
+      attributes:
+        id: TCPIP_STACK_CONFIGURATION_SAVE_RESTORE
+        label: Enable Configuration Save/Restore Functionality
+      type: Boolean
+    TCPIP_STACK_DOWN_OPERATION:
+      attributes:
+        id: TCPIP_STACK_DOWN_OPERATION
+        label: Enable Stack Deinitialize Operations
+      type: Boolean
+    TCPIP_STACK_DRAM_DEBUG_ENABLE:
+      attributes:
+        id: TCPIP_STACK_DRAM_DEBUG_ENABLE
+        label: TCP/IP Stack Dynamic Allocation Debug
+      type: Boolean
+    TCPIP_STACK_DRAM_RUN_LIMIT:
+      attributes:
+        id: TCPIP_STACK_DRAM_RUN_LIMIT
+        label: TCP/IP Stack Dynamic RAM Lower Limit
+      type: Integer
+    TCPIP_STACK_DRAM_SIZE:
+      attributes:
+        id: TCPIP_STACK_DRAM_SIZE
+        label: TCP/IP Stack Dynamic RAM Size
+      type: Integer
+    TCPIP_STACK_DRAM_TRACE_ENABLE:
+      attributes:
+        id: TCPIP_STACK_DRAM_TRACE_ENABLE
+        label: TCP/IP Stack Dynamic Allocation Trace
+      type: Boolean
+    TCPIP_STACK_DRAM_TRACE_SLOTS:
+      attributes:
+        id: TCPIP_STACK_DRAM_TRACE_SLOTS
+        label: TCP/IP Stack Number of Trace Slots
+      type: Integer
+    TCPIP_STACK_ENABLE_INIT_CALLBACK:
+      attributes:
+        id: TCPIP_STACK_ENABLE_INIT_CALLBACK
+        label: Enable Stack Initialization Callback
+      type: Boolean
+    TCPIP_STACK_EVENT_NOTIFICATION:
+      attributes:
+        id: TCPIP_STACK_EVENT_NOTIFICATION
+        label: TCPIP_STACK_EVENT_NOTIFICATION
+      type: Boolean
+    TCPIP_STACK_EXTERN_PACKET_PROCESS:
+      attributes:
+        id: TCPIP_STACK_EXTERN_PACKET_PROCESS
+        label: Enable External Packet Processing
+      type: Boolean
+    TCPIP_STACK_FREE_FUNC:
+      attributes:
+        id: TCPIP_STACK_FREE_FUNC
+        label: Stack deallocation function, free style
+      type: String
+    TCPIP_STACK_HEAP_CALC_MASK:
+      attributes:
+        id: TCPIP_STACK_HEAP_CALC_MASK
+        label: Module-wise Heap Estimate(show with each module)
+      type: Boolean
+    TCPIP_STACK_HEAP_SIZE_RECOMMEND:
+      attributes:
+        id: TCPIP_STACK_HEAP_SIZE_RECOMMEND
+        label: TCP/IP Heap Size Estimate(in kilobytes)
+      children:
+      - children:
+        - attributes:
+            id: tcpipStack
+            value: '19'
+          type: Dynamic
+        type: Values
+      type: Integer
+    TCPIP_STACK_HEAP_USAGE_CONFIG:
+      attributes:
+        id: TCPIP_STACK_HEAP_USAGE_CONFIG
+        label: Heap area usage
+      type: Combo
+    TCPIP_STACK_HEAP_USE_FLAGS:
+      attributes:
+        id: TCPIP_STACK_HEAP_USE_FLAGS
+        label: Flags supported for heap allocation
+      type: Combo
+    TCPIP_STACK_IF_UP_DOWN_OPERATION:
+      attributes:
+        id: TCPIP_STACK_IF_UP_DOWN_OPERATION
+        label: Enable IF Up/Down Operations
+      type: Boolean
+    TCPIP_STACK_INIT_CALLBACK:
+      attributes:
+        id: TCPIP_STACK_INIT_CALLBACK
+        label: Stack Initialization Callback Function
+      type: String
+    TCPIP_STACK_INTERFACE_CHANGE_SIGNALING:
+      attributes:
+        id: TCPIP_STACK_INTERFACE_CHANGE_SIGNALING
+        label: Enable Interface Address Change Signaling
+      type: Boolean
+    TCPIP_STACK_INTERRUPT_EN_IDX0:
+      attributes:
+        id: TCPIP_STACK_INTERRUPT_EN_IDX0
+        label: Interrupt 0
+      type: Boolean
+    TCPIP_STACK_INTERRUPT_EN_IDX1:
+      attributes:
+        id: TCPIP_STACK_INTERRUPT_EN_IDX1
+        label: Interrupt 1
+      type: Boolean
+    TCPIP_STACK_INTERRUPT_EN_IDX2:
+      attributes:
+        id: TCPIP_STACK_INTERRUPT_EN_IDX2
+        label: Interrupt 2
+      type: Boolean
+    TCPIP_STACK_INTERRUPT_EN_IDX3:
+      attributes:
+        id: TCPIP_STACK_INTERRUPT_EN_IDX3
+        label: Interrupt 3
+      type: Boolean
+    TCPIP_STACK_INTERRUPT_EN_IDX4:
+      attributes:
+        id: TCPIP_STACK_INTERRUPT_EN_IDX4
+        label: Interrupt 4
+      type: Boolean
+    TCPIP_STACK_INTERRUPT_EN_IDX5:
+      attributes:
+        id: TCPIP_STACK_INTERRUPT_EN_IDX5
+        label: Interrupt 5
+      type: Boolean
+    TCPIP_STACK_INTERRUPT_NAME_IDX0:
+      attributes:
+        id: TCPIP_STACK_INTERRUPT_NAME_IDX0
+        label: Interrupt Name0
+      type: String
+    TCPIP_STACK_INTERRUPT_NAME_IDX1:
+      attributes:
+        id: TCPIP_STACK_INTERRUPT_NAME_IDX1
+        label: Interrupt Name1
+      type: String
+    TCPIP_STACK_INTERRUPT_NAME_IDX2:
+      attributes:
+        id: TCPIP_STACK_INTERRUPT_NAME_IDX2
+        label: Interrupt Name2
+      type: String
+    TCPIP_STACK_INTERRUPT_NAME_IDX3:
+      attributes:
+        id: TCPIP_STACK_INTERRUPT_NAME_IDX3
+        label: Interrupt Name3
+      type: String
+    TCPIP_STACK_INTERRUPT_NAME_IDX4:
+      attributes:
+        id: TCPIP_STACK_INTERRUPT_NAME_IDX4
+        label: Interrupt Name4
+      type: String
+    TCPIP_STACK_INTERRUPT_NAME_IDX5:
+      attributes:
+        id: TCPIP_STACK_INTERRUPT_NAME_IDX5
+        label: Interrupt Name5
+      type: String
+    TCPIP_STACK_INTERRUPT_VECTOR_IDX0:
+      attributes:
+        id: TCPIP_STACK_INTERRUPT_VECTOR_IDX0
+        label: Interrupt Vector0
+      type: Integer
+    TCPIP_STACK_INTERRUPT_VECTOR_IDX1:
+      attributes:
+        id: TCPIP_STACK_INTERRUPT_VECTOR_IDX1
+        label: Interrupt Vector1
+      type: Integer
+    TCPIP_STACK_INTERRUPT_VECTOR_IDX2:
+      attributes:
+        id: TCPIP_STACK_INTERRUPT_VECTOR_IDX2
+        label: Interrupt Vector2
+      type: Integer
+    TCPIP_STACK_INTERRUPT_VECTOR_IDX3:
+      attributes:
+        id: TCPIP_STACK_INTERRUPT_VECTOR_IDX3
+        label: Interrupt Vector3
+      type: Integer
+    TCPIP_STACK_INTERRUPT_VECTOR_IDX4:
+      attributes:
+        id: TCPIP_STACK_INTERRUPT_VECTOR_IDX4
+        label: Interrupt Vector4
+      type: Integer
+    TCPIP_STACK_INTERRUPT_VECTOR_IDX5:
+      attributes:
+        id: TCPIP_STACK_INTERRUPT_VECTOR_IDX5
+        label: Interrupt Vector5
+      type: Integer
+    TCPIP_STACK_INTMAC_INTERFACE_NUM:
+      attributes:
+        id: TCPIP_STACK_INTMAC_INTERFACE_NUM
+        label: Number of Internal MAC interfaces
+      children:
+      - children:
+        - attributes:
+            id: tcpipStack
+            value: '1'
+          type: Dynamic
+        type: Values
+      type: Integer
+    TCPIP_STACK_INT_MAC_IDX0:
+      attributes:
+        id: TCPIP_STACK_INT_MAC_IDX0
+        label: Internal MAC?
+      children:
+      - children:
+        - attributes:
+            id: tcpipStack
+            value: 'true'
+          type: Dynamic
+        type: Values
+      type: Boolean
+    TCPIP_STACK_INT_MAC_IDX1:
+      attributes:
+        id: TCPIP_STACK_INT_MAC_IDX1
+        label: Internal MAC?
+      type: Boolean
+    TCPIP_STACK_INT_MAC_IDX2:
+      attributes:
+        id: TCPIP_STACK_INT_MAC_IDX2
+        label: Internal MAC?
+      type: Boolean
+    TCPIP_STACK_INT_MAC_IDX3:
+      attributes:
+        id: TCPIP_STACK_INT_MAC_IDX3
+        label: Internal MAC?
+      type: Boolean
+    TCPIP_STACK_INT_MAC_IDX4:
+      attributes:
+        id: TCPIP_STACK_INT_MAC_IDX4
+        label: Internal MAC?
+      type: Boolean
+    TCPIP_STACK_INT_MAC_IDX5:
+      attributes:
+        id: TCPIP_STACK_INT_MAC_IDX5
+        label: Internal MAC?
+      type: Boolean
+    TCPIP_STACK_LINK_RATE:
+      attributes:
+        id: TCPIP_STACK_LINK_RATE
+        label: TCP/IP Stack Link Check Rate, ms.
+      type: Integer
+    TCPIP_STACK_MAC_CLOCK:
+      attributes:
+        id: TCPIP_STACK_MAC_CLOCK
+        label: MAC Peripheral Clock Frequency
+      type: Integer
+    TCPIP_STACK_MAC_DOWN_OPERATION:
+      attributes:
+        id: TCPIP_STACK_MAC_DOWN_OPERATION
+        label: Enable MAC Down on Failure
+      type: Boolean
+    TCPIP_STACK_MAC_INTERRUPT_NUM:
+      attributes:
+        id: TCPIP_STACK_MAC_INTERRUPT_NUM
+        label: Number of Interrupts
+      type: Integer
+    TCPIP_STACK_MALLOC_FUNC:
+      attributes:
+        id: TCPIP_STACK_MALLOC_FUNC
+        label: Stack allocation function, malloc style
+      type: String
+    TCPIP_STACK_MII_MODE_IDX0:
+      attributes:
+        id: TCPIP_STACK_MII_MODE_IDX0
+        label: PHY Interface
+      children:
+      - children:
+        - attributes:
+            id: tcpipStack
+            value: RMII
+          type: Dynamic
+        type: Values
+      type: String
+    TCPIP_STACK_MII_MODE_IDX1:
+      attributes:
+        id: TCPIP_STACK_MII_MODE_IDX1
+        label: PHY Interface
+      type: String
+    TCPIP_STACK_MII_MODE_IDX2:
+      attributes:
+        id: TCPIP_STACK_MII_MODE_IDX2
+        label: PHY Interface
+      type: String
+    TCPIP_STACK_MII_MODE_IDX3:
+      attributes:
+        id: TCPIP_STACK_MII_MODE_IDX3
+        label: PHY Interface
+      type: String
+    TCPIP_STACK_MII_MODE_IDX4:
+      attributes:
+        id: TCPIP_STACK_MII_MODE_IDX4
+        label: PHY Interface
+      type: String
+    TCPIP_STACK_MII_MODE_IDX5:
+      attributes:
+        id: TCPIP_STACK_MII_MODE_IDX5
+        label: PHY Interface
+      type: String
+    TCPIP_STACK_NET_INTERFACE_NAME_IDX0:
+      attributes:
+        id: TCPIP_STACK_NET_INTERFACE_NAME_IDX0
+        label: Interface Name
+      children:
+      - children:
+        - attributes:
+            id: tcpipStack
+            value: GMAC
+          type: Dynamic
+        type: Values
+      type: String
+    TCPIP_STACK_NET_INTERFACE_NAME_IDX1:
+      attributes:
+        id: TCPIP_STACK_NET_INTERFACE_NAME_IDX1
+        label: Interface Name
+      type: String
+    TCPIP_STACK_NET_INTERFACE_NAME_IDX2:
+      attributes:
+        id: TCPIP_STACK_NET_INTERFACE_NAME_IDX2
+        label: Interface Name
+      type: String
+    TCPIP_STACK_NET_INTERFACE_NAME_IDX3:
+      attributes:
+        id: TCPIP_STACK_NET_INTERFACE_NAME_IDX3
+        label: Interface Name
+      type: String
+    TCPIP_STACK_NET_INTERFACE_NAME_IDX4:
+      attributes:
+        id: TCPIP_STACK_NET_INTERFACE_NAME_IDX4
+        label: Interface Name
+      type: String
+    TCPIP_STACK_NET_INTERFACE_NAME_IDX5:
+      attributes:
+        id: TCPIP_STACK_NET_INTERFACE_NAME_IDX5
+        label: Interface Name
+      type: String
+    TCPIP_STACK_NET_INTERFACE_NUM:
+      attributes:
+        id: TCPIP_STACK_NET_INTERFACE_NUM
+        label: Number of Network interfaces
+      children:
+      - children:
+        - attributes:
+            id: tcpipStack
+            value: '1'
+          type: Dynamic
+        type: Values
+      type: Integer
+    TCPIP_STACK_NOCACHE_MEM_ADDRESS:
+      attributes:
+        id: TCPIP_STACK_NOCACHE_MEM_ADDRESS
+        label: Start Address of Non-Cacheable Memory
+      children:
+      - children:
+        - attributes:
+            id: tcpipStack
+            value: '541454336'
+          type: Dynamic
+        type: Values
+      type: Hex
+    TCPIP_STACK_NOCACHE_SIZE:
+      attributes:
+        id: TCPIP_STACK_NOCACHE_SIZE
+        label: Non-Cacheable Memory Size
+      children:
+      - children:
+        - attributes:
+            id: tcpipStack
+            value: 4KB
+          type: Dynamic
+        type: Values
+      type: String
+    TCPIP_STACK_NO_CACHE_CONFIG:
+      attributes:
+        id: TCPIP_STACK_NO_CACHE_CONFIG
+        label: Non-Cacheable Memory
+      children:
+      - children:
+        - attributes:
+            id: tcpipStack
+            value: 'true'
+          type: Dynamic
+        type: Values
+      type: Boolean
+    TCPIP_STACK_OTH_INT_IDX0:
+      attributes:
+        id: TCPIP_STACK_OTH_INT_IDX0
+        label: External Interface
+      type: String
+    TCPIP_STACK_OTH_INT_IDX1:
+      attributes:
+        id: TCPIP_STACK_OTH_INT_IDX1
+        label: External Interface
+      type: String
+    TCPIP_STACK_OTH_INT_IDX2:
+      attributes:
+        id: TCPIP_STACK_OTH_INT_IDX2
+        label: External Interface
+      type: String
+    TCPIP_STACK_OTH_INT_IDX3:
+      attributes:
+        id: TCPIP_STACK_OTH_INT_IDX3
+        label: External Interface
+      type: String
+    TCPIP_STACK_OTH_INT_IDX4:
+      attributes:
+        id: TCPIP_STACK_OTH_INT_IDX4
+        label: External Interface
+      type: String
+    TCPIP_STACK_OTH_INT_IDX5:
+      attributes:
+        id: TCPIP_STACK_OTH_INT_IDX5
+        label: External Interface
+      type: String
+    TCPIP_STACK_POOL_EXPANSION_SIZE:
+      attributes:
+        id: TCPIP_STACK_POOL_EXPANSION_SIZE
+        label: The Expansion Size for the Internal Heap Pool
+      type: Integer
+    TCPIP_STACK_RTOS:
+      attributes:
+        id: TCPIP_STACK_RTOS
+        label: Run Library Tasks as
+      type: Combo
+    TCPIP_STACK_RTOS_DELAY:
+      attributes:
+        id: TCPIP_STACK_RTOS_DELAY
+        label: Task Delay
+      type: Integer
+    TCPIP_STACK_RTOS_USE_DELAY:
+      attributes:
+        id: TCPIP_STACK_RTOS_USE_DELAY
+        label: Use Task Delay?
+      type: Boolean
+    TCPIP_STACK_RUN_TIME_INIT:
+      attributes:
+        id: TCPIP_STACK_RUN_TIME_INIT
+        label: Enable Stack Modules Run-time Initialization
+      type: Boolean
+    TCPIP_STACK_SECURE_PORT_ENTRIES:
+      attributes:
+        id: TCPIP_STACK_SECURE_PORT_ENTRIES
+        label: Number of entries in the secure port table
+      type: Integer
+    TCPIP_STACK_SUPPORTED_HEAPS:
+      attributes:
+        id: TCPIP_STACK_SUPPORTED_HEAPS
+        label: Maximum heap types
+      type: Integer
+    TCPIP_STACK_SYS_RANDOM_H2_ADAPTER:
+      attributes:
+        id: TCPIP_STACK_SYS_RANDOM_H2_ADAPTER
+        label: TCPIP_STACK_SYS_RANDOM_H2_ADAPTER
+      children:
+      - children:
+        - attributes:
+            id: tcpipStack
+            value: 'false'
+          type: Dynamic
+        type: Values
+      type: Boolean
+    TCPIP_STACK_TICK_RATE:
+      attributes:
+        id: TCPIP_STACK_TICK_RATE
+        label: TCP/IP Stack State Machine Tick Rate, ms.
+      type: Integer
+    TCPIP_STACK_USER_NOTIFICATION:
+      attributes:
+        id: TCPIP_STACK_USER_NOTIFICATION
+        label: Enable User Notification
+      type: Boolean
+    TCPIP_STACK_USE_HEAP_CONFIG:
+      attributes:
+        id: TCPIP_STACK_USE_HEAP_CONFIG
+        label: Use Heap Config
+      type: Combo
+    TCPIP_STACK_VLAN_SUPPORT:
+      attributes:
+        id: TCPIP_STACK_VLAN_SUPPORT
+        label: Enable VLAN Support
+      type: Boolean
+    USE_TCPIP_STACK:
+      attributes:
+        id: USE_TCPIP_STACK
+        label: Use TCP/IP Stack?
+      type: Boolean
+  userData: {}

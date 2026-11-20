@@ -470,11 +470,13 @@ void SYS_Initialize ( void* data )
 
  
     TC0_CH0_TimerInitialize(); 
-     
+    TC0_CH1_TimerInitialize(); 
     
 	BSP_Initialize();
     BSP_Initialize();
 	TWIHS0_Initialize();
+
+    USART1_Initialize();
 
 
     /* MISRAC 2023 deviation block start */
