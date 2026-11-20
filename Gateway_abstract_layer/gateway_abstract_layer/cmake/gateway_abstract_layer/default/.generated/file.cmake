@@ -57,6 +57,7 @@ set(gateway_abstract_layer_default_default_XC32_FILE_TYPE_compile
     "${CMAKE_CURRENT_SOURCE_DIR}/../../../config.mcc/src/config/default/system/time/src/sys_time.c"
     "${CMAKE_CURRENT_SOURCE_DIR}/../../../config.mcc/src/config/default/tasks.c"
     "${CMAKE_CURRENT_SOURCE_DIR}/../../../config.mcc/src/main.c"
+    "${CMAKE_CURRENT_SOURCE_DIR}/../../../src/abstract_layer/modules/hal_can.c"
     "${CMAKE_CURRENT_SOURCE_DIR}/../../../src/abstract_layer/modules/hal_console.c"
     "${CMAKE_CURRENT_SOURCE_DIR}/../../../src/abstract_layer/modules/hal_marker.c"
     "${CMAKE_CURRENT_SOURCE_DIR}/../../../src/abstract_layer/modules/hal_time.c"

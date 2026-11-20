@@ -54,6 +54,23 @@ size_t hal_console_write_str(const char *str);
 size_t hal_console_read(uint8_t *data, size_t len);
 size_t hal_console_tx_free(void);
 
+/* ---- CAN (MCAN1 / PLIB, non-blocking) ----------------------------------- */
+
+void hal_can_init(void);
+void hal_can_deinit(void);
+
+/** Queue one classic frame for TX via dedicated buffers (R4). */
+hal_can_status_t hal_can_tx(const hal_can_frame_t *frame);
+
+/** Pop one received frame from the software RX queue. */
+hal_can_status_t hal_can_rx(hal_can_frame_t *frame);
+
+uint32_t hal_can_rx_count(void);
+uint32_t hal_can_rx_overflow_count(void);
+uint32_t hal_can_rx_high_water(void);
+uint32_t hal_can_tx_drop_count(void);
+bool     hal_can_is_bus_off(void);
+
 #ifdef __cplusplus
 }
 #endif

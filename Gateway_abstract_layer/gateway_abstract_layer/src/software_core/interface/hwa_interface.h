@@ -30,9 +30,19 @@ size_t hwa_console_write_str(const char *str);
 size_t hwa_console_read(uint8_t *data, size_t len);
 
 /* CAN ------------------------------------------------------------------- */
+/** Transmit classic frame. sub_id kept for CANopen OD path; unused on wire. */
 void hwa_can_tx(uint32_t id, uint32_t sub_id, uint8_t *data, uint8_t len);
+
+/** Receive one queued frame; sub_id set to 0 for raw Stage-2 frames. */
 void hwa_can_rx(uint32_t *id, uint32_t *sub_id, uint8_t *data, uint8_t *len);
-void hwa_get_number_of_massages(void);
+
+/** Number of frames waiting in the RX software queue. */
+uint32_t hwa_get_number_of_massages(void);
+
+uint32_t hwa_can_rx_overflow_count(void);
+uint32_t hwa_can_rx_high_water(void);
+uint32_t hwa_can_tx_drop_count(void);
+bool     hwa_can_is_bus_off(void);
 
 /* ETHERCAT -------------------------------------------------------------- */
 

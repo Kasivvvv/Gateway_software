@@ -1,0 +1,461 @@
+{
+	"artifacts" : 
+	[
+		{
+			"path" : "/Users/kasiawcislo/Documents/Studia/Magisterka/Gateway_software/Gateway_abstract_layer/gateway_abstract_layer/out/gateway_abstract_layer/default.elf"
+		}
+	],
+	"backtrace" : 3,
+	"backtraceGraph" : 
+	{
+		"commands" : 
+		[
+			"add_executable",
+			"include",
+			"target_link_options",
+			"gateway_abstract_layer_default_link_rule",
+			"target_compile_definitions"
+		],
+		"files" : 
+		[
+			".generated/main.cmake",
+			"CMakeLists.txt",
+			".generated/rule.cmake"
+		],
+		"nodes" : 
+		[
+			{
+				"file" : 1
+			},
+			{
+				"command" : 1,
+				"file" : 1,
+				"line" : 15,
+				"parent" : 0
+			},
+			{
+				"file" : 0,
+				"parent" : 1
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 49,
+				"parent" : 2
+			},
+			{
+				"command" : 3,
+				"file" : 0,
+				"line" : 57,
+				"parent" : 2
+			},
+			{
+				"command" : 2,
+				"file" : 2,
+				"line" : 94,
+				"parent" : 4
+			},
+			{
+				"command" : 4,
+				"file" : 2,
+				"line" : 95,
+				"parent" : 4
+			}
+		]
+	},
+	"dependencies" : 
+	[
+		{
+			"id" : "gateway_abstract_layer_default_default_XC32_compile::@6890427a1f51a3e7e1df"
+		}
+	],
+	"id" : "gateway_abstract_layer_default_image_FdG4uiJW::@6890427a1f51a3e7e1df",
+	"link" : 
+	{
+		"commandFragments" : 
+		[
+			{
+				"backtrace" : 5,
+				"fragment" : "-g",
+				"role" : "flags"
+			},
+			{
+				"backtrace" : 5,
+				"fragment" : "-mprocessor=ATSAMV71Q21B",
+				"role" : "flags"
+			},
+			{
+				"backtrace" : 5,
+				"fragment" : "-mno-device-startup-code",
+				"role" : "flags"
+			},
+			{
+				"backtrace" : 5,
+				"fragment" : "-Wl,--defsym=__MPLAB_BUILD=1,--script=/Users/kasiawcislo/Documents/Studia/Magisterka/Gateway_software/Gateway_abstract_layer/gateway_abstract_layer/cmake/gateway_abstract_layer/default/../../../config.mcc/src/config/default/ATSAMV71Q21B.ld,--defsym=_min_heap_size=512,--gc-sections,-Map=mem.map,--report-mem,--memorysummary,memoryfile.xml",
+				"role" : "flags"
+			},
+			{
+				"backtrace" : 5,
+				"fragment" : "-mdfp=/Users/kasiawcislo/.mchp_packs/Microchip/SAMV71_DFP/4.13.257/samv71b",
+				"role" : "flags"
+			}
+		],
+		"language" : "C"
+	},
+	"name" : "gateway_abstract_layer_default_image_FdG4uiJW",
+	"nameOnDisk" : "default.elf",
+	"paths" : 
+	{
+		"build" : ".",
+		"source" : "."
+	},
+	"sourceGroups" : 
+	[
+		{
+			"name" : "Object Libraries",
+			"sourceIndexes" : 
+			[
+				0,
+				1,
+				2,
+				3,
+				4,
+				5,
+				6,
+				7,
+				8,
+				9,
+				10,
+				11,
+				12,
+				13,
+				14,
+				15,
+				16,
+				17,
+				18,
+				19,
+				20,
+				21,
+				22,
+				23,
+				24,
+				25,
+				26,
+				27,
+				28,
+				29,
+				30,
+				31,
+				32,
+				33,
+				34,
+				35,
+				36,
+				37,
+				38,
+				39,
+				40,
+				41,
+				42,
+				43,
+				44,
+				45,
+				46,
+				47
+			]
+		}
+	],
+	"sources" : 
+	[
+		{
+			"backtrace" : 3,
+			"isGenerated" : true,
+			"path" : "/Users/kasiawcislo/Documents/Studia/Magisterka/Gateway_software/Gateway_abstract_layer/gateway_abstract_layer/_build/gateway_abstract_layer/default/CMakeFiles/gateway_abstract_layer_default_default_XC32_compile.dir/Users/kasiawcislo/Documents/Studia/Magisterka/Gateway_software/Gateway_abstract_layer/gateway_abstract_layer/config.mcc/src/app.c.o",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 3,
+			"isGenerated" : true,
+			"path" : "/Users/kasiawcislo/Documents/Studia/Magisterka/Gateway_software/Gateway_abstract_layer/gateway_abstract_layer/_build/gateway_abstract_layer/default/CMakeFiles/gateway_abstract_layer_default_default_XC32_compile.dir/Users/kasiawcislo/Documents/Studia/Magisterka/Gateway_software/Gateway_abstract_layer/gateway_abstract_layer/config.mcc/src/config/default/bsp/bsp.c.o",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 3,
+			"isGenerated" : true,
+			"path" : "/Users/kasiawcislo/Documents/Studia/Magisterka/Gateway_software/Gateway_abstract_layer/gateway_abstract_layer/_build/gateway_abstract_layer/default/CMakeFiles/gateway_abstract_layer_default_default_XC32_compile.dir/Users/kasiawcislo/Documents/Studia/Magisterka/Gateway_software/Gateway_abstract_layer/gateway_abstract_layer/config.mcc/src/config/default/driver/at24/src/drv_at24.c.o",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 3,
+			"isGenerated" : true,
+			"path" : "/Users/kasiawcislo/Documents/Studia/Magisterka/Gateway_software/Gateway_abstract_layer/gateway_abstract_layer/_build/gateway_abstract_layer/default/CMakeFiles/gateway_abstract_layer_default_default_XC32_compile.dir/Users/kasiawcislo/Documents/Studia/Magisterka/Gateway_software/Gateway_abstract_layer/gateway_abstract_layer/config.mcc/src/config/default/driver/ethphy/src/dynamic/drv_ethphy.c.o",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 3,
+			"isGenerated" : true,
+			"path" : "/Users/kasiawcislo/Documents/Studia/Magisterka/Gateway_software/Gateway_abstract_layer/gateway_abstract_layer/_build/gateway_abstract_layer/default/CMakeFiles/gateway_abstract_layer_default_default_XC32_compile.dir/Users/kasiawcislo/Documents/Studia/Magisterka/Gateway_software/Gateway_abstract_layer/gateway_abstract_layer/config.mcc/src/config/default/driver/ethphy/src/dynamic/drv_extphy_ksz8061.c.o",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 3,
+			"isGenerated" : true,
+			"path" : "/Users/kasiawcislo/Documents/Studia/Magisterka/Gateway_software/Gateway_abstract_layer/gateway_abstract_layer/_build/gateway_abstract_layer/default/CMakeFiles/gateway_abstract_layer_default_default_XC32_compile.dir/Users/kasiawcislo/Documents/Studia/Magisterka/Gateway_software/Gateway_abstract_layer/gateway_abstract_layer/config.mcc/src/config/default/driver/gmac/src/dynamic/drv_gmac.c.o",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 3,
+			"isGenerated" : true,
+			"path" : "/Users/kasiawcislo/Documents/Studia/Magisterka/Gateway_software/Gateway_abstract_layer/gateway_abstract_layer/_build/gateway_abstract_layer/default/CMakeFiles/gateway_abstract_layer_default_default_XC32_compile.dir/Users/kasiawcislo/Documents/Studia/Magisterka/Gateway_software/Gateway_abstract_layer/gateway_abstract_layer/config.mcc/src/config/default/driver/gmac/src/dynamic/drv_gmac_lib_same7x_v7x.c.o",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 3,
+			"isGenerated" : true,
+			"path" : "/Users/kasiawcislo/Documents/Studia/Magisterka/Gateway_software/Gateway_abstract_layer/gateway_abstract_layer/_build/gateway_abstract_layer/default/CMakeFiles/gateway_abstract_layer_default_default_XC32_compile.dir/Users/kasiawcislo/Documents/Studia/Magisterka/Gateway_software/Gateway_abstract_layer/gateway_abstract_layer/config.mcc/src/config/default/driver/miim/src/dynamic/drv_miim.c.o",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 3,
+			"isGenerated" : true,
+			"path" : "/Users/kasiawcislo/Documents/Studia/Magisterka/Gateway_software/Gateway_abstract_layer/gateway_abstract_layer/_build/gateway_abstract_layer/default/CMakeFiles/gateway_abstract_layer_default_default_XC32_compile.dir/Users/kasiawcislo/Documents/Studia/Magisterka/Gateway_software/Gateway_abstract_layer/gateway_abstract_layer/config.mcc/src/config/default/driver/miim/src/dynamic/drv_miim_gmac.c.o",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 3,
+			"isGenerated" : true,
+			"path" : "/Users/kasiawcislo/Documents/Studia/Magisterka/Gateway_software/Gateway_abstract_layer/gateway_abstract_layer/_build/gateway_abstract_layer/default/CMakeFiles/gateway_abstract_layer_default_default_XC32_compile.dir/Users/kasiawcislo/Documents/Studia/Magisterka/Gateway_software/Gateway_abstract_layer/gateway_abstract_layer/config.mcc/src/config/default/exceptions.c.o",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 3,
+			"isGenerated" : true,
+			"path" : "/Users/kasiawcislo/Documents/Studia/Magisterka/Gateway_software/Gateway_abstract_layer/gateway_abstract_layer/_build/gateway_abstract_layer/default/CMakeFiles/gateway_abstract_layer_default_default_XC32_compile.dir/Users/kasiawcislo/Documents/Studia/Magisterka/Gateway_software/Gateway_abstract_layer/gateway_abstract_layer/config.mcc/src/config/default/initialization.c.o",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 3,
+			"isGenerated" : true,
+			"path" : "/Users/kasiawcislo/Documents/Studia/Magisterka/Gateway_software/Gateway_abstract_layer/gateway_abstract_layer/_build/gateway_abstract_layer/default/CMakeFiles/gateway_abstract_layer_default_default_XC32_compile.dir/Users/kasiawcislo/Documents/Studia/Magisterka/Gateway_software/Gateway_abstract_layer/gateway_abstract_layer/config.mcc/src/config/default/interrupts.c.o",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 3,
+			"isGenerated" : true,
+			"path" : "/Users/kasiawcislo/Documents/Studia/Magisterka/Gateway_software/Gateway_abstract_layer/gateway_abstract_layer/_build/gateway_abstract_layer/default/CMakeFiles/gateway_abstract_layer_default_default_XC32_compile.dir/Users/kasiawcislo/Documents/Studia/Magisterka/Gateway_software/Gateway_abstract_layer/gateway_abstract_layer/config.mcc/src/config/default/libc_syscalls.c.o",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 3,
+			"isGenerated" : true,
+			"path" : "/Users/kasiawcislo/Documents/Studia/Magisterka/Gateway_software/Gateway_abstract_layer/gateway_abstract_layer/_build/gateway_abstract_layer/default/CMakeFiles/gateway_abstract_layer_default_default_XC32_compile.dir/Users/kasiawcislo/Documents/Studia/Magisterka/Gateway_software/Gateway_abstract_layer/gateway_abstract_layer/config.mcc/src/config/default/library/tcpip/src/dhcp.c.o",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 3,
+			"isGenerated" : true,
+			"path" : "/Users/kasiawcislo/Documents/Studia/Magisterka/Gateway_software/Gateway_abstract_layer/gateway_abstract_layer/_build/gateway_abstract_layer/default/CMakeFiles/gateway_abstract_layer_default_default_XC32_compile.dir/Users/kasiawcislo/Documents/Studia/Magisterka/Gateway_software/Gateway_abstract_layer/gateway_abstract_layer/config.mcc/src/config/default/library/tcpip/src/dns.c.o",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 3,
+			"isGenerated" : true,
+			"path" : "/Users/kasiawcislo/Documents/Studia/Magisterka/Gateway_software/Gateway_abstract_layer/gateway_abstract_layer/_build/gateway_abstract_layer/default/CMakeFiles/gateway_abstract_layer_default_default_XC32_compile.dir/Users/kasiawcislo/Documents/Studia/Magisterka/Gateway_software/Gateway_abstract_layer/gateway_abstract_layer/config.mcc/src/config/default/library/tcpip/src/hash_fnv.c.o",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 3,
+			"isGenerated" : true,
+			"path" : "/Users/kasiawcislo/Documents/Studia/Magisterka/Gateway_software/Gateway_abstract_layer/gateway_abstract_layer/_build/gateway_abstract_layer/default/CMakeFiles/gateway_abstract_layer_default_default_XC32_compile.dir/Users/kasiawcislo/Documents/Studia/Magisterka/Gateway_software/Gateway_abstract_layer/gateway_abstract_layer/config.mcc/src/config/default/library/tcpip/src/helpers.c.o",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 3,
+			"isGenerated" : true,
+			"path" : "/Users/kasiawcislo/Documents/Studia/Magisterka/Gateway_software/Gateway_abstract_layer/gateway_abstract_layer/_build/gateway_abstract_layer/default/CMakeFiles/gateway_abstract_layer_default_default_XC32_compile.dir/Users/kasiawcislo/Documents/Studia/Magisterka/Gateway_software/Gateway_abstract_layer/gateway_abstract_layer/config.mcc/src/config/default/library/tcpip/src/oahash.c.o",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 3,
+			"isGenerated" : true,
+			"path" : "/Users/kasiawcislo/Documents/Studia/Magisterka/Gateway_software/Gateway_abstract_layer/gateway_abstract_layer/_build/gateway_abstract_layer/default/CMakeFiles/gateway_abstract_layer_default_default_XC32_compile.dir/Users/kasiawcislo/Documents/Studia/Magisterka/Gateway_software/Gateway_abstract_layer/gateway_abstract_layer/config.mcc/src/config/default/library/tcpip/src/tcpip_heap_alloc.c.o",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 3,
+			"isGenerated" : true,
+			"path" : "/Users/kasiawcislo/Documents/Studia/Magisterka/Gateway_software/Gateway_abstract_layer/gateway_abstract_layer/_build/gateway_abstract_layer/default/CMakeFiles/gateway_abstract_layer_default_default_XC32_compile.dir/Users/kasiawcislo/Documents/Studia/Magisterka/Gateway_software/Gateway_abstract_layer/gateway_abstract_layer/config.mcc/src/config/default/library/tcpip/src/tcpip_heap_internal.c.o",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 3,
+			"isGenerated" : true,
+			"path" : "/Users/kasiawcislo/Documents/Studia/Magisterka/Gateway_software/Gateway_abstract_layer/gateway_abstract_layer/_build/gateway_abstract_layer/default/CMakeFiles/gateway_abstract_layer_default_default_XC32_compile.dir/Users/kasiawcislo/Documents/Studia/Magisterka/Gateway_software/Gateway_abstract_layer/gateway_abstract_layer/config.mcc/src/config/default/library/tcpip/src/tcpip_helpers.c.o",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 3,
+			"isGenerated" : true,
+			"path" : "/Users/kasiawcislo/Documents/Studia/Magisterka/Gateway_software/Gateway_abstract_layer/gateway_abstract_layer/_build/gateway_abstract_layer/default/CMakeFiles/gateway_abstract_layer_default_default_XC32_compile.dir/Users/kasiawcislo/Documents/Studia/Magisterka/Gateway_software/Gateway_abstract_layer/gateway_abstract_layer/config.mcc/src/config/default/library/tcpip/src/tcpip_manager.c.o",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 3,
+			"isGenerated" : true,
+			"path" : "/Users/kasiawcislo/Documents/Studia/Magisterka/Gateway_software/Gateway_abstract_layer/gateway_abstract_layer/_build/gateway_abstract_layer/default/CMakeFiles/gateway_abstract_layer_default_default_XC32_compile.dir/Users/kasiawcislo/Documents/Studia/Magisterka/Gateway_software/Gateway_abstract_layer/gateway_abstract_layer/config.mcc/src/config/default/library/tcpip/src/tcpip_notify.c.o",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 3,
+			"isGenerated" : true,
+			"path" : "/Users/kasiawcislo/Documents/Studia/Magisterka/Gateway_software/Gateway_abstract_layer/gateway_abstract_layer/_build/gateway_abstract_layer/default/CMakeFiles/gateway_abstract_layer_default_default_XC32_compile.dir/Users/kasiawcislo/Documents/Studia/Magisterka/Gateway_software/Gateway_abstract_layer/gateway_abstract_layer/config.mcc/src/config/default/library/tcpip/src/tcpip_packet.c.o",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 3,
+			"isGenerated" : true,
+			"path" : "/Users/kasiawcislo/Documents/Studia/Magisterka/Gateway_software/Gateway_abstract_layer/gateway_abstract_layer/_build/gateway_abstract_layer/default/CMakeFiles/gateway_abstract_layer_default_default_XC32_compile.dir/Users/kasiawcislo/Documents/Studia/Magisterka/Gateway_software/Gateway_abstract_layer/gateway_abstract_layer/config.mcc/src/config/default/peripheral/clk/plib_clk.c.o",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 3,
+			"isGenerated" : true,
+			"path" : "/Users/kasiawcislo/Documents/Studia/Magisterka/Gateway_software/Gateway_abstract_layer/gateway_abstract_layer/_build/gateway_abstract_layer/default/CMakeFiles/gateway_abstract_layer_default_default_XC32_compile.dir/Users/kasiawcislo/Documents/Studia/Magisterka/Gateway_software/Gateway_abstract_layer/gateway_abstract_layer/config.mcc/src/config/default/peripheral/efc/plib_efc.c.o",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 3,
+			"isGenerated" : true,
+			"path" : "/Users/kasiawcislo/Documents/Studia/Magisterka/Gateway_software/Gateway_abstract_layer/gateway_abstract_layer/_build/gateway_abstract_layer/default/CMakeFiles/gateway_abstract_layer_default_default_XC32_compile.dir/Users/kasiawcislo/Documents/Studia/Magisterka/Gateway_software/Gateway_abstract_layer/gateway_abstract_layer/config.mcc/src/config/default/peripheral/mcan/plib_mcan1.c.o",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 3,
+			"isGenerated" : true,
+			"path" : "/Users/kasiawcislo/Documents/Studia/Magisterka/Gateway_software/Gateway_abstract_layer/gateway_abstract_layer/_build/gateway_abstract_layer/default/CMakeFiles/gateway_abstract_layer_default_default_XC32_compile.dir/Users/kasiawcislo/Documents/Studia/Magisterka/Gateway_software/Gateway_abstract_layer/gateway_abstract_layer/config.mcc/src/config/default/peripheral/mpu/plib_mpu.c.o",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 3,
+			"isGenerated" : true,
+			"path" : "/Users/kasiawcislo/Documents/Studia/Magisterka/Gateway_software/Gateway_abstract_layer/gateway_abstract_layer/_build/gateway_abstract_layer/default/CMakeFiles/gateway_abstract_layer_default_default_XC32_compile.dir/Users/kasiawcislo/Documents/Studia/Magisterka/Gateway_software/Gateway_abstract_layer/gateway_abstract_layer/config.mcc/src/config/default/peripheral/nvic/plib_nvic.c.o",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 3,
+			"isGenerated" : true,
+			"path" : "/Users/kasiawcislo/Documents/Studia/Magisterka/Gateway_software/Gateway_abstract_layer/gateway_abstract_layer/_build/gateway_abstract_layer/default/CMakeFiles/gateway_abstract_layer_default_default_XC32_compile.dir/Users/kasiawcislo/Documents/Studia/Magisterka/Gateway_software/Gateway_abstract_layer/gateway_abstract_layer/config.mcc/src/config/default/peripheral/pio/plib_pio.c.o",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 3,
+			"isGenerated" : true,
+			"path" : "/Users/kasiawcislo/Documents/Studia/Magisterka/Gateway_software/Gateway_abstract_layer/gateway_abstract_layer/_build/gateway_abstract_layer/default/CMakeFiles/gateway_abstract_layer_default_default_XC32_compile.dir/Users/kasiawcislo/Documents/Studia/Magisterka/Gateway_software/Gateway_abstract_layer/gateway_abstract_layer/config.mcc/src/config/default/peripheral/tc/plib_tc0.c.o",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 3,
+			"isGenerated" : true,
+			"path" : "/Users/kasiawcislo/Documents/Studia/Magisterka/Gateway_software/Gateway_abstract_layer/gateway_abstract_layer/_build/gateway_abstract_layer/default/CMakeFiles/gateway_abstract_layer_default_default_XC32_compile.dir/Users/kasiawcislo/Documents/Studia/Magisterka/Gateway_software/Gateway_abstract_layer/gateway_abstract_layer/config.mcc/src/config/default/peripheral/twihs/master/plib_twihs0_master.c.o",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 3,
+			"isGenerated" : true,
+			"path" : "/Users/kasiawcislo/Documents/Studia/Magisterka/Gateway_software/Gateway_abstract_layer/gateway_abstract_layer/_build/gateway_abstract_layer/default/CMakeFiles/gateway_abstract_layer_default_default_XC32_compile.dir/Users/kasiawcislo/Documents/Studia/Magisterka/Gateway_software/Gateway_abstract_layer/gateway_abstract_layer/config.mcc/src/config/default/peripheral/usart/plib_usart1.c.o",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 3,
+			"isGenerated" : true,
+			"path" : "/Users/kasiawcislo/Documents/Studia/Magisterka/Gateway_software/Gateway_abstract_layer/gateway_abstract_layer/_build/gateway_abstract_layer/default/CMakeFiles/gateway_abstract_layer_default_default_XC32_compile.dir/Users/kasiawcislo/Documents/Studia/Magisterka/Gateway_software/Gateway_abstract_layer/gateway_abstract_layer/config.mcc/src/config/default/startup_xc32.c.o",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 3,
+			"isGenerated" : true,
+			"path" : "/Users/kasiawcislo/Documents/Studia/Magisterka/Gateway_software/Gateway_abstract_layer/gateway_abstract_layer/_build/gateway_abstract_layer/default/CMakeFiles/gateway_abstract_layer_default_default_XC32_compile.dir/Users/kasiawcislo/Documents/Studia/Magisterka/Gateway_software/Gateway_abstract_layer/gateway_abstract_layer/config.mcc/src/config/default/stdio/xc32_monitor.c.o",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 3,
+			"isGenerated" : true,
+			"path" : "/Users/kasiawcislo/Documents/Studia/Magisterka/Gateway_software/Gateway_abstract_layer/gateway_abstract_layer/_build/gateway_abstract_layer/default/CMakeFiles/gateway_abstract_layer_default_default_XC32_compile.dir/Users/kasiawcislo/Documents/Studia/Magisterka/Gateway_software/Gateway_abstract_layer/gateway_abstract_layer/config.mcc/src/config/default/system/cache/sys_cache.c.o",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 3,
+			"isGenerated" : true,
+			"path" : "/Users/kasiawcislo/Documents/Studia/Magisterka/Gateway_software/Gateway_abstract_layer/gateway_abstract_layer/_build/gateway_abstract_layer/default/CMakeFiles/gateway_abstract_layer_default_default_XC32_compile.dir/Users/kasiawcislo/Documents/Studia/Magisterka/Gateway_software/Gateway_abstract_layer/gateway_abstract_layer/config.mcc/src/config/default/system/int/src/sys_int.c.o",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 3,
+			"isGenerated" : true,
+			"path" : "/Users/kasiawcislo/Documents/Studia/Magisterka/Gateway_software/Gateway_abstract_layer/gateway_abstract_layer/_build/gateway_abstract_layer/default/CMakeFiles/gateway_abstract_layer_default_default_XC32_compile.dir/Users/kasiawcislo/Documents/Studia/Magisterka/Gateway_software/Gateway_abstract_layer/gateway_abstract_layer/config.mcc/src/config/default/system/sys_time_h2_adapter.c.o",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 3,
+			"isGenerated" : true,
+			"path" : "/Users/kasiawcislo/Documents/Studia/Magisterka/Gateway_software/Gateway_abstract_layer/gateway_abstract_layer/_build/gateway_abstract_layer/default/CMakeFiles/gateway_abstract_layer_default_default_XC32_compile.dir/Users/kasiawcislo/Documents/Studia/Magisterka/Gateway_software/Gateway_abstract_layer/gateway_abstract_layer/config.mcc/src/config/default/system/time/src/sys_time.c.o",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 3,
+			"isGenerated" : true,
+			"path" : "/Users/kasiawcislo/Documents/Studia/Magisterka/Gateway_software/Gateway_abstract_layer/gateway_abstract_layer/_build/gateway_abstract_layer/default/CMakeFiles/gateway_abstract_layer_default_default_XC32_compile.dir/Users/kasiawcislo/Documents/Studia/Magisterka/Gateway_software/Gateway_abstract_layer/gateway_abstract_layer/config.mcc/src/config/default/tasks.c.o",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 3,
+			"isGenerated" : true,
+			"path" : "/Users/kasiawcislo/Documents/Studia/Magisterka/Gateway_software/Gateway_abstract_layer/gateway_abstract_layer/_build/gateway_abstract_layer/default/CMakeFiles/gateway_abstract_layer_default_default_XC32_compile.dir/Users/kasiawcislo/Documents/Studia/Magisterka/Gateway_software/Gateway_abstract_layer/gateway_abstract_layer/config.mcc/src/main.c.o",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 3,
+			"isGenerated" : true,
+			"path" : "/Users/kasiawcislo/Documents/Studia/Magisterka/Gateway_software/Gateway_abstract_layer/gateway_abstract_layer/_build/gateway_abstract_layer/default/CMakeFiles/gateway_abstract_layer_default_default_XC32_compile.dir/Users/kasiawcislo/Documents/Studia/Magisterka/Gateway_software/Gateway_abstract_layer/gateway_abstract_layer/src/abstract_layer/modules/hal_can.c.o",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 3,
+			"isGenerated" : true,
+			"path" : "/Users/kasiawcislo/Documents/Studia/Magisterka/Gateway_software/Gateway_abstract_layer/gateway_abstract_layer/_build/gateway_abstract_layer/default/CMakeFiles/gateway_abstract_layer_default_default_XC32_compile.dir/Users/kasiawcislo/Documents/Studia/Magisterka/Gateway_software/Gateway_abstract_layer/gateway_abstract_layer/src/abstract_layer/modules/hal_console.c.o",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 3,
+			"isGenerated" : true,
+			"path" : "/Users/kasiawcislo/Documents/Studia/Magisterka/Gateway_software/Gateway_abstract_layer/gateway_abstract_layer/_build/gateway_abstract_layer/default/CMakeFiles/gateway_abstract_layer_default_default_XC32_compile.dir/Users/kasiawcislo/Documents/Studia/Magisterka/Gateway_software/Gateway_abstract_layer/gateway_abstract_layer/src/abstract_layer/modules/hal_marker.c.o",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 3,
+			"isGenerated" : true,
+			"path" : "/Users/kasiawcislo/Documents/Studia/Magisterka/Gateway_software/Gateway_abstract_layer/gateway_abstract_layer/_build/gateway_abstract_layer/default/CMakeFiles/gateway_abstract_layer_default_default_XC32_compile.dir/Users/kasiawcislo/Documents/Studia/Magisterka/Gateway_software/Gateway_abstract_layer/gateway_abstract_layer/src/abstract_layer/modules/hal_time.c.o",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 3,
+			"isGenerated" : true,
+			"path" : "/Users/kasiawcislo/Documents/Studia/Magisterka/Gateway_software/Gateway_abstract_layer/gateway_abstract_layer/_build/gateway_abstract_layer/default/CMakeFiles/gateway_abstract_layer_default_default_XC32_compile.dir/Users/kasiawcislo/Documents/Studia/Magisterka/Gateway_software/Gateway_abstract_layer/gateway_abstract_layer/src/interface/hwa_adapter.c.o",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 3,
+			"isGenerated" : true,
+			"path" : "/Users/kasiawcislo/Documents/Studia/Magisterka/Gateway_software/Gateway_abstract_layer/gateway_abstract_layer/_build/gateway_abstract_layer/default/CMakeFiles/gateway_abstract_layer_default_default_XC32_compile.dir/Users/kasiawcislo/Documents/Studia/Magisterka/Gateway_software/Gateway_abstract_layer/gateway_abstract_layer/src/software_core/canopen/canopen.c.o",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 3,
+			"isGenerated" : true,
+			"path" : "/Users/kasiawcislo/Documents/Studia/Magisterka/Gateway_software/Gateway_abstract_layer/gateway_abstract_layer/_build/gateway_abstract_layer/default/CMakeFiles/gateway_abstract_layer_default_default_XC32_compile.dir/Users/kasiawcislo/Documents/Studia/Magisterka/Gateway_software/Gateway_abstract_layer/gateway_abstract_layer/src/software_core/core/core.c.o",
+			"sourceGroupIndex" : 0
+		}
+	],
+	"type" : "EXECUTABLE"
+}

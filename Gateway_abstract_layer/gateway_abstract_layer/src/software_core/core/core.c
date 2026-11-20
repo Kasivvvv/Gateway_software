@@ -3,14 +3,12 @@
 #include "bsp/bsp.h"
 #include "hwa_interface.h"
 
-/* Stage 1: Tloop-driven superloop with MARK_LOOP and console stats. */
+/* Stage 2: Tloop + CAN echo on MCAN1. */
 
-#define CORE_STATS_PERIOD_TICKS   (5000U)  /* 5000 * 200 us = 1 s */
-#define CORE_LED_PERIOD_TICKS     (2500U)  /* 2500 * 200 us = 500 ms */
-
-/* Widen MARK_LOOP after timing so a logic analyser can resolve the edge
- * (empty iteration is only ~tens of CPU cycles ≈ tens of ns). */
+#define CORE_STATS_PERIOD_TICKS   (5000U)  /* 1 s */
+#define CORE_LED_PERIOD_TICKS     (2500U)  /* 500 ms */
 #define CORE_MARK_LOOP_MIN_CYCLES (300U)   /* ~1 us @ 300 MHz */
+#define CORE_CAN_ECHO_MAX_PER_TICK (8U)
 
 typedef struct
 {
@@ -18,6 +16,7 @@ typedef struct
     uint32_t longestCycles;
     uint32_t lastCycles;
     uint32_t iterationsAtReport;
+    uint32_t canEchoed;
 } core_stats_t;
 
 static core_stats_t s_stats;
@@ -65,11 +64,10 @@ static void core_u32_to_dec(uint32_t value, char *out, size_t outLen)
 
 static void core_report_stats(void)
 {
-    char buf[96];
+    char buf[160];
     char num[12];
     size_t pos = 0U;
 
-    /* Format without printf to keep the image small and non-blocking. */
     #define CORE_APPEND_LIT(lit) \
         do { \
             size_t litLen = sizeof(lit) - 1U; \
@@ -90,17 +88,22 @@ static void core_report_stats(void)
             } \
         } while (0)
 
-    /* Delta of iterations since previous report (~1 s → expect ~5000). */
-    CORE_APPEND_LIT("Tloop stats: dit=");
+    CORE_APPEND_LIT("S2: dit=");
     CORE_APPEND_U32(s_stats.iterations - s_stats.iterationsAtReport);
-    CORE_APPEND_LIT(" it=");
-    CORE_APPEND_U32(s_stats.iterations);
-    CORE_APPEND_LIT(" last_cy=");
-    CORE_APPEND_U32(s_stats.lastCycles);
+    CORE_APPEND_LIT(" echo=");
+    CORE_APPEND_U32(s_stats.canEchoed);
+    CORE_APPEND_LIT(" rxq=");
+    CORE_APPEND_U32(hwa_get_number_of_massages());
+    CORE_APPEND_LIT(" hw=");
+    CORE_APPEND_U32(hwa_can_rx_high_water());
+    CORE_APPEND_LIT(" ovf=");
+    CORE_APPEND_U32(hwa_can_rx_overflow_count());
+    CORE_APPEND_LIT(" txdrop=");
+    CORE_APPEND_U32(hwa_can_tx_drop_count());
+    CORE_APPEND_LIT(" busoff=");
+    CORE_APPEND_U32(hwa_can_is_bus_off() ? 1U : 0U);
     CORE_APPEND_LIT(" max_cy=");
     CORE_APPEND_U32(s_stats.longestCycles);
-    CORE_APPEND_LIT(" ov=");
-    CORE_APPEND_U32(hwa_time_overrun_count());
     CORE_APPEND_LIT("\r\n");
     s_stats.iterationsAtReport = s_stats.iterations;
     buf[pos] = '\0';
@@ -111,6 +114,34 @@ static void core_report_stats(void)
     #undef CORE_APPEND_U32
 }
 
+static void core_can_echo(void)
+{
+    uint32_t n;
+
+    for (n = 0U; n < CORE_CAN_ECHO_MAX_PER_TICK; n++)
+    {
+        uint32_t id = 0U;
+        uint32_t subId = 0U;
+        uint8_t data[8];
+        uint8_t len = 0U;
+
+        if (hwa_get_number_of_massages() == 0U)
+        {
+            break;
+        }
+
+        hwa_can_rx(&id, &subId, data, &len);
+        if (len == 0U)
+        {
+            break;
+        }
+
+        /* Echo with same ID; sub_id unused on the wire in Stage 2. */
+        hwa_can_tx(id, subId, data, len);
+        s_stats.canEchoed++;
+    }
+}
+
 void core_init(void)
 {
     hwa_init();
@@ -119,12 +150,13 @@ void core_init(void)
     s_stats.longestCycles = 0U;
     s_stats.lastCycles = 0U;
     s_stats.iterationsAtReport = 0U;
+    s_stats.canEchoed = 0U;
     s_ticksSinceStats = 0U;
     s_ticksSinceLed = 0U;
 
     LED0_Off();
 
-    (void)hwa_console_write_str("Gateway core Stage 1: Tloop=");
+    (void)hwa_console_write_str("Gateway core Stage 2: CAN echo, Tloop=");
     {
         char num[12];
         core_u32_to_dec(hwa_time_tloop_us(), num, sizeof(num));
@@ -146,11 +178,10 @@ void core_step(void)
     hwa_marker_set(HAL_MARKER_LOOP);
     t0 = hwa_time_cycles();
 
-    /* Stage 1: no conversion / stacks yet — measure empty iteration cost. */
+    core_can_echo();
 
     elapsed = hwa_time_cycles() - t0;
 
-    /* Keep MARK_LOOP high long enough for the analyser; does not affect elapsed. */
     while ((hwa_time_cycles() - t0) < CORE_MARK_LOOP_MIN_CYCLES)
     {
     }
