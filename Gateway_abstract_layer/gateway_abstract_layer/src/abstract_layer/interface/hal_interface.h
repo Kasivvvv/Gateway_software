@@ -36,6 +36,12 @@ void hal_marker_set(hal_marker_id_t id);
 void hal_marker_clear(hal_marker_id_t id);
 void hal_marker_toggle(hal_marker_id_t id);
 
+/**
+ * Pulse a marker for at least minCycles (DWT). Used so a logic analyser
+ * at a few MS/s can reliably see t1/t4 edges.
+ */
+void hal_marker_pulse(hal_marker_id_t id, uint32_t minCycles);
+
 /** When disabled (CAL-01), set/clear/toggle become no-ops. */
 void hal_marker_enable(bool enabled);
 bool hal_marker_is_enabled(void);

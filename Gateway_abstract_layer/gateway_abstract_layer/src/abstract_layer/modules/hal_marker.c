@@ -1,5 +1,6 @@
 #include "hal_interface.h"
 
+#include "definitions.h"
 #include "peripheral/pio/plib_pio.h"
 
 /*
@@ -101,4 +102,21 @@ void hal_marker_toggle(hal_marker_id_t id)
         case HAL_MARKER_BUSOFF: MARK_BUFFER_Toggle(); break;
         default:                                      break;
     }
+}
+
+void hal_marker_pulse(hal_marker_id_t id, uint32_t minCycles)
+{
+    uint32_t t0;
+
+    if (!s_markersEnabled)
+    {
+        return;
+    }
+
+    t0 = DWT->CYCCNT;
+    hal_marker_set(id);
+    while ((DWT->CYCCNT - t0) < minCycles)
+    {
+    }
+    hal_marker_clear(id);
 }

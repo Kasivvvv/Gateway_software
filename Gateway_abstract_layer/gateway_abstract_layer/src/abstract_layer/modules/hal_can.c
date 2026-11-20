@@ -16,6 +16,8 @@
 #define HAL_CAN_RX_QUEUE_DEPTH     (64U)
 #define HAL_CAN_TX_DEDICATED_NUM   (32U)
 #define HAL_CAN_STD_ID_SHIFT       (18U)
+/* ~2 µs @ 300 MHz — visible at a few MS/s on a logic analyser. */
+#define HAL_CAN_MARK_MIN_CYCLES    (600U)
 
 static uint8_t CACHE_ALIGN __attribute__((coherent))
     s_mcan1MsgRam[MCAN1_MESSAGE_RAM_CONFIG_SIZE];
@@ -113,6 +115,12 @@ static void hal_can_rx_fifo_callback(uint8_t numberOfMessage, uintptr_t context)
         }
     }
 
+    {
+        uint32_t t0 = DWT->CYCCNT;
+        while ((DWT->CYCCNT - t0) < HAL_CAN_MARK_MIN_CYCLES)
+        {
+        }
+    }
     hal_marker_clear(HAL_MARKER_T1);
 }
 
@@ -220,17 +228,23 @@ hal_can_status_t hal_can_tx(const hal_can_frame_t *frame)
     }
 
     /* t4: hand-over to MCAN TX buffer (Table 7.3). */
-    hal_marker_set(HAL_MARKER_T4);
-    if (!MCAN1_MessageTransmit(slot, &txBuf))
     {
-        irqState = NVIC_INT_Disable();
-        s_txBusyMask &= ~(1UL << slot);
-        NVIC_INT_Restore(irqState);
-        s_txDropCount++;
+        uint32_t tMark = DWT->CYCCNT;
+        hal_marker_set(HAL_MARKER_T4);
+        if (!MCAN1_MessageTransmit(slot, &txBuf))
+        {
+            irqState = NVIC_INT_Disable();
+            s_txBusyMask &= ~(1UL << slot);
+            NVIC_INT_Restore(irqState);
+            s_txDropCount++;
+            hal_marker_clear(HAL_MARKER_T4);
+            return HAL_CAN_ERR_BUSY;
+        }
+        while ((DWT->CYCCNT - tMark) < HAL_CAN_MARK_MIN_CYCLES)
+        {
+        }
         hal_marker_clear(HAL_MARKER_T4);
-        return HAL_CAN_ERR_BUSY;
     }
-    hal_marker_clear(HAL_MARKER_T4);
 
     (void)frame->sub_id; /* reserved for CANopen OD path */
     return HAL_CAN_OK;
