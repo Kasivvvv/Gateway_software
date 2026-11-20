@@ -7,7 +7,7 @@
             "device": "ATSAMV71Q21B",
             "imagePath": "./out/gateway_abstract_layer/default.elf",
             "toolProperties": "default-tool-base",
-            "tool": "Simulator",
+            "tool": "EDBG",
             "packs": [
                 {
                     "name": "SAMV71_DFP",
@@ -34,7 +34,7 @@
         {
             "name": "default-XC32",
             "type": "toolchain",
-            "provider": "microchip.toolchains:xc32@5.10",
+            "provider": "microchip.toolchains:xc32@6.00",
             "properties": {
                 "linker.heap-size": "512",
                 "compiler.extra-include-directories": [

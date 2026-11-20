@@ -8,13 +8,13 @@
     "toolchains": {
         "overrides": {
             "registered": {
-                "microchip.toolchains:xc32@5.10": [
-                    "c:\\Program Files\\Microchip\\xc32\\v5.10"
+                "microchip.toolchains:xc32@6.00": [
+                    "/Applications/microchip/xc32/v6.00"
                 ]
             },
             "configs": {
                 "default": {
-                    "microchip.toolchains:xc32@5.10": 0
+                    "microchip.toolchains:xc32@6.00": 0
                 }
             }
         }
