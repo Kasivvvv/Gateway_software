@@ -1,0 +1,15 @@
+*:/usr/*
+*:include/lely/co/def/*
+constParameter
+constVariable
+cstyleCast
+knownConditionTrueFalse
+noExplicitConstructor
+shadowArgument
+shadowFunction
+shadowVariable
+throwInNoexceptFunction
+missingIncludeSystem
+uninitDerivedMemberVar
+unreadVariable
+unusedStructMember

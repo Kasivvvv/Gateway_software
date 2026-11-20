@@ -1,0 +1,1 @@
+v3.6.0 (n7space/canopen/lely-core, branch ecss tag v3.6.0)

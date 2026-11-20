@@ -1,0 +1,62 @@
+ARG __GNUC__
+
+FROM gcc:${__GNUC__}
+
+# support for Debian 8 (GCC <= 6)
+RUN VERSION=$(sed 's/\..*//' /etc/debian_version) \
+    && if [ "$VERSION" -eq "8" ] ; then \
+          echo "deb [trusted=yes] http://archive.debian.org/debian/ jessie main non-free contrib" > /etc/apt/sources.list ; \
+          echo " deb-src [trusted=yes] http://archive.debian.org/debian/ jessie main non-free contrib" >> /etc/apt/sources.list ; \
+          echo "deb [trusted=yes] http://archive.debian.org/debian-security/ jessie/updates main non-free contrib" >> /etc/apt/sources.list ; \
+          echo " deb-src [trusted=yes] http://archive.debian.org/debian-security/ jessie/updates main non-free contrib" >> /etc/apt/sources.list ; \
+       fi
+
+# support for Debian 10 (GCC <= 8)
+RUN VERSION=$(sed 's/\..*//' /etc/debian_version) \
+    && if [ "$VERSION" -eq "10" ] ; then \
+          echo "deb [trusted=yes] http://archive.debian.org/debian/ buster main non-free contrib" > /etc/apt/sources.list ; \
+          echo " deb-src [trusted=yes] http://archive.debian.org/debian/ buster main non-free contrib" >> /etc/apt/sources.list ; \
+          echo "deb [trusted=yes] http://archive.debian.org/debian-security/ buster/updates main non-free contrib" >> /etc/apt/sources.list ; \
+          echo " deb-src [trusted=yes] http://archive.debian.org/debian-security/ buster/updates main non-free contrib" >> /etc/apt/sources.list ; \
+       fi
+
+# support for Debian 11 (GCC <= 8)
+RUN VERSION=$(sed 's/\..*//' /etc/debian_version) \
+    && if [ "$VERSION" -eq "11" ] ; then \
+          echo "deb [trusted=yes] http://archive.debian.org/debian/ bullseye main non-free contrib" > /etc/apt/sources.list ; \
+          echo "deb [trusted=yes] http://archive.debian.org/debian/ bullseye-updates main non-free contrib" >> /etc/apt/sources.list ; \
+# Debian security for bullseye is currently broken
+#          echo "deb [trusted=yes] http://archive.debian.org/debian-security/ bullseye-security main non-free contrib" >> /etc/apt/sources.list ; \
+       fi
+
+RUN apt-get update -q \
+    && DEBIAN_FRONTEND=noninteractive apt-get install -qy --no-install-recommends \
+        cython3 \
+        libpython3-dev \
+        python3 \
+        python3-empy \
+        python3-setuptools \
+        python3-wheel \
+        python3-yaml \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN apt-get update -q \
+    && DEBIAN_FRONTEND=noninteractive apt-get install -qy --no-install-recommends \
+        libbluetooth-dev \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN apt-get update -q \
+    && DEBIAN_FRONTEND=noninteractive apt-get install -qy --no-install-recommends \
+        automake \
+        libtool \
+        pkg-config \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN git clone --branch v4.0 --depth 1 https://github.com/cpputest/cpputest.git \
+    && cd cpputest/cpputest_build \
+    && autoreconf .. -i \
+    && ../configure --disable-memory-leak-detection \
+    && make \
+    && make install \
+    && cd - \
+    && rm -rf cpputest

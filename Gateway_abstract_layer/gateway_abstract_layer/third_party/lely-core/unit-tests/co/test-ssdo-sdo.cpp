@@ -1,0 +1,667 @@
+/**@file
+ * This file is part of the CANopen Library Unit Test Suite.
+ *
+ * @copyright 2020-2021 N7 Space Sp. z o.o.
+ *
+ * Unit Test Suite was developed under a programme of,
+ * and funded by, the European Space Agency.
+ *
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+#ifdef HAVE_CONFIG_H
+#include <config.h>
+#endif
+
+#include <memory>
+
+#include <CppUTest/TestHarness.h>
+
+#include <lely/co/csdo.h>
+#include <lely/co/ssdo.h>
+#include <lely/co/sdo.h>
+
+#include <libtest/allocators/default.hpp>
+#include <libtest/tools/lely-cpputest-ext.hpp>
+#include <libtest/tools/lely-unit-test.hpp>
+
+#include "holder/dev.hpp"
+#include "holder/obj.hpp"
+
+TEST_GROUP(CO_SsdoDnInd) {
+  Allocators::Default allocator;
+
+  static const co_unsigned8_t DEV_ID = 0x01u;
+  static const co_unsigned8_t SDO_NUM = 0x01u;
+  static const co_unsigned32_t CAN_ID = DEV_ID;
+  static const co_unsigned32_t CAN_ID_EXT =
+      co_unsigned32_t{co_unsigned32_t{DEV_ID} | co_unsigned32_t{0x10000000u}};
+
+  co_dev_t* dev = nullptr;
+  can_net_t* net = nullptr;
+  co_ssdo_t* ssdo = nullptr;
+  std::unique_ptr<CoDevTHolder> dev_holder;
+  std::unique_ptr<CoObjTHolder> obj1200;
+
+  co_unsigned32_t GetSrv01CobidReq() const {
+    return co_dev_get_val_u32(dev, 0x1200u, 0x01u);
+  }
+
+  co_unsigned32_t GetSrv02CobidRes() const {
+    return co_dev_get_val_u32(dev, 0x1200u, 0x02u);
+  }
+
+  co_unsigned8_t GetSrv03NodeId() const {
+    return co_dev_get_val_u8(dev, 0x1200u, 0x03u);
+  }
+
+  // obj 0x1200, sub 0x00 - highest sub-index supported
+  void SetSrv00HighestSubidxSupported(const co_unsigned8_t subidx) {
+    co_sub_t* const sub = co_dev_find_sub(dev, 0x1200u, 0x00u);
+    if (sub != nullptr)
+      co_sub_set_val_u8(sub, subidx);
+    else
+      obj1200->InsertAndSetSub(0x00u, CO_DEFTYPE_UNSIGNED8, subidx);
+  }
+
+  // obj 0x1200, sub 0x01 - COB-ID client -> server (rx)
+  void SetSrv01CobidReq(const co_unsigned32_t cobid) {
+    co_sub_t* const sub = co_dev_find_sub(dev, 0x1200u, 0x01u);
+    if (sub != nullptr)
+      co_sub_set_val_u32(sub, cobid);
+    else
+      obj1200->InsertAndSetSub(0x01u, CO_DEFTYPE_UNSIGNED32, cobid);
+  }
+
+  // obj 0x1200, sub 0x02 - COB-ID server -> client (tx)
+  void SetSrv02CobidRes(const co_unsigned32_t cobid) {
+    co_sub_t* const sub = co_dev_find_sub(dev, 0x1200u, 0x02u);
+    if (sub != nullptr)
+      co_sub_set_val_u32(sub, cobid);
+    else
+      obj1200->InsertAndSetSub(0x02u, CO_DEFTYPE_UNSIGNED32, cobid);
+  }
+
+  // obj 0x1200, sub 0x03 - Node-ID of the SDO client
+  void SetSrv03NodeId(const co_unsigned8_t id) {
+    co_sub_t* const sub = co_dev_find_sub(dev, 0x1200u, 0x03u);
+    if (sub != nullptr)
+      co_sub_set_val_u8(sub, id);
+    else
+      obj1200->InsertAndSetSub(0x03u, CO_DEFTYPE_UNSIGNED8, id);
+  }
+
+  void RestartSSDO() {
+    co_ssdo_stop(ssdo);
+    co_ssdo_start(ssdo);
+  }
+
+  TEST_SETUP() {
+    LelyUnitTest::DisableDiagnosticMessages();
+    net = can_net_create(allocator.ToAllocT(), 0);
+    assert(net);
+
+    dev_holder.reset(new CoDevTHolder(DEV_ID));
+    dev = dev_holder->Get();
+    assert(dev);
+
+    dev_holder->CreateAndInsertObj(obj1200, 0x1200u);
+    SetSrv00HighestSubidxSupported(0x03u);
+    SetSrv01CobidReq(CAN_ID);
+    SetSrv02CobidRes(CAN_ID);
+    SetSrv03NodeId(0);
+
+    ssdo = co_ssdo_create(net, dev, SDO_NUM);
+    CHECK(ssdo != nullptr);
+    co_ssdo_start(ssdo);
+
+    CoCsdoDnCon::Clear();
+  }
+
+  TEST_TEARDOWN() {
+    co_ssdo_stop(ssdo);
+    co_ssdo_destroy(ssdo);
+
+    dev_holder.reset();
+    can_net_destroy(net);
+  }
+};
+
+/// @name SSDO service: object 0x1200 modification using SDO
+///@{
+
+/// \Given a pointer to a device (co_dev_t), the object dictionary
+///        contains the SDO Server Parameter object (0x1200)
+///
+/// \When the download indication function for the object 0x1200 is called with
+///       a non-zero abort code
+///
+/// \Then the same abort code value is returned, nothing is changed
+///       \Calls co_sub_get_type()
+TEST(CO_SsdoDnInd, NonZeroAbortCode) {
+  const co_unsigned32_t ac = CO_SDO_AC_ERROR;
+
+  const auto ret =
+      LelyUnitTest::CallDnIndWithAbortCode(dev, 0x1200u, 0x00u, ac);
+
+  CHECK_EQUAL(ac, ret);
+}
+
+/// \Given a pointer to the device (co_dev_t) with the SSDO service started and
+///        the object 0x1200 inserted
+///
+/// \When a value is downloaded to the server parameter
+///       "Highest sub-index supported" entry (idx: 0x1200, subidx: 0x00)
+///
+/// \Then 0 is returned, confirmation function is called once with
+///       CO_SDO_AC_NO_WRITE abort code
+///       \Calls co_sub_get_type()
+///       \Calls co_sdo_req_dn_val()
+///       \Calls co_sub_get_subidx()
+TEST(CO_SsdoDnInd, DownloadHighestSubidx) {
+  const int32_t data = 0;
+  const auto ret =
+      co_dev_dn_val_req(dev, 0x1200u, 0x00u, CO_DEFTYPE_UNSIGNED8, &data,
+                        nullptr, CoCsdoDnCon::Func, nullptr);
+
+  CHECK_EQUAL(0, ret);
+  CHECK_EQUAL(1u, CoCsdoDnCon::GetNumCalled());
+  CHECK_EQUAL(CO_SDO_AC_NO_WRITE, CoCsdoDnCon::ac);
+}
+
+/// \Given a pointer to the device (co_dev_t) with the SSDO service started and
+///        the object 0x1200 inserted
+///
+/// \When a value longer than 4 bytes is downloaded to the server parameter
+///       "COB-ID client -> server (rx)" entry (idx: 0x1200, subidx: 0x01)
+///
+/// \Then 0 is returned, confirmation function is called once with
+///       CO_SDO_AC_TYPE_LEN_HI abort code, COB-ID is not changed
+///       \Calls co_sub_get_type()
+///       \Calls co_sdo_req_dn_val()
+TEST(CO_SsdoDnInd, DownloadReqCobid_TooManyBytes) {
+  const uint_least64_t data = 0;
+  const auto ret =
+      co_dev_dn_val_req(dev, 0x1200u, 0x01u, CO_DEFTYPE_UNSIGNED64, &data,
+                        nullptr, CoCsdoDnCon::Func, nullptr);
+
+  CHECK_EQUAL(0, ret);
+  CHECK_EQUAL(1u, CoCsdoDnCon::GetNumCalled());
+  CHECK_EQUAL(CO_SDO_AC_TYPE_LEN_HI, CoCsdoDnCon::ac);
+  CHECK_EQUAL(DEV_ID, GetSrv01CobidReq());
+}
+
+/// \Given a pointer to the device (co_dev_t) with the SSDO service started and
+///        the object 0x1200 inserted with a valid server parameter
+///        "COB-ID client -> server (rx)" entry
+///
+/// \When the same COB-ID value is downloaded to the server parameter "COB-ID
+///       client -> server (rx)" entry (idx: 0x1200, subidx: 0x01)
+///
+/// \Then 0 is returned, confirmation function is called once with 0 abort code,
+///       COB-ID is not changed
+///       \Calls co_sub_get_type()
+///       \Calls co_sdo_req_dn_val()
+///       \Calls co_sub_get_subidx()
+///       \Calls co_sub_get_val_u32()
+TEST(CO_SsdoDnInd, DownloadReqCobid_SameAsOld) {
+  const co_unsigned32_t cobid = CAN_ID;
+  const auto ret =
+      co_dev_dn_val_req(dev, 0x1200u, 0x01u, CO_DEFTYPE_UNSIGNED32, &cobid,
+                        nullptr, CoCsdoDnCon::Func, nullptr);
+
+  CHECK_EQUAL(0, ret);
+  CHECK_EQUAL(1u, CoCsdoDnCon::GetNumCalled());
+  CHECK_EQUAL(0, CoCsdoDnCon::ac);
+  CHECK_EQUAL(DEV_ID, GetSrv01CobidReq());
+}
+
+/// \Given a pointer to the device (co_dev_t) with the SSDO service started and
+///        the object 0x1200 inserted with a valid server parameter
+///        "COB-ID client -> server (rx)" entry
+///
+/// \When a new valid COB-ID with a new CAN-ID is downloaded to the server
+///       parameter "COB-ID client -> server (rx)" entry
+///       (idx: 0x1200, subidx: 0x01)
+///
+/// \Then 0 is returned, confirmation function is called once with
+///       CO_SDO_AC_PARAM_VAL as abort code and the COB-ID is not changed
+///       \Calls co_sub_get_type()
+///       \Calls co_sdo_req_dn_val()
+///       \Calls co_sub_get_subidx()
+///       \Calls co_sub_get_val_u32()
+TEST(CO_SsdoDnInd, DownloadReqCobid_OldValid_NewValid_NewId) {
+  const co_unsigned32_t cobid = CAN_ID + 1u;
+  const auto ret =
+      co_dev_dn_val_req(dev, 0x1200u, 0x01u, CO_DEFTYPE_UNSIGNED32, &cobid,
+                        nullptr, CoCsdoDnCon::Func, nullptr);
+
+  CHECK_EQUAL(0, ret);
+  CHECK_EQUAL(1u, CoCsdoDnCon::GetNumCalled());
+  CHECK_EQUAL(CO_SDO_AC_PARAM_VAL, CoCsdoDnCon::ac);
+  CHECK_EQUAL(CAN_ID, GetSrv01CobidReq());
+}
+
+/// \Given a pointer to the device (co_dev_t) with the SSDO service started and
+///        the object 0x1200 inserted with a valid server parameter
+///        "COB-ID client -> server (rx)" entry
+///
+/// \When a new invalid COB-ID with a new CAN-ID is downloaded to the
+///       server parameter "COB-ID client -> server (rx)" entry
+///       (idx: 0x1200, subidx: 0x01)
+///
+/// \Then 0 is returned, confirmation function is called once with 0 as abort
+///       code and the COB-ID is changed
+///       \Calls co_sub_get_type()
+///       \Calls co_sdo_req_dn_val()
+///       \Calls co_sub_get_subidx()
+///       \Calls co_sub_get_val_u32()
+///       \Calls co_sub_dn()
+///       \Calls can_recv_stop()
+TEST(CO_SsdoDnInd, DownloadReqCobid_OldValid_NewInvalid_NewId) {
+  const co_unsigned32_t cobid = (CAN_ID + 1u) | CO_SDO_COBID_VALID;
+  const auto ret =
+      co_dev_dn_val_req(dev, 0x1200u, 0x01u, CO_DEFTYPE_UNSIGNED32, &cobid,
+                        nullptr, CoCsdoDnCon::Func, nullptr);
+
+  CHECK_EQUAL(0, ret);
+  CHECK_EQUAL(1u, CoCsdoDnCon::GetNumCalled());
+  CHECK_EQUAL(0, CoCsdoDnCon::ac);
+  CHECK_EQUAL(cobid, GetSrv01CobidReq());
+}
+
+/// \Given a pointer to the device (co_dev_t) with the SSDO service started and
+///        the object 0x1200 inserted with an invalid server parameter
+///        "COB-ID client -> server (rx)" entry
+///
+/// \When a new valid COB-ID with a new CAN-ID is downloaded to the server
+///       parameter "COB-ID client -> server (rx)" entry (idx: 0x1200,
+///       subidx: 0x01)
+///
+/// \Then 0 is returned, confirmation function is called once with 0 as abort
+///       code and the COB-ID is changed
+///       \Calls co_sub_get_type()
+///       \Calls co_sdo_req_dn_val()
+///       \Calls co_sub_get_subidx()
+///       \Calls co_sub_get_val_u32()
+///       \Calls co_sub_dn()
+///       \Calls can_recv_start()
+TEST(CO_SsdoDnInd, DownloadReqCobid_OldInvalid_NewValid_NewId) {
+  SetSrv01CobidReq(CAN_ID | CO_SDO_COBID_VALID);
+  RestartSSDO();
+
+  const co_unsigned32_t cobid = CAN_ID + 1u;
+  const auto ret =
+      co_dev_dn_val_req(dev, 0x1200u, 0x01u, CO_DEFTYPE_UNSIGNED32, &cobid,
+                        nullptr, CoCsdoDnCon::Func, nullptr);
+
+  CHECK_EQUAL(0, ret);
+  CHECK_EQUAL(1u, CoCsdoDnCon::GetNumCalled());
+  CHECK_EQUAL(0, CoCsdoDnCon::ac);
+  CHECK_EQUAL(cobid, GetSrv01CobidReq());
+}
+
+/// \Given a pointer to the device (co_dev_t) with the SSDO service started and
+///        the object 0x1200 inserted and a valid server parameter
+///        "COB-ID client -> server (rx)" entry
+///
+/// \When a new valid COB-ID with an old CAN-ID is downloaded to the server
+///       parameter "COB-ID client -> server (rx)" entry (idx: 0x1200,
+///       subidx: 0x01)
+///
+/// \Then 0 is returned, confirmation function is called once with 0 as abort
+///       code and the COB-ID is not changed
+///       \Calls co_sub_get_type()
+///       \Calls co_sdo_req_dn_val()
+///       \Calls co_sub_get_subidx()
+///       \Calls co_sub_get_val_u32()
+///       \Calls co_sub_dn()
+///       \Calls can_recv_start()
+TEST(CO_SsdoDnInd, DownloadReqCobid_OldValid_NewValid_OldId) {
+  const co_unsigned32_t cobid = CAN_ID | CO_SDO_COBID_FRAME;
+  const auto ret =
+      co_dev_dn_val_req(dev, 0x1200u, 0x01u, CO_DEFTYPE_UNSIGNED32, &cobid,
+                        nullptr, CoCsdoDnCon::Func, nullptr);
+
+  CHECK_EQUAL(0, ret);
+  CHECK_EQUAL(1u, CoCsdoDnCon::GetNumCalled());
+  CHECK_EQUAL(0, CoCsdoDnCon::ac);
+  CHECK_EQUAL(cobid, GetSrv01CobidReq());
+}
+
+/// \Given a pointer to the device (co_dev_t) with the SSDO service started and
+///        the object 0x1200 inserted and a valid server parameter
+///        "COB-ID client -> server (rx)" entry
+///
+/// \When a new invalid COB-ID with a new extended CAN-ID is downloaded to the
+///       server parameter "COB-ID client -> server (rx)" entry
+///       (idx: 0x1200, subidx: 0x01)
+///
+/// \Then 0 is returned, confirmation function is called once with
+///       CO_SDO_AC_PARAM_VAL as abort code and the COB-ID is not changed
+///       \Calls co_sub_get_type()
+///       \Calls co_sdo_req_dn_val()
+///       \Calls co_sub_get_subidx()
+TEST(CO_SsdoDnInd, DownloadReqCobid_OldValid_NewInvalid_NewIdExtended) {
+  const co_unsigned32_t cobid = CAN_ID_EXT | CO_SDO_COBID_VALID;
+  const auto ret =
+      co_dev_dn_val_req(dev, 0x1200u, 0x01u, CO_DEFTYPE_UNSIGNED32, &cobid,
+                        nullptr, CoCsdoDnCon::Func, nullptr);
+
+  CHECK_EQUAL(0, ret);
+  CHECK_EQUAL(1u, CoCsdoDnCon::GetNumCalled());
+  CHECK_EQUAL(CO_SDO_AC_PARAM_VAL, CoCsdoDnCon::ac);
+  CHECK_EQUAL(CAN_ID, GetSrv01CobidReq());
+}
+
+/// \Given a pointer to the device (co_dev_t) with the SSDO service started and
+///        the object 0x1200 inserted with a valid server parameter
+///        "COB-ID client -> server (rx)" entry
+///
+/// \When a new invalid COB-ID with a new CAN-ID with an old value but
+///       extended flag set is downloaded to the server parameter
+///       "COB-ID client -> server (rx)" entry (idx: 0x1200, subidx: 0x01)
+///
+/// \Then 0 is returned, confirmation function is called once with 0 as abort
+///       code and requested COB-ID is set
+///       \Calls co_sub_get_type()
+///       \Calls co_sdo_req_dn_val()
+///       \Calls co_sub_get_subidx()
+///       \Calls co_sub_get_val_u32()
+///       \Calls co_sub_dn()
+///       \Calls can_recv_stop()
+TEST(CO_SsdoDnInd, DownloadReqCobid_OldValid_NewInvalid_OldIdExtended) {
+  const co_unsigned32_t cobid =
+      CAN_ID | CO_SDO_COBID_VALID | CO_SDO_COBID_FRAME;
+  const auto ret =
+      co_dev_dn_val_req(dev, 0x1200u, 0x01u, CO_DEFTYPE_UNSIGNED32, &cobid,
+                        nullptr, CoCsdoDnCon::Func, nullptr);
+
+  CHECK_EQUAL(0, ret);
+  CHECK_EQUAL(1u, CoCsdoDnCon::GetNumCalled());
+  CHECK_EQUAL(0, CoCsdoDnCon::ac);
+  CHECK_EQUAL(cobid, GetSrv01CobidReq());
+}
+
+/// \Given a pointer to the device (co_dev_t) with the SSDO service started and
+///        the object 0x1200 inserted and a valid server parameter
+///        "COB-ID server -> client (tx)" entry
+///
+/// \When the same COB-ID value is downloaded to the server parameter "COB-ID
+///       server -> client (tx)" entry (idx: 0x1200, subidx: 0x02)
+///
+/// \Then 0 is returned, confirmation function is called once with 0 as abort
+///       code and the COB-ID is not changed
+///       \Calls co_sub_get_type()
+///       \Calls co_sdo_req_dn_val()
+///       \Calls co_sub_get_subidx()
+///       \Calls co_sub_get_val_u32()
+TEST(CO_SsdoDnInd, DownloadResCobid_SameAsOld) {
+  const co_unsigned32_t cobid = CAN_ID;
+  const auto ret =
+      co_dev_dn_val_req(dev, 0x1200u, 0x02u, CO_DEFTYPE_UNSIGNED32, &cobid,
+                        nullptr, CoCsdoDnCon::Func, nullptr);
+
+  CHECK_EQUAL(0, ret);
+  CHECK_EQUAL(1u, CoCsdoDnCon::GetNumCalled());
+  CHECK_EQUAL(0, CoCsdoDnCon::ac);
+  CHECK_EQUAL(cobid, GetSrv02CobidRes());
+}
+
+/// \Given a pointer to the device (co_dev_t) with the SSDO service started and
+///        the object 0x1200 inserted and a valid server parameter
+///        "COB-ID server -> client (tx)" entry
+///
+/// \When a new valid COB-ID with a new CAN-ID is downloaded to the server
+///       parameter "COB-ID server -> client (tx)" entry (idx: 0x1200,
+///       subidx: 0x02)
+///
+/// \Then 0 is returned, confirmation function is called once with
+///       CO_SDO_AC_PARAM_VAL as abort code and the COB-ID is not changed
+///       \Calls co_sub_get_type()
+///       \Calls co_sdo_req_dn_val()
+///       \Calls co_sub_get_subidx()
+///       \Calls co_sub_get_val_u32()
+TEST(CO_SsdoDnInd, DownloadResCobid_OldValid_NewValid_NewId) {
+  const co_unsigned32_t cobid = CAN_ID + 1u;
+  const auto ret =
+      co_dev_dn_val_req(dev, 0x1200u, 0x02u, CO_DEFTYPE_UNSIGNED32, &cobid,
+                        nullptr, CoCsdoDnCon::Func, nullptr);
+
+  CHECK_EQUAL(0, ret);
+  CHECK_EQUAL(1u, CoCsdoDnCon::GetNumCalled());
+  CHECK_EQUAL(CO_SDO_AC_PARAM_VAL, CoCsdoDnCon::ac);
+  CHECK_EQUAL(CAN_ID, GetSrv02CobidRes());
+}
+
+/// \Given a pointer to the device (co_dev_t) with the SSDO service started and
+///        the object 0x1200 inserted and a valid server parameter
+///        "COB-ID server -> client (tx)" entry
+///
+/// \When a new invalid COB-ID with a new CAN-ID is downloaded to the server
+///       parameter "server -> client (tx)" entry (idx: 0x1200,
+///       subidx: 0x02)
+///
+/// \Then 0 is returned, confirmation function is called once with 0 as abort
+///       code and requested COB-ID is set
+///       \Calls co_sub_get_type()
+///       \Calls co_sdo_req_dn_val()
+///       \Calls co_sub_get_subidx()
+///       \Calls co_sub_get_val_u32()
+///       \Calls co_sub_dn()
+///       \Calls can_recv_stop()
+TEST(CO_SsdoDnInd, DownloadResCobid_OldValid_NewInvalid_NewId) {
+  const co_unsigned32_t cobid = CAN_ID | CO_SDO_COBID_VALID;
+  const auto ret =
+      co_dev_dn_val_req(dev, 0x1200u, 0x02u, CO_DEFTYPE_UNSIGNED32, &cobid,
+                        nullptr, CoCsdoDnCon::Func, nullptr);
+
+  CHECK_EQUAL(0, ret);
+  CHECK_EQUAL(1u, CoCsdoDnCon::GetNumCalled());
+  CHECK_EQUAL(0, CoCsdoDnCon::ac);
+  CHECK_EQUAL(cobid, GetSrv02CobidRes());
+}
+
+/// \Given a pointer to the device (co_dev_t) with the SSDO service started and
+///        the object 0x1200 inserted and an invalid server parameter
+///        "COB-ID server -> client (tx)" entry
+///
+/// \When a new valid COB-ID with a new CAN-ID is downloaded to the server
+///       parameter "COB-ID server -> client (tx)" entry (idx: 0x1200,
+///       subidx: 0x02)
+///
+/// \Then 0 is returned, confirmation function is called once with 0 as
+///       abort code and requested COB-ID is set
+///       \Calls co_sub_get_type()
+///       \Calls co_sdo_req_dn_val()
+///       \Calls co_sub_get_subidx()
+///       \Calls co_sub_get_val_u32()
+///       \Calls co_sub_dn()
+///       \Calls can_recv_start()
+TEST(CO_SsdoDnInd, DownloadResCobid_OldInvalid_NewValid_NewId) {
+  SetSrv02CobidRes(CAN_ID | CO_SDO_COBID_VALID);
+  RestartSSDO();
+
+  const co_unsigned32_t cobid = CAN_ID + 1u;
+  const auto ret =
+      co_dev_dn_val_req(dev, 0x1200u, 0x02u, CO_DEFTYPE_UNSIGNED32, &cobid,
+                        nullptr, CoCsdoDnCon::Func, nullptr);
+
+  CHECK_EQUAL(0, ret);
+  CHECK_EQUAL(1u, CoCsdoDnCon::GetNumCalled());
+  CHECK_EQUAL(0, CoCsdoDnCon::ac);
+  CHECK_EQUAL(cobid, GetSrv02CobidRes());
+}
+
+/// \Given a pointer to the device (co_dev_t) with the SSDO service started and
+///        the object 0x1200 inserted and a valid server parameter
+///        "COB-ID server -> client (tx)" entry
+///
+/// \When a new valid COB-ID with a new CAN-ID with an old value but extended
+///       flag set is downloaded to the server parameter
+///       "COB-ID server -> client (tx)" entry (idx: 0x1200, subidx: 0x02)
+///
+/// \Then 0 is returned, confirmation function is called once with 0 as abort
+///       code and requested COB-ID is set
+///       \Calls co_sub_get_type()
+///       \Calls co_sdo_req_dn_val()
+///       \Calls co_sub_get_subidx()
+///       \Calls co_sub_get_val_u32()
+///       \Calls co_sub_dn()
+///       \Calls co_ssdo_update()
+///       \Calls can_recv_start()
+TEST(CO_SsdoDnInd, DownloadResCobid_OldValid_NewValid_OldIdExtended) {
+  const co_unsigned32_t cobid = CAN_ID | CO_SDO_COBID_FRAME;
+  const auto ret =
+      co_dev_dn_val_req(dev, 0x1200u, 0x02u, CO_DEFTYPE_UNSIGNED32, &cobid,
+                        nullptr, CoCsdoDnCon::Func, nullptr);
+
+  CHECK_EQUAL(0, ret);
+  CHECK_EQUAL(1u, CoCsdoDnCon::GetNumCalled());
+  CHECK_EQUAL(0, CoCsdoDnCon::ac);
+  CHECK_EQUAL(cobid, GetSrv02CobidRes());
+}
+
+/// \Given a pointer to the device (co_dev_t) with the SSDO service started and
+///        the object 0x1200 inserted and a valid server parameter
+///        "COB-ID server -> client (tx)" entry
+///
+/// \When a new invalid COB-ID with an old CAN-ID is downloaded to the server
+///       parameter "COB-ID server -> client (tx)" entry (idx: 0x1200,
+///       subidx: 0x02)
+///
+/// \Then 0 is returned, confirmation function is called once with 0 as abort
+///       code and requested COB-ID is set
+///       \Calls co_sub_get_type()
+///       \Calls co_sdo_req_dn_val()
+///       \Calls co_sub_get_subidx()
+///       \Calls co_sub_get_val_u32()
+TEST(CO_SsdoDnInd, DownloadResCobid_OldValid_NewInvalid_OldId) {
+  const co_unsigned32_t cobid = CAN_ID_EXT | CO_SDO_COBID_VALID;
+  const auto ret =
+      co_dev_dn_val_req(dev, 0x1200u, 0x02u, CO_DEFTYPE_UNSIGNED32, &cobid,
+                        nullptr, CoCsdoDnCon::Func, nullptr);
+
+  CHECK_EQUAL(0, ret);
+  CHECK_EQUAL(1u, CoCsdoDnCon::GetNumCalled());
+  CHECK_EQUAL(CO_SDO_AC_PARAM_VAL, CoCsdoDnCon::ac);
+  CHECK_EQUAL(CAN_ID, GetSrv02CobidRes());
+}
+
+/// \Given a pointer to the device (co_dev_t) with the SSDO service started and
+///        the object 0x1200 inserted and a valid server parameter
+///        "COB-ID server -> client (tx)" entry
+///
+/// \When a new invalid COB-ID with a CAN-ID with an old value but
+///       extended flag set is downloaded to the server parameter
+///       "COB-ID server -> client (tx)" entry (idx: 0x1200, subidx: 0x02)
+///
+/// \Then 0 is returned, confirmation function is called once with 0 as abort
+///       code and requested COB-ID is set
+///       \Calls co_sub_get_type()
+///       \Calls co_sdo_req_dn_val()
+///       \Calls co_sub_get_subidx()
+///       \Calls co_sub_get_val_u32()
+///       \Calls co_sub_dn()
+///       \Calls can_recv_stop()
+TEST(CO_SsdoDnInd, DownloadResCobid_OldValid_NewInvalid_OldIdExtended) {
+  const co_unsigned32_t cobid =
+      CAN_ID | CO_SDO_COBID_VALID | CO_SDO_COBID_FRAME;
+  const auto ret =
+      co_dev_dn_val_req(dev, 0x1200u, 0x02u, CO_DEFTYPE_UNSIGNED32, &cobid,
+                        nullptr, CoCsdoDnCon::Func, nullptr);
+
+  CHECK_EQUAL(0, ret);
+  CHECK_EQUAL(1u, CoCsdoDnCon::GetNumCalled());
+  CHECK_EQUAL(0, CoCsdoDnCon::ac);
+  CHECK_EQUAL(cobid, GetSrv02CobidRes());
+}
+
+/// \Given a pointer to the device (co_dev_t) with the SSDO service started and
+///        the object 0x1200 inserted and a valid Node-ID
+///
+/// \When Node-ID with the same value as the current Node-ID is downloaded to
+///       the server parameter "Node-ID of the SDO client" entry (idx: 0x1200,
+///       subidx: 0x03)
+///
+/// \Then 0 is returned, confirmation function is called once with 0 as abort
+///       code and the COB-ID is not changed
+///       \Calls co_sub_get_type()
+///       \Calls co_sdo_req_dn_val()
+///       \Calls co_sub_get_subidx()
+///       \Calls co_sub_get_val_u8()
+TEST(CO_SsdoDnInd, DownloadNodeId_SameAsOld) {
+  const co_unsigned8_t new_id = 0x00u;
+  const auto ret =
+      co_dev_dn_val_req(dev, 0x1200u, 0x03u, CO_DEFTYPE_UNSIGNED8, &new_id,
+                        nullptr, CoCsdoDnCon::Func, nullptr);
+
+  CHECK_EQUAL(0, ret);
+  CHECK_EQUAL(1u, CoCsdoDnCon::GetNumCalled());
+  CHECK_EQUAL(0, CoCsdoDnCon::ac);
+  CHECK_EQUAL(0, GetSrv03NodeId());
+}
+
+/// \Given a pointer to the device (co_dev_t) with the SSDO service started and
+///        the object 0x1200 inserted and a valid Node-ID
+///
+/// \When Node-ID new value is downloaded to the server parameter "Node-ID of
+///       the SDO client" entry (idx: 0x1200, subidx: 0x03)
+///
+/// \Then 0 is returned, confirmation function is called once with 0 as abort
+///       code and the requested Node-ID value is set
+///       \Calls co_sub_get_type()
+///       \Calls co_sdo_req_dn_val()
+///       \Calls co_sub_get_subidx()
+///       \Calls co_sub_get_val_u8()
+///       \Calls co_sub_dn()
+///       \Calls can_recv_start()
+TEST(CO_SsdoDnInd, DownloadNodeId_Nominal) {
+  const co_unsigned8_t new_id = 0x01u;
+  const auto ret =
+      co_dev_dn_val_req(dev, 0x1200u, 0x03u, CO_DEFTYPE_UNSIGNED8, &new_id,
+                        nullptr, CoCsdoDnCon::Func, nullptr);
+
+  CHECK_EQUAL(0, ret);
+  CHECK_EQUAL(1u, CoCsdoDnCon::GetNumCalled());
+  CHECK_EQUAL(0, CoCsdoDnCon::ac);
+  CHECK_EQUAL(new_id, GetSrv03NodeId());
+}
+
+/// \Given a pointer to the device (co_dev_t) with the SSDO service started and
+///        the object 0x1200 inserted
+///
+/// \When a value is downloaded to an invalid sub-object entry (idx: 0x1200,
+///       subidx: 0x04)
+///
+/// \Then 0 is returned, confirmation function is called once with
+///       CO_SDO_AC_NO_SUB as abort code
+///       \Calls co_sub_get_type()
+///       \Calls co_sdo_req_dn_val()
+///       \Calls co_sub_get_subidx()
+TEST(CO_SsdoDnInd, DownloadNodeId_InvalidSubidx) {
+  obj1200->InsertAndSetSub(0x04u, CO_DEFTYPE_UNSIGNED8, co_unsigned8_t{0x00u});
+  RestartSSDO();
+
+  const co_unsigned8_t data = 0;
+  const auto ret =
+      co_dev_dn_val_req(dev, 0x1200u, 0x04u, CO_DEFTYPE_UNSIGNED8, &data,
+                        nullptr, CoCsdoDnCon::Func, nullptr);
+
+  CHECK_EQUAL(0, ret);
+  CHECK_EQUAL(1u, CoCsdoDnCon::GetNumCalled());
+  CHECK_EQUAL(CO_SDO_AC_NO_SUB, CoCsdoDnCon::ac);
+}
+
+///@}

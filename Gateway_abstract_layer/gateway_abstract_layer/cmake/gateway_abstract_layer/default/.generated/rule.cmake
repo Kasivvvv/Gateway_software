@@ -39,7 +39,12 @@ function(gateway_abstract_layer_default_default_XC32_compile_rule target)
         "-mdfp=${PACK_REPO_PATH}/Microchip/SAMV71_DFP/4.13.257/samv71b")
     list(REMOVE_ITEM options "")
     target_compile_options(${target} PRIVATE "${options}")
-    target_compile_definitions(${target} PRIVATE "XPRJ_default=default")
+    target_compile_definitions(${target}
+        PRIVATE "HAVE_CONFIG_H=1"
+        PRIVATE "LELY_NO_MALLOC=1"
+        PRIVATE "LELY_HAVE_TIMESPEC=1"
+        PRIVATE "LELY_HAVE_ITIMERSPEC=1"
+        PRIVATE "XPRJ_default=default")
     target_include_directories(${target}
         PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/../../../config.mcc/src"
         PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/../../../config.mcc/src/config/default"
@@ -49,6 +54,18 @@ function(gateway_abstract_layer_default_default_XC32_compile_rule target)
         PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/../../../config.mcc/src/packs/ATSAMV71Q21B_DFP"
         PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/../../../config.mcc/src/packs/CMSIS"
         PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/../../../config.mcc/src/packs/CMSIS/CMSIS/Core/Include"
+        PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/../../../src"
+        PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/../../../src/abstract_layer/interface"
+        PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/../../../src/software_core/interface"
+        PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/../../../src/software_core/core"
+        PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/../../../src/software_core/canopen"
+        PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/../../../src/software_core/canopen/config"
+        PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/../../../src/interface"
+        PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/../../../third_party/lely-core/include"
+        PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/../../../third_party/lely-core/lib/co"
+        PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/../../../third_party/lely-core/lib/can"
+        PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/../../../third_party/lely-core/lib/util"
+        PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/../../../third_party/lely-core/lib/compat"
         PRIVATE "${PACK_REPO_PATH}/ARM/CMSIS/6.3.0/CMSIS/Core/Include")
 endfunction()
 function(gateway_abstract_layer_default_default_XC32_compile_cpp_rule target)
@@ -73,6 +90,8 @@ function(gateway_abstract_layer_default_default_XC32_compile_cpp_rule target)
         PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/../../../config.mcc/src/packs/ATSAMV71Q21B_DFP"
         PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/../../../config.mcc/src/packs/CMSIS"
         PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/../../../config.mcc/src/packs/CMSIS/CMSIS/Core/Include"
+        PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/../../../src"
+        PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/../../../third_party/lely-core/include"
         PRIVATE "${PACK_REPO_PATH}/ARM/CMSIS/6.3.0/CMSIS/Core/Include")
 endfunction()
 function(gateway_abstract_layer_default_dependentObject_rule target)

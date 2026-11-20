@@ -1,0 +1,246 @@
+; Stage-3 minimal OD for gateway as CANopen node (set S1, Table 8.5).
+; Node-ID 0x10 → HB 0x710, TPDO 0x190, RPDO 0x210. Heartbeat 100 ms. SYNC consumer.
+
+[FileInfo]
+FileName=gateway_node.dcf
+FileVersion=1
+FileRevision=0
+Description=Gateway CANopen node Stage 3
+
+[DeviceInfo]
+VendorName=Gateway
+VendorNumber=0x00000000
+ProductName=EtherCAT-CAN Gateway
+ProductNumber=0x00000001
+RevisionNumber=0x00000001
+OrderCode=
+BaudRate_10=0
+BaudRate_20=0
+BaudRate_50=0
+BaudRate_125=0
+BaudRate_250=0
+BaudRate_500=0
+BaudRate_800=0
+BaudRate_1000=1
+SimpleBootUpMaster=0
+SimpleBootUpSlave=1
+Granularity=8
+DynamicChannelsSupported=0
+GroupMessaging=0
+NrOfRxPDO=1
+NrOfTxPDO=1
+LSS_Supported=0
+
+[DummyUsage]
+Dummy0001=0
+Dummy0002=1
+Dummy0003=1
+Dummy0004=1
+Dummy0005=1
+Dummy0006=1
+Dummy0007=1
+
+[DeviceComissioning]
+NodeName=Gateway
+NodeID=0x10
+Baudrate=1000
+NetNumber=0
+LSS_SerialNumber=0x00000001
+
+[MandatoryObjects]
+SupportedObjects=3
+1=0x1000
+2=0x1001
+3=0x1018
+
+[OptionalObjects]
+SupportedObjects=6
+1=0x1005
+2=0x1017
+3=0x1400
+4=0x1600
+5=0x1800
+6=0x1A00
+
+[ManufacturerObjects]
+SupportedObjects=2
+1=0x2000
+2=0x2100
+
+[1000]
+ParameterName=Device type
+ObjectType=0x07
+DataType=0x0007
+AccessType=ro
+DefaultValue=0x00000000
+PDOMapping=0
+
+[1001]
+ParameterName=Error register
+ObjectType=0x07
+DataType=0x0005
+AccessType=ro
+DefaultValue=0x00
+PDOMapping=0
+
+[1005]
+ParameterName=COB-ID SYNC message
+ObjectType=0x07
+DataType=0x0007
+AccessType=rw
+DefaultValue=0x00000080
+PDOMapping=0
+
+[1017]
+ParameterName=Producer heartbeat time
+ObjectType=0x07
+DataType=0x0006
+AccessType=rw
+DefaultValue=100
+PDOMapping=0
+
+[1018]
+SubNumber=5
+ParameterName=Identity object
+ObjectType=0x09
+
+[1018sub0]
+ParameterName=Highest sub-index supported
+ObjectType=0x07
+DataType=0x0005
+AccessType=const
+DefaultValue=4
+
+[1018sub1]
+ParameterName=Vendor-ID
+ObjectType=0x07
+DataType=0x0007
+AccessType=ro
+DefaultValue=0x00000000
+
+[1018sub2]
+ParameterName=Product code
+ObjectType=0x07
+DataType=0x0007
+AccessType=ro
+DefaultValue=0x00000001
+
+[1018sub3]
+ParameterName=Revision number
+ObjectType=0x07
+DataType=0x0007
+AccessType=ro
+DefaultValue=0x00000001
+
+[1018sub4]
+ParameterName=Serial number
+ObjectType=0x07
+DataType=0x0007
+AccessType=ro
+DefaultValue=0x00000001
+
+[1400]
+SubNumber=3
+ParameterName=RPDO 1 communication parameter
+ObjectType=0x09
+
+[1400sub0]
+ParameterName=Highest sub-index supported
+ObjectType=0x07
+DataType=0x0005
+AccessType=const
+DefaultValue=2
+
+[1400sub1]
+ParameterName=COB-ID used by RPDO
+ObjectType=0x07
+DataType=0x0007
+AccessType=rw
+DefaultValue=$NODEID+0x200
+
+[1400sub2]
+ParameterName=Transmission type
+ObjectType=0x07
+DataType=0x0005
+AccessType=rw
+DefaultValue=1
+
+[1600]
+SubNumber=2
+ParameterName=RPDO 1 mapping parameter
+ObjectType=0x09
+
+[1600sub0]
+ParameterName=Number of mapped objects
+ObjectType=0x07
+DataType=0x0005
+AccessType=rw
+DefaultValue=1
+
+[1600sub1]
+ParameterName=Mapped object 1
+ObjectType=0x07
+DataType=0x0007
+AccessType=rw
+DefaultValue=0x21000040
+
+[1800]
+SubNumber=3
+ParameterName=TPDO 1 communication parameter
+ObjectType=0x09
+
+[1800sub0]
+ParameterName=Highest sub-index supported
+ObjectType=0x07
+DataType=0x0005
+AccessType=const
+DefaultValue=2
+
+[1800sub1]
+ParameterName=COB-ID used by TPDO
+ObjectType=0x07
+DataType=0x0007
+AccessType=rw
+DefaultValue=$NODEID+0x180
+
+[1800sub2]
+ParameterName=Transmission type
+ObjectType=0x07
+DataType=0x0005
+AccessType=rw
+DefaultValue=1
+
+[1A00]
+SubNumber=2
+ParameterName=TPDO 1 mapping parameter
+ObjectType=0x09
+
+[1A00sub0]
+ParameterName=Number of mapped objects
+ObjectType=0x07
+DataType=0x0005
+AccessType=rw
+DefaultValue=1
+
+[1A00sub1]
+ParameterName=Mapped object 1
+ObjectType=0x07
+DataType=0x0007
+AccessType=rw
+DefaultValue=0x20000040
+
+[2000]
+ParameterName=TX sequence counter
+ObjectType=0x07
+DataType=0x001B
+AccessType=rw
+DefaultValue=0
+PDOMapping=1
+
+[2100]
+ParameterName=RX process data
+ObjectType=0x07
+DataType=0x001B
+AccessType=rw
+DefaultValue=0
+PDOMapping=1
