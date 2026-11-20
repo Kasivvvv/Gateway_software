@@ -46,15 +46,15 @@ endif()
 
 
 # Main target for this project
-add_executable(gateway_abstract_layer_default_image_FdG4uiJW ${gateway_abstract_layer_default_library_list})
+add_executable(gateway_abstract_layer_default_image_93X5tCtw ${gateway_abstract_layer_default_library_list})
 
-set_target_properties(gateway_abstract_layer_default_image_FdG4uiJW PROPERTIES
+set_target_properties(gateway_abstract_layer_default_image_93X5tCtw PROPERTIES
     OUTPUT_NAME "default"
     SUFFIX ".elf"
     RUNTIME_OUTPUT_DIRECTORY "${gateway_abstract_layer_default_output_dir}")
-target_link_libraries(gateway_abstract_layer_default_image_FdG4uiJW PRIVATE ${gateway_abstract_layer_default_default_XC32_FILE_TYPE_link})
+target_link_libraries(gateway_abstract_layer_default_image_93X5tCtw PRIVATE ${gateway_abstract_layer_default_default_XC32_FILE_TYPE_link})
 # Add the link options from the rule file.
-gateway_abstract_layer_default_link_rule( gateway_abstract_layer_default_image_FdG4uiJW)
+gateway_abstract_layer_default_link_rule( gateway_abstract_layer_default_image_93X5tCtw)
 
 # Add bin2hex target for converting built file to a .hex file.
 string(REGEX REPLACE [.]elf$ .hex gateway_abstract_layer_default_image_name_hex ${gateway_abstract_layer_default_image_name})
@@ -63,7 +63,7 @@ add_custom_target(gateway_abstract_layer_default_Bin2Hex ALL
     DEPENDS "${gateway_abstract_layer_default_output_dir}/${gateway_abstract_layer_default_image_name}"
     BYPRODUCTS ${gateway_abstract_layer_default_output_dir}/${gateway_abstract_layer_default_image_name_hex}
     COMMENT "Convert built file to .hex")
-add_dependencies(gateway_abstract_layer_default_Bin2Hex gateway_abstract_layer_default_image_FdG4uiJW)
+add_dependencies(gateway_abstract_layer_default_Bin2Hex gateway_abstract_layer_default_image_93X5tCtw)
 
 
 

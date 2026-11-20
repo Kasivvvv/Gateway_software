@@ -13,7 +13,7 @@
 16,PC29,,Available,In,,,,,,,
 17,PC12,CAN1_RX,MCAN1_CANRX1,n/a,n/a,No,Disabled,No,No,Disabled,Low
 18,PC15,,Available,In,,,,,,,
-19,PC13,,Available,In,,,,,,,
+19,PC13,MARK_LOOP,GPIO,Out,Low,No,Disabled,No,No,Disabled,Low
 20,PB1,,Available,In,,,,,,,
 21,PB0,,Available,In,,,,,,,
 22,PA20,,Available,In,,,,,,,
@@ -62,7 +62,7 @@
 73,PA5,MARK_STATE,GPIO,Out,Low,No,Disabled,No,No,Disabled,Low
 74,PD17,,Available,In,,,,,,,
 75,PA9,SWITCH0,SWITCH_AL,n/a,n/a,No,Disabled,Yes,No,Disabled,Low
-76,PC28,MARK_LOOP,GPIO,Out,Low,No,Disabled,No,No,Disabled,Low
+76,PC28,,Available,In,,,,,,,
 77,PA4,AT24MAC402_I2C_SCL,TWIHS0_TWCK0,n/a,n/a,No,Disabled,No,No,Disabled,Low
 78,PD16,,Available,In,,,,,,,
 79,PB6,,Available,In,,,,,,,

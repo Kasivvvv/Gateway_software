@@ -22,8 +22,8 @@ data:
     - children:
       - attributes:
           id: tcpipNetConfig
-          x: '553'
-          y: '365'
+          x: '467'
+          y: '349'
         type: ElementPosition
       type: ElementPositions
     type: ComponentGraph

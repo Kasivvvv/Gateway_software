@@ -37,7 +37,18 @@ data:
         type: DirectCapability
       type: Attachments
     type: twihs0
-  elementPosition: {}
+  elementPosition:
+    attributes:
+      id: __ROOTVIEW
+    children:
+    - children:
+      - attributes:
+          id: twihs0
+          x: '619'
+          y: '99'
+        type: ElementPosition
+      type: ElementPositions
+    type: ComponentGraph
   symbols:
     I2C_CLOCK_SPEED:
       attributes:

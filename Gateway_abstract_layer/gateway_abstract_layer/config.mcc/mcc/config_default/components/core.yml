@@ -96,7 +96,7 @@ data:
       - children:
         - attributes:
             id: core
-            value: '1342243328'
+            value: '1073816064'
           type: Dynamic
         type: Values
       type: Hex
@@ -8162,7 +8162,7 @@ data:
       children:
       - children:
         - attributes:
-            value: GPIO
+            value: ''
           type: User
         type: Values
       type: String
@@ -8173,7 +8173,7 @@ data:
       children:
       - children:
         - attributes:
-            value: GPIO
+            value: ''
           type: User
         type: Values
       type: String
@@ -8184,7 +8184,7 @@ data:
       children:
       - children:
         - attributes:
-            value: MARK_LOOP
+            value: ''
           type: User
         type: Values
       type: String
@@ -8195,7 +8195,7 @@ data:
       children:
       - children:
         - attributes:
-            value: Out
+            value: ''
           type: User
         type: Values
       type: String
@@ -8279,6 +8279,50 @@ data:
     PIN_59_DIR:
       attributes:
         id: PIN_59_DIR
+        label: Direction
+      children:
+      - children:
+        - attributes:
+            value: Out
+          type: User
+        type: Values
+      type: String
+    PIN_19_FUNCTION_TYPE:
+      attributes:
+        id: PIN_19_FUNCTION_TYPE
+        label: Type
+      children:
+      - children:
+        - attributes:
+            value: GPIO
+          type: User
+        type: Values
+      type: String
+    PIN_19_PERIPHERAL_FUNCTION:
+      attributes:
+        id: PIN_19_PERIPHERAL_FUNCTION
+        label: Peripheral Selection
+      children:
+      - children:
+        - attributes:
+            value: GPIO
+          type: User
+        type: Values
+      type: String
+    PIN_19_FUNCTION_NAME:
+      attributes:
+        id: PIN_19_FUNCTION_NAME
+        label: Name
+      children:
+      - children:
+        - attributes:
+            value: MARK_LOOP
+          type: User
+        type: Values
+      type: String
+    PIN_19_DIR:
+      attributes:
+        id: PIN_19_DIR
         label: Direction
       children:
       - children:

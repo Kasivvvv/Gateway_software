@@ -4,19 +4,5 @@
             "reference": "default",
             "toolSerial": "ATML2407131800003593"
         }
-    ],
-    "toolchains": {
-        "overrides": {
-            "registered": {
-                "microchip.toolchains:xc32@6.00": [
-                    "/Applications/microchip/xc32/v6.00"
-                ]
-            },
-            "configs": {
-                "default": {
-                    "microchip.toolchains:xc32@6.00": 0
-                }
-            }
-        }
-    }
+    ]
 }

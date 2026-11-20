@@ -4,7 +4,7 @@
         "--header-insertion=never"
     ],
     "mplab.clangd.compileCommandsDir": "${workspaceFolder}/_build/gateway_abstract_layer/default",
-    "mplab.clangd.path": "/Applications/microchip/xc32/v6.00/bin/xc32-clangd",
+    "mplab.clangd.path": "c:\\Program Files\\Microchip\\xc32\\v5.10\\bin\\xc32-clangd.exe",
     "C_Cpp.intelliSenseEngine": "disabled",
     "memory-inspector.debugTypes": [
         "arm-debugger",

@@ -7,17 +7,17 @@
             "device": "ATSAMV71Q21B",
             "imagePath": "./out/gateway_abstract_layer/default.elf",
             "toolProperties": "default-tool-base",
-            "tool": "EDBG",
+            "tool": "Simulator",
             "packs": [
                 {
                     "name": "SAMV71_DFP",
-                    "vendor": "Microchip",
-                    "version": "4.13.257"
+                    "version": "4.13.257",
+                    "vendor": "Microchip"
                 },
                 {
                     "name": "CMSIS",
-                    "vendor": "ARM",
-                    "version": "6.3.0"
+                    "version": "6.3.0",
+                    "vendor": "ARM"
                 }
             ],
             "fileSet": "default",
@@ -34,7 +34,7 @@
         {
             "name": "default-XC32",
             "type": "toolchain",
-            "provider": "microchip.toolchains:xc32@6.00",
+            "provider": "microchip.toolchains:xc32@5.10",
             "properties": {
                 "linker.heap-size": "512",
                 "compiler.extra-include-directories": [
@@ -68,6 +68,14 @@
             "name": "default-tool-base",
             "type": "tool",
             "properties": {}
+        },
+        {
+            "name": "default-debug",
+            "type": "debug",
+            "provider": "microchip.mplab-core-da:DebugPropertyGroup",
+            "properties": {
+                "useOnDemandDebugStrategy": true
+            }
         }
     ],
     "fileSets": [
