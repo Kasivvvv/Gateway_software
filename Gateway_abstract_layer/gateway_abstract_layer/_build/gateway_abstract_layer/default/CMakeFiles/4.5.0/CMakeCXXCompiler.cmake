@@ -1,4 +1,4 @@
-set(CMAKE_CXX_COMPILER "/Applications/microchip/xc32/v5.10/bin/xc32-g++")
+set(CMAKE_CXX_COMPILER "c:/Program Files/Microchip/xc32/v5.10/bin/xc32-g++.exe")
 set(CMAKE_CXX_COMPILER_ARG1 "")
 set(CMAKE_CXX_COMPILER_ID "GNU")
 set(CMAKE_CXX_COMPILER_VERSION "13.2.1")
@@ -21,21 +21,23 @@ set(CMAKE_CXX_SIMULATE_ID "")
 set(CMAKE_CXX_COMPILER_FRONTEND_VARIANT "GNU")
 set(CMAKE_CXX_COMPILER_APPLE_SYSROOT "")
 set(CMAKE_CXX_SIMULATE_VERSION "")
+set(CMAKE_CXX_COMPILER_ARCHITECTURE_ID "")
 
 
 
 
-set(CMAKE_AR "/Applications/microchip/xc32/v5.10/bin/xc32-ar")
+set(CMAKE_AR "c:/Program Files/Microchip/xc32/v5.10/bin/xc32-ar.exe")
 set(CMAKE_CXX_COMPILER_AR "CMAKE_CXX_COMPILER_AR-NOTFOUND")
-set(CMAKE_RANLIB "/Applications/microchip/xc32/v5.10/bin/xc32-ranlib")
+set(CMAKE_RANLIB "C:/Program Files/Microchip/xc32/v5.10/bin/xc32-ranlib.exe")
 set(CMAKE_CXX_COMPILER_RANLIB "CMAKE_CXX_COMPILER_RANLIB-NOTFOUND")
-set(CMAKE_LINKER "/Applications/microchip/xc32/v5.10/bin/xc32-ld")
+set(CMAKE_LINKER "C:/Program Files/Microchip/xc32/v5.10/bin/xc32-ld.exe")
 set(CMAKE_LINKER_LINK "")
 set(CMAKE_LINKER_LLD "")
 set(CMAKE_CXX_COMPILER_LINKER "")
+set(CMAKE_CXX_COMPILER_LINKER_ARCHITECTURE_FLAGS "")
 set(CMAKE_CXX_COMPILER_LINKER_ID "")
-set(CMAKE_CXX_COMPILER_LINKER_VERSION )
-set(CMAKE_CXX_COMPILER_LINKER_FRONTEND_VARIANT )
+set(CMAKE_CXX_COMPILER_LINKER_VERSION "")
+set(CMAKE_CXX_COMPILER_LINKER_FRONTEND_VARIANT "")
 set(CMAKE_MT "")
 set(CMAKE_TAPI "CMAKE_TAPI-NOTFOUND")
 set(CMAKE_COMPILER_IS_GNUCXX 1)
@@ -95,10 +97,7 @@ set(CMAKE_CXX_IMPLICIT_LINK_LIBRARIES "")
 set(CMAKE_CXX_IMPLICIT_LINK_DIRECTORIES "")
 set(CMAKE_CXX_IMPLICIT_LINK_FRAMEWORK_DIRECTORIES "")
 set(CMAKE_CXX_COMPILER_CLANG_RESOURCE_DIR "")
+set(CMAKE_CXX_STANDARD_LIBRARY_INCLUDE_DIRECTORY "")
 
-set(CMAKE_CXX_COMPILER_IMPORT_STD "")
-### Imported target for C++23 standard library
-set(CMAKE_CXX23_COMPILER_IMPORT_STD_NOT_FOUND_MESSAGE "Experimental `import std` support not enabled when detecting toolchain; it must be set before `CXX` is enabled (usually a `project()` call)")
-
-
-
+set(CMAKE_CXX_COMPILER_IMPORT_STD_ERROR_MESSAGE  "Could not find `libstdc++.modules.json` resource")
+set(CMAKE_CXX_STDLIB_MODULES_JSON "")

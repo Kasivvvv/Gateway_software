@@ -42,15 +42,27 @@
 			}
 		]
 	},
+	"codemodelVersion" : 
+	{
+		"major" : 2,
+		"minor" : 12
+	},
 	"dependencies" : 
 	[
 		{
 			"backtrace" : 4,
-			"id" : "gateway_abstract_layer_default_image_FdG4uiJW::@6890427a1f51a3e7e1df"
+			"id" : "gateway_abstract_layer_default_image_93X5tCtw::@6890427a1f51a3e7e1df"
 		}
 	],
 	"id" : "gateway_abstract_layer_default_Bin2Hex::@6890427a1f51a3e7e1df",
 	"name" : "gateway_abstract_layer_default_Bin2Hex",
+	"orderDependencies" : 
+	[
+		{
+			"backtrace" : 4,
+			"id" : "gateway_abstract_layer_default_image_93X5tCtw::@6890427a1f51a3e7e1df"
+		}
+	],
 	"paths" : 
 	{
 		"build" : ".",
@@ -77,14 +89,22 @@
 	[
 		{
 			"backtrace" : 3,
+			"backtraces" : 
+			[
+				3
+			],
 			"isGenerated" : true,
-			"path" : "/Users/kasiawcislo/Documents/Studia/Magisterka/Gateway_software/Gateway_abstract_layer/gateway_abstract_layer/_build/gateway_abstract_layer/default/CMakeFiles/gateway_abstract_layer_default_Bin2Hex",
+			"path" : "C:/Users/katarzynawcislo/Documents/Zabijcie_mnie/Gateway_software/Gateway_abstract_layer/gateway_abstract_layer/_build/gateway_abstract_layer/default/CMakeFiles/gateway_abstract_layer_default_Bin2Hex",
 			"sourceGroupIndex" : 0
 		},
 		{
 			"backtrace" : 0,
+			"backtraces" : 
+			[
+				0
+			],
 			"isGenerated" : true,
-			"path" : "/Users/kasiawcislo/Documents/Studia/Magisterka/Gateway_software/Gateway_abstract_layer/gateway_abstract_layer/_build/gateway_abstract_layer/default/CMakeFiles/gateway_abstract_layer_default_Bin2Hex.rule",
+			"path" : "C:/Users/katarzynawcislo/Documents/Zabijcie_mnie/Gateway_software/Gateway_abstract_layer/gateway_abstract_layer/_build/gateway_abstract_layer/default/CMakeFiles/gateway_abstract_layer_default_Bin2Hex.rule",
 			"sourceGroupIndex" : 1
 		}
 	],

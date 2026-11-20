@@ -7,7 +7,7 @@
 			{
 				"id" : "GNU",
 				"implicit" : {},
-				"path" : "/Applications/microchip/xc32/v5.10/bin/xc32-gcc",
+				"path" : "c:/Program Files/Microchip/xc32/v5.10/bin/xc32-gcc.exe",
 				"version" : ""
 			},
 			"language" : "ASM",
@@ -29,7 +29,7 @@
 					"linkFrameworkDirectories" : [],
 					"linkLibraries" : []
 				},
-				"path" : "/Applications/microchip/xc32/v5.10/bin/xc32-gcc",
+				"path" : "c:/Program Files/Microchip/xc32/v5.10/bin/xc32-gcc.exe",
 				"version" : "13.2.1"
 			},
 			"language" : "C",
@@ -50,7 +50,7 @@
 					"linkFrameworkDirectories" : [],
 					"linkLibraries" : []
 				},
-				"path" : "/Applications/microchip/xc32/v5.10/bin/xc32-g++",
+				"path" : "c:/Program Files/Microchip/xc32/v5.10/bin/xc32-g++.exe",
 				"version" : "13.2.1"
 			},
 			"language" : "CXX",
@@ -76,6 +76,6 @@
 	"version" : 
 	{
 		"major" : 1,
-		"minor" : 0
+		"minor" : 1
 	}
 }

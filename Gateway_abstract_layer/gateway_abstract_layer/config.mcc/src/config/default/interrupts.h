@@ -67,6 +67,7 @@ void USART1_InterruptHandler (void);
 void TWIHS0_InterruptHandler (void);
 void TC0_CH0_InterruptHandler (void);
 void TC0_CH1_InterruptHandler (void);
+void MCAN1_INT0_InterruptHandler (void);
 void GMAC_InterruptHandler (void);
 
 

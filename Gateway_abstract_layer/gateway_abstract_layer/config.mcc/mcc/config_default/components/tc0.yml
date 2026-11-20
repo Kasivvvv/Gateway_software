@@ -983,6 +983,13 @@ data:
       attributes:
         id: TC3_CLOCK_FREQ
         label: Clock Frequency (Hz)
+      children:
+      - children:
+        - attributes:
+            id: tc0
+            value: '150000000'
+          type: Dynamic
+        type: Values
       type: Integer
     TC3_CMR_TCCLKS:
       attributes:

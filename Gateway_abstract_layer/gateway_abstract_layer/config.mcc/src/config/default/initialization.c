@@ -476,6 +476,8 @@ void SYS_Initialize ( void* data )
     BSP_Initialize();
 	TWIHS0_Initialize();
 
+    MCAN1_Initialize();
+
     USART1_Initialize();
 
 

@@ -29,6 +29,44 @@
 
 
 
+/*********************************************************************************
+Initialize Main Clock (MAINCK)
+*********************************************************************************/
+static void CLK_MainClockInitialize(void)
+{
+    /* Enable Main Crystal Oscillator */
+    PMC_REGS->CKGR_MOR = (PMC_REGS->CKGR_MOR & ~CKGR_MOR_MOSCXTST_Msk) | CKGR_MOR_KEY_PASSWD | CKGR_MOR_MOSCXTST(255) | CKGR_MOR_MOSCXTEN_Msk;
+
+    /* Wait until the main oscillator clock is ready */
+    while ( (PMC_REGS->PMC_SR & PMC_SR_MOSCXTS_Msk) != PMC_SR_MOSCXTS_Msk)
+    {
+        /* Nothing to do */
+    }
+
+
+    /* Enable the RC Oscillator */
+    PMC_REGS->CKGR_MOR|= CKGR_MOR_KEY_PASSWD | CKGR_MOR_MOSCRCEN_Msk;
+
+    /* Wait until the RC oscillator clock is ready. */
+    while( (PMC_REGS->PMC_SR & PMC_SR_MOSCRCS_Msk) != PMC_SR_MOSCRCS_Msk)
+    {
+        /* Nothing to do */
+    }
+
+    /* Configure the RC Oscillator frequency */
+    PMC_REGS->CKGR_MOR = (PMC_REGS->CKGR_MOR & ~CKGR_MOR_MOSCRCF_Msk) | CKGR_MOR_KEY_PASSWD | CKGR_MOR_MOSCRCF_12_MHz;
+
+    /* Wait until the RC oscillator clock is ready */
+    while( (PMC_REGS->PMC_SR& PMC_SR_MOSCRCS_Msk) != PMC_SR_MOSCRCS_Msk)
+    {
+        /* Nothing to do */
+    }
+
+    /* Main RC Oscillator is selected as the Main Clock (MAINCK) source.
+       Switch Main Clock (MAINCK) to the RC Oscillator clock */
+    PMC_REGS->CKGR_MOR = (PMC_REGS->CKGR_MOR & ~CKGR_MOR_MOSCSEL_Msk) | CKGR_MOR_KEY_PASSWD;
+
+}
 
 /*********************************************************************************
 Initialize PLLA (PLLACK)
@@ -48,6 +86,35 @@ static void CLK_PLLAInitialize(void)
 }
 
 
+/*********************************************************************************
+Initialize UTMI PLL  (UPLLCK)
+*********************************************************************************/
+
+static void CLK_UTMIPLLInitialize(void)
+{
+
+    /* Configure Crystal Clock Frequency (12MHz or 16MHz) to select USB PLL (UPLL) multiplication factor
+       UPLL multiplication factor is x40 to generate 480MHz from 12MHz
+       UPLL multiplication factor is x30 to generate 480MHz from 16MHz  */
+    UTMI_REGS->UTMI_CKTRIM= UTMI_CKTRIM_FREQ_XTAL12;
+
+    /* Enable UPLL and configure UPLL lock time */
+    PMC_REGS->CKGR_UCKR = CKGR_UCKR_UPLLEN_Msk | CKGR_UCKR_UPLLCOUNT(0x3F);
+
+    /* Wait until PLL Lock occurs */
+    while ((PMC_REGS->PMC_SR & PMC_SR_LOCKU_Msk) != PMC_SR_LOCKU_Msk)
+    {
+        /* Nothing to do */
+    }
+    /* UPLL clock frequency is 480MHz (Divider=1) */
+    PMC_REGS->PMC_MCKR &= (~PMC_MCKR_UPLLDIV2_Msk);
+
+    /* Wait until clock is ready */
+    while ( (PMC_REGS->PMC_SR & PMC_SR_MCKRDY_Msk) != PMC_SR_MCKRDY_Msk)
+    {
+        /* Nothing to do */
+    }
+}
 
 /*********************************************************************************
 Initialize Master clock (MCK)
@@ -83,6 +150,28 @@ static void CLK_MasterClockInitialize(void)
 
 
 
+/*********************************************************************************
+Initialize Programmable Clock (PCKx)
+*********************************************************************************/
+
+static void CLK_ProgrammableClockInitialize(void)
+{
+    /* Disable selected programmable clock  */
+    PMC_REGS->PMC_SCDR = PMC_SCDR_PCK5_Msk;
+
+    /* Configure selected programmable clock    */
+    PMC_REGS->PMC_PCK[5]= PMC_PCK_CSS_UPLL_CLK | PMC_PCK_PRES(11);
+
+    /* Enable selected programmable clock   */
+    PMC_REGS->PMC_SCER =    PMC_SCER_PCK5_Msk;
+
+    /* Wait for clock to be ready   */
+    while( (PMC_REGS->PMC_SR & (PMC_SR_PCKRDY5_Msk) ) != (PMC_SR_PCKRDY5_Msk))
+    {
+        /* Nothing to do */
+    }
+
+}
 
 
 /*********************************************************************************
@@ -92,18 +181,24 @@ void CLOCK_Initialize( void )
 {
 
 
+    /* Initialize Main Clock */
+    CLK_MainClockInitialize();
 
     /* Initialize PLLA */
     CLK_PLLAInitialize();
 
+    /* Initialize UTMI PLL */
+    CLK_UTMIPLLInitialize();
 
     /* Initialize Master Clock */
     CLK_MasterClockInitialize();
 
 
 
+    /* Initialize Programmable Clock */
+    CLK_ProgrammableClockInitialize();
 
     /* Enable Peripheral Clock */
     PMC_REGS->PMC_PCER0=0x18b5c00U;
-    PMC_REGS->PMC_PCER1=0x80U;
+    PMC_REGS->PMC_PCER1=0xa0U;
 }

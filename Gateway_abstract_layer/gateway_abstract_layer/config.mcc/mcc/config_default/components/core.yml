@@ -21,6 +21,13 @@ data:
       attributes:
         id: MCAN1_CLOCK_ENABLE
         label: MCAN1
+      children:
+      - children:
+        - attributes:
+            id: mcan1
+            value: 'true'
+          type: Dynamic
+        type: Values
       type: Boolean
     PMC_PCER1:
       attributes:
@@ -30,7 +37,7 @@ data:
       - children:
         - attributes:
             id: core
-            value: '128'
+            value: '160'
           type: Dynamic
         type: Values
       type: Hex
@@ -340,7 +347,7 @@ data:
       children:
       - children:
         - attributes:
-            value: '16'
+            value: '10'
           type: User
         type: Values
       type: Integer
@@ -812,7 +819,7 @@ data:
       - children:
         - attributes:
             id: core
-            value: '0'
+            value: '40000000'
           type: Dynamic
         type: Values
       type: Integer
@@ -823,7 +830,7 @@ data:
       children:
       - children:
         - attributes:
-            value: '150000000'
+            value: '40000000'
           type: User
         type: Values
       type: String
@@ -834,7 +841,7 @@ data:
       children:
       - children:
         - attributes:
-            value: MCK
+            value: UPLL_CLK
           type: User
         type: Values
       type: Combo
@@ -8331,6 +8338,179 @@ data:
           type: User
         type: Values
       type: String
+    PCK1_CLOCK_FREQUENCY:
+      attributes:
+        id: PCK1_CLOCK_FREQUENCY
+        label: 'Programmable clock #1 Frequency (HZ)'
+      children:
+      - children:
+        - attributes:
+            value: '32000'
+          type: User
+        type: Values
+      type: String
+    TC0_CH3_CLOCK_FREQUENCY:
+      attributes:
+        id: TC0_CH3_CLOCK_FREQUENCY
+        label: TC0_CH3_CLOCK_FREQUENCY
+      children:
+      - children:
+        - attributes:
+            id: core
+            value: '150000000'
+          type: Dynamic
+        type: Values
+      type: Integer
+    PCK6_CLOCK_FREQUENCY:
+      attributes:
+        id: PCK6_CLOCK_FREQUENCY
+        label: 'Programmable clock #6 Frequency (HZ)'
+      children:
+      - children:
+        - attributes:
+            value: '32000'
+          type: User
+        type: Values
+      type: String
+    PMC_CKGR_UCKR_UPLLEN:
+      attributes:
+        id: PMC_CKGR_UCKR_UPLLEN
+        label: UTMI PLL Enable
+      children:
+      - children:
+        - attributes:
+            value: 'true'
+          type: User
+        type: Values
+      type: Boolean
+    PMC_CKGR_MOR_MOSCXTEN:
+      attributes:
+        id: PMC_CKGR_MOR_MOSCXTEN
+        label: Main Crystal Oscillator Enable
+      children:
+      - children:
+        - attributes:
+            value: 'true'
+          type: User
+        type: Values
+      type: Boolean
+    PCK7_CLOCK_FREQUENCY:
+      attributes:
+        id: PCK7_CLOCK_FREQUENCY
+        label: 'Programmable clock #7 Frequency (HZ)'
+      children:
+      - children:
+        - attributes:
+            value: '32000'
+          type: User
+        type: Values
+      type: String
+    PMC_PCK5_PRES:
+      attributes:
+        id: PMC_PCK5_PRES
+        label: Programmable Clock Prescaler
+      children:
+      - children:
+        - attributes:
+            value: '12'
+          type: User
+        type: Values
+      type: Integer
+    PMC_SCER_PCK5:
+      attributes:
+        id: PMC_SCER_PCK5
+        label: Programmable Clock 5 Output Enable
+      children:
+      - children:
+        - attributes:
+            value: 'true'
+          type: User
+        type: Values
+      type: Boolean
+    MCAN1_INT0_INTERRUPT_ENABLE_UPDATE:
+      attributes:
+        id: MCAN1_INT0_INTERRUPT_ENABLE_UPDATE
+        label: NVIC Peripheral Enable/Disable Update
+      children:
+      - children:
+        - attributes:
+            id: core
+            value: 'false'
+          type: Dynamic
+        type: Values
+      type: Boolean
+    NVIC_37_0_ENABLE:
+      attributes:
+        id: NVIC_37_0_ENABLE
+        label: Enable MCAN Controller 1 Interrupt 0 Interrupt
+      children:
+      - children:
+        - attributes:
+            id: core
+            value: 'true'
+          type: Dynamic
+        type: Values
+      type: Boolean
+    MCAN1_INT0_INTERRUPT_ENABLE:
+      attributes:
+        id: MCAN1_INT0_INTERRUPT_ENABLE
+        label: Vector Peripheral Enable
+      children:
+      - children:
+        - attributes:
+            id: mcan1
+            value: 'true'
+          type: Dynamic
+        type: Values
+      type: Boolean
+    NVIC_37_0_HANDLER:
+      attributes:
+        id: NVIC_37_0_HANDLER
+        label: Handler
+      children:
+      - children:
+        - attributes:
+            id: core
+            value: MCAN1_INT0_InterruptHandler
+          type: Dynamic
+        type: Values
+      type: String
+    MCAN1_INT0_INTERRUPT_HANDLER:
+      attributes:
+        id: MCAN1_INT0_INTERRUPT_HANDLER
+        label: Vector Peripheral Handler
+      children:
+      - children:
+        - attributes:
+            id: mcan1
+            value: MCAN1_INT0_InterruptHandler
+          type: Dynamic
+        type: Values
+      type: String
+    NVIC_37_0_HANDLER_LOCK:
+      attributes:
+        id: NVIC_37_0_HANDLER_LOCK
+        label: Handler Lock
+      children:
+      - children:
+        - attributes:
+            id: core
+            value: 'true'
+          type: Dynamic
+        type: Values
+      type: Boolean
+    MCAN1_INT0_INTERRUPT_HANDLER_LOCK:
+      attributes:
+        id: MCAN1_INT0_INTERRUPT_HANDLER_LOCK
+        label: Vector Peripheral Handler Lock
+      children:
+      - children:
+        - attributes:
+            id: mcan1
+            value: 'true'
+          type: Dynamic
+        type: Values
+      type: Boolean
   userData:
     children:
     - attributes:

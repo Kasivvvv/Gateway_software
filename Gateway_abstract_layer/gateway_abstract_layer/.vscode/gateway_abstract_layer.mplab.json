@@ -126,7 +126,8 @@
                 "config.mcc/src/config/default/system/sys_time_h2_adapter.c",
                 "config.mcc/src/config/default/driver/at24/src/drv_at24.c",
                 "config.mcc/src/config/default/peripheral/twihs/master/plib_twihs0_master.c",
-                "config.mcc/src/config/default/peripheral/usart/plib_usart1.c"
+                "config.mcc/src/config/default/peripheral/usart/plib_usart1.c",
+                "config.mcc/src/config/default/peripheral/mcan/plib_mcan1.c"
             ]
         }
     ]
