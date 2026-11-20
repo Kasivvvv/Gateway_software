@@ -8,12 +8,16 @@
 #define CORE_STATS_PERIOD_TICKS   (5000U)  /* 5000 * 200 us = 1 s */
 #define CORE_LED_PERIOD_TICKS     (2500U)  /* 2500 * 200 us = 500 ms */
 
+/* Widen MARK_LOOP after timing so a logic analyser can resolve the edge
+ * (empty iteration is only ~tens of CPU cycles ≈ tens of ns). */
+#define CORE_MARK_LOOP_MIN_CYCLES (300U)   /* ~1 us @ 300 MHz */
+
 typedef struct
 {
     uint32_t iterations;
     uint32_t longestCycles;
     uint32_t lastCycles;
-    uint32_t overrunsAtReport;
+    uint32_t iterationsAtReport;
 } core_stats_t;
 
 static core_stats_t s_stats;
@@ -86,7 +90,10 @@ static void core_report_stats(void)
             } \
         } while (0)
 
-    CORE_APPEND_LIT("Tloop stats: it=");
+    /* Delta of iterations since previous report (~1 s → expect ~5000). */
+    CORE_APPEND_LIT("Tloop stats: dit=");
+    CORE_APPEND_U32(s_stats.iterations - s_stats.iterationsAtReport);
+    CORE_APPEND_LIT(" it=");
     CORE_APPEND_U32(s_stats.iterations);
     CORE_APPEND_LIT(" last_cy=");
     CORE_APPEND_U32(s_stats.lastCycles);
@@ -95,6 +102,7 @@ static void core_report_stats(void)
     CORE_APPEND_LIT(" ov=");
     CORE_APPEND_U32(hwa_time_overrun_count());
     CORE_APPEND_LIT("\r\n");
+    s_stats.iterationsAtReport = s_stats.iterations;
     buf[pos] = '\0';
 
     (void)hwa_console_write_str(buf);
@@ -110,7 +118,7 @@ void core_init(void)
     s_stats.iterations = 0U;
     s_stats.longestCycles = 0U;
     s_stats.lastCycles = 0U;
-    s_stats.overrunsAtReport = 0U;
+    s_stats.iterationsAtReport = 0U;
     s_ticksSinceStats = 0U;
     s_ticksSinceLed = 0U;
 
@@ -141,6 +149,12 @@ void core_step(void)
     /* Stage 1: no conversion / stacks yet — measure empty iteration cost. */
 
     elapsed = hwa_time_cycles() - t0;
+
+    /* Keep MARK_LOOP high long enough for the analyser; does not affect elapsed. */
+    while ((hwa_time_cycles() - t0) < CORE_MARK_LOOP_MIN_CYCLES)
+    {
+    }
+
     hwa_marker_clear(HAL_MARKER_LOOP);
 
     s_stats.iterations++;

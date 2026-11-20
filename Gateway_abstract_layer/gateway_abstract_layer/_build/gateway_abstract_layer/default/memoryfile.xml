@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project>
-  <executable name="C:\Users\katarzynawcislo\Documents\Zabijcie_mnie\Gateway_software\Gateway_abstract_layer\gateway_abstract_layer\out\gateway_abstract_layer\default.elf">
+  <executable name="/Users/kasiawcislo/Documents/Studia/Magisterka/Gateway_software/Gateway_abstract_layer/gateway_abstract_layer/out/gateway_abstract_layer/default.elf">
     <memory name="program">
       <units>bytes</units>
       <length>2097152</length>
-      <used>41861</used>
-      <free>2055291</free>
+      <used>42041</used>
+      <free>2055111</free>
     </memory>
     <memory name="data">
       <units>bytes</units>

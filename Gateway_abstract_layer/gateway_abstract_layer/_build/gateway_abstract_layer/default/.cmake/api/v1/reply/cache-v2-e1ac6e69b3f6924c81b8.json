@@ -15,7 +15,7 @@
 				}
 			],
 			"type" : "FILEPATH",
-			"value" : "C:/Program Files/Microchip/xc32/v5.10/bin/xc32-addr2line.exe"
+			"value" : "/Applications/microchip/xc32/v5.10/bin/xc32-addr2line"
 		},
 		{
 			"name" : "CMAKE_AR",
@@ -31,7 +31,7 @@
 				}
 			],
 			"type" : "FILEPATH",
-			"value" : "c:/Program Files/Microchip/xc32/v5.10/bin/xc32-ar.exe"
+			"value" : "/Applications/microchip/xc32/v5.10/bin/xc32-ar"
 		},
 		{
 			"name" : "CMAKE_ASM_COMPILER",
@@ -47,7 +47,7 @@
 				}
 			],
 			"type" : "STRING",
-			"value" : "c:/Program Files/Microchip/xc32/v5.10/bin/xc32-gcc.exe"
+			"value" : "/Applications/microchip/xc32/v5.10/bin/xc32-gcc"
 		},
 		{
 			"name" : "CMAKE_ASM_COMPILER_AR",
@@ -195,7 +195,7 @@
 				}
 			],
 			"type" : "INTERNAL",
-			"value" : "c:/Users/katarzynawcislo/Documents/Zabijcie_mnie/Gateway_software/Gateway_abstract_layer/gateway_abstract_layer/_build/gateway_abstract_layer/default"
+			"value" : "/Users/kasiawcislo/Documents/Studia/Magisterka/Gateway_software/Gateway_abstract_layer/gateway_abstract_layer/_build/gateway_abstract_layer/default"
 		},
 		{
 			"name" : "CMAKE_CACHE_MAJOR_VERSION",
@@ -219,7 +219,7 @@
 				}
 			],
 			"type" : "INTERNAL",
-			"value" : "5"
+			"value" : "0"
 		},
 		{
 			"name" : "CMAKE_CACHE_PATCH_VERSION",
@@ -231,7 +231,7 @@
 				}
 			],
 			"type" : "INTERNAL",
-			"value" : "0"
+			"value" : "3"
 		},
 		{
 			"name" : "CMAKE_COLOR_DIAGNOSTICS",
@@ -255,7 +255,7 @@
 				}
 			],
 			"type" : "INTERNAL",
-			"value" : "C:/Users/katarzynawcislo/.mplab/app-finder/apps/cmake/v4.5.0/cmake-4.5.0-windows-x86_64/bin/cmake.exe"
+			"value" : "/opt/homebrew/bin/cmake"
 		},
 		{
 			"name" : "CMAKE_CPACK_COMMAND",
@@ -267,7 +267,7 @@
 				}
 			],
 			"type" : "INTERNAL",
-			"value" : "C:/Users/katarzynawcislo/.mplab/app-finder/apps/cmake/v4.5.0/cmake-4.5.0-windows-x86_64/bin/cpack.exe"
+			"value" : "/opt/homebrew/bin/cpack"
 		},
 		{
 			"name" : "CMAKE_CTEST_COMMAND",
@@ -279,7 +279,7 @@
 				}
 			],
 			"type" : "INTERNAL",
-			"value" : "C:/Users/katarzynawcislo/.mplab/app-finder/apps/cmake/v4.5.0/cmake-4.5.0-windows-x86_64/bin/ctest.exe"
+			"value" : "/opt/homebrew/bin/ctest"
 		},
 		{
 			"name" : "CMAKE_CXX_COMPILER",
@@ -295,7 +295,7 @@
 				}
 			],
 			"type" : "STRING",
-			"value" : "c:/Program Files/Microchip/xc32/v5.10/bin/xc32-g++.exe"
+			"value" : "/Applications/microchip/xc32/v5.10/bin/xc32-g++"
 		},
 		{
 			"name" : "CMAKE_CXX_COMPILER_AR",
@@ -423,7 +423,7 @@
 				}
 			],
 			"type" : "STRING",
-			"value" : "c:/Program Files/Microchip/xc32/v5.10/bin/xc32-gcc.exe"
+			"value" : "/Applications/microchip/xc32/v5.10/bin/xc32-gcc"
 		},
 		{
 			"name" : "CMAKE_C_COMPILER_AR",
@@ -538,18 +538,6 @@
 			"value" : "-O2 -g -DNDEBUG"
 		},
 		{
-			"name" : "CMAKE_DIAGNOSTIC_INIT",
-			"properties" : 
-			[
-				{
-					"name" : "HELPSTRING",
-					"value" : "Set initial state for CMake diagnostics; used to persist state set by command-line options across invocations."
-				}
-			],
-			"type" : "INTERNAL",
-			"value" : "CMD_AUTHOR=WARN;CMD_DEPRECATED=WARN;CMD_EXPERIMENTAL=WARN;CMD_STRICT=IGNORE;CMD_INSTALL_ABSOLUTE_DESTINATION=IGNORE;CMD_NON_TARGET_DIRECTIVE=IGNORE;CMD_POLICY=WARN;CMD_UNINITIALIZED=IGNORE;CMD_UNUSED_CLI=WARN"
-		},
-		{
 			"name" : "CMAKE_DLLTOOL",
 			"properties" : 
 			[
@@ -563,7 +551,7 @@
 				}
 			],
 			"type" : "FILEPATH",
-			"value" : "C:/msys64/ucrt64/bin/dlltool.exe"
+			"value" : "CMAKE_DLLTOOL-NOTFOUND"
 		},
 		{
 			"name" : "CMAKE_EDIT_COMMAND",
@@ -575,19 +563,7 @@
 				}
 			],
 			"type" : "INTERNAL",
-			"value" : "C:/Users/katarzynawcislo/.mplab/app-finder/apps/cmake/v4.5.0/cmake-4.5.0-windows-x86_64/bin/cmake-gui.exe"
-		},
-		{
-			"name" : "CMAKE_ERROR_DEPRECATED",
-			"properties" : 
-			[
-				{
-					"name" : "HELPSTRING",
-					"value" : "Deprecated.  Use -W[no-]error=deprecated instead."
-				}
-			],
-			"type" : "INTERNAL",
-			"value" : "OFF"
+			"value" : "/opt/homebrew/bin/ccmake"
 		},
 		{
 			"name" : "CMAKE_EXECUTABLE_FORMAT",
@@ -703,7 +679,7 @@
 			[
 				{
 					"name" : "HELPSTRING",
-					"value" : "Enable output of a compile_commands.json file listing the exact compiler invocation for each translation unit. Implemented by the Makefile and Ninja generators; ignored elsewhere."
+					"value" : "No help, variable specified on the command line."
 				}
 			],
 			"type" : "BOOL",
@@ -731,7 +707,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "C:/Users/katarzynawcislo/Documents/Zabijcie_mnie/Gateway_software/Gateway_abstract_layer/gateway_abstract_layer/_build/gateway_abstract_layer/default/CMakeFiles/pkgRedirects"
+			"value" : "/Users/kasiawcislo/Documents/Studia/Magisterka/Gateway_software/Gateway_abstract_layer/gateway_abstract_layer/_build/gateway_abstract_layer/default/CMakeFiles/pkgRedirects"
 		},
 		{
 			"name" : "CMAKE_GENERATOR",
@@ -791,7 +767,7 @@
 				}
 			],
 			"type" : "INTERNAL",
-			"value" : "C:/Users/katarzynawcislo/Documents/Zabijcie_mnie/Gateway_software/Gateway_abstract_layer/gateway_abstract_layer/cmake/gateway_abstract_layer/default"
+			"value" : "/Users/kasiawcislo/Documents/Studia/Magisterka/Gateway_software/Gateway_abstract_layer/gateway_abstract_layer/cmake/gateway_abstract_layer/default"
 		},
 		{
 			"name" : "CMAKE_INSTALL_PREFIX",
@@ -803,7 +779,7 @@
 				}
 			],
 			"type" : "PATH",
-			"value" : "C:/Program Files/gateway_abstract_layer_default_project"
+			"value" : "/usr/local"
 		},
 		{
 			"name" : "CMAKE_LINKER",
@@ -819,7 +795,7 @@
 				}
 			],
 			"type" : "FILEPATH",
-			"value" : "C:/Program Files/Microchip/xc32/v5.10/bin/xc32-ld.exe"
+			"value" : "/Applications/microchip/xc32/v5.10/bin/xc32-ld"
 		},
 		{
 			"name" : "CMAKE_LIST_FILE_NAME",
@@ -847,7 +823,7 @@
 				}
 			],
 			"type" : "FILEPATH",
-			"value" : "C:/Users/katarzynawcislo/.mplab/app-finder/apps/ninja/v1.13.2/ninja.exe"
+			"value" : "/Users/kasiawcislo/.mplab/app-finder/apps/ninja/v1.13.2/ninja"
 		},
 		{
 			"name" : "CMAKE_MODULE_LINKER_FLAGS",
@@ -943,7 +919,7 @@
 				}
 			],
 			"type" : "FILEPATH",
-			"value" : "C:/Program Files/Microchip/xc32/v5.10/bin/xc32-nm.exe"
+			"value" : "/Applications/microchip/xc32/v5.10/bin/xc32-nm"
 		},
 		{
 			"name" : "CMAKE_NUMBER_OF_MAKEFILES",
@@ -971,7 +947,7 @@
 				}
 			],
 			"type" : "FILEPATH",
-			"value" : "C:/Program Files/Microchip/xc32/v5.10/bin/xc32-objcopy.exe"
+			"value" : "/Applications/microchip/xc32/v5.10/bin/xc32-objcopy"
 		},
 		{
 			"name" : "CMAKE_OBJDUMP",
@@ -987,7 +963,7 @@
 				}
 			],
 			"type" : "FILEPATH",
-			"value" : "C:/Program Files/Microchip/xc32/v5.10/bin/xc32-objdump.exe"
+			"value" : "/Applications/microchip/xc32/v5.10/bin/xc32-objdump"
 		},
 		{
 			"name" : "CMAKE_PLATFORM_INFO_INITIALIZED",
@@ -1000,18 +976,6 @@
 			],
 			"type" : "INTERNAL",
 			"value" : "1"
-		},
-		{
-			"name" : "CMAKE_PROJECT_COMPAT_VERSION",
-			"properties" : 
-			[
-				{
-					"name" : "HELPSTRING",
-					"value" : "Value Computed by CMake"
-				}
-			],
-			"type" : "STATIC",
-			"value" : ""
 		},
 		{
 			"name" : "CMAKE_PROJECT_DESCRIPTION",
@@ -1050,18 +1014,6 @@
 			"value" : "gateway_abstract_layer_default_project"
 		},
 		{
-			"name" : "CMAKE_PROJECT_SPDX_LICENSE",
-			"properties" : 
-			[
-				{
-					"name" : "HELPSTRING",
-					"value" : "Value Computed by CMake"
-				}
-			],
-			"type" : "STATIC",
-			"value" : ""
-		},
-		{
 			"name" : "CMAKE_RANLIB",
 			"properties" : 
 			[
@@ -1075,7 +1027,7 @@
 				}
 			],
 			"type" : "FILEPATH",
-			"value" : "C:/Program Files/Microchip/xc32/v5.10/bin/xc32-ranlib.exe"
+			"value" : "/Applications/microchip/xc32/v5.10/bin/xc32-ranlib"
 		},
 		{
 			"name" : "CMAKE_READELF",
@@ -1091,7 +1043,7 @@
 				}
 			],
 			"type" : "FILEPATH",
-			"value" : "C:/Program Files/Microchip/xc32/v5.10/bin/xc32-readelf.exe"
+			"value" : "/Applications/microchip/xc32/v5.10/bin/xc32-readelf"
 		},
 		{
 			"name" : "CMAKE_ROOT",
@@ -1103,7 +1055,7 @@
 				}
 			],
 			"type" : "INTERNAL",
-			"value" : "C:/Users/katarzynawcislo/.mplab/app-finder/apps/cmake/v4.5.0/cmake-4.5.0-windows-x86_64/share/cmake-4.5"
+			"value" : "/opt/homebrew/share/cmake"
 		},
 		{
 			"name" : "CMAKE_SHARED_LINKER_FLAGS",
@@ -1227,7 +1179,7 @@
 				},
 				{
 					"name" : "HELPSTRING",
-					"value" : "Flags used by the archiver during the creation of static libraries during all build types."
+					"value" : "Flags used by the linker during the creation of static libraries during all build types."
 				}
 			],
 			"type" : "STRING",
@@ -1243,7 +1195,7 @@
 				},
 				{
 					"name" : "HELPSTRING",
-					"value" : "Flags used by the archiver during the creation of static libraries during DEBUG builds."
+					"value" : "Flags used by the linker during the creation of static libraries during DEBUG builds."
 				}
 			],
 			"type" : "STRING",
@@ -1259,7 +1211,7 @@
 				},
 				{
 					"name" : "HELPSTRING",
-					"value" : "Flags used by the archiver during the creation of static libraries during MINSIZEREL builds."
+					"value" : "Flags used by the linker during the creation of static libraries during MINSIZEREL builds."
 				}
 			],
 			"type" : "STRING",
@@ -1275,7 +1227,7 @@
 				},
 				{
 					"name" : "HELPSTRING",
-					"value" : "Flags used by the archiver during the creation of static libraries during RELEASE builds."
+					"value" : "Flags used by the linker during the creation of static libraries during RELEASE builds."
 				}
 			],
 			"type" : "STRING",
@@ -1291,7 +1243,7 @@
 				},
 				{
 					"name" : "HELPSTRING",
-					"value" : "Flags used by the archiver during the creation of static libraries during RELWITHDEBINFO builds."
+					"value" : "Flags used by the linker during the creation of static libraries during RELWITHDEBINFO builds."
 				}
 			],
 			"type" : "STRING",
@@ -1311,19 +1263,7 @@
 				}
 			],
 			"type" : "FILEPATH",
-			"value" : "C:/Program Files/Microchip/xc32/v5.10/bin/xc32-strip.exe"
-		},
-		{
-			"name" : "CMAKE_SYSTEM_ENVIRONMENT_ID",
-			"properties" : 
-			[
-				{
-					"name" : "HELPSTRING",
-					"value" : "Opaque identifier for the current system environment"
-				}
-			],
-			"type" : "INTERNAL",
-			"value" : ""
+			"value" : "/Applications/microchip/xc32/v5.10/bin/xc32-strip"
 		},
 		{
 			"name" : "CMAKE_TAPI",
@@ -1351,7 +1291,19 @@
 				}
 			],
 			"type" : "FILEPATH",
-			"value" : "C:/Users/katarzynawcislo/Documents/Zabijcie_mnie/Gateway_software/Gateway_abstract_layer/gateway_abstract_layer/cmake/gateway_abstract_layer/default/.generated/toolchain.cmake"
+			"value" : "/Users/kasiawcislo/Documents/Studia/Magisterka/Gateway_software/Gateway_abstract_layer/gateway_abstract_layer/cmake/gateway_abstract_layer/default/.generated/toolchain.cmake"
+		},
+		{
+			"name" : "CMAKE_UNAME",
+			"properties" : 
+			[
+				{
+					"name" : "HELPSTRING",
+					"value" : "uname command"
+				}
+			],
+			"type" : "INTERNAL",
+			"value" : "/usr/bin/uname"
 		},
 		{
 			"name" : "CMAKE_USER_MAKE_RULES_OVERRIDE",
@@ -1359,11 +1311,11 @@
 			[
 				{
 					"name" : "HELPSTRING",
-					"value" : "Specify a CMake file that overrides platform information. CMake loads the specified file while enabling support for each language from either the project or enable_language commands. It is loaded after CMake's builtin compiler and platform information modules have been loaded but before the information is used."
+					"value" : "No help, variable specified on the command line."
 				}
 			],
 			"type" : "FILEPATH",
-			"value" : "C:/Users/katarzynawcislo/Documents/Zabijcie_mnie/Gateway_software/Gateway_abstract_layer/gateway_abstract_layer/cmake/gateway_abstract_layer/default/.generated/overrides.cmake"
+			"value" : "/Users/kasiawcislo/Documents/Studia/Magisterka/Gateway_software/Gateway_abstract_layer/gateway_abstract_layer/cmake/gateway_abstract_layer/default/.generated/overrides.cmake"
 		},
 		{
 			"name" : "CMAKE_VERBOSE_MAKEFILE",
@@ -1382,18 +1334,6 @@
 			"value" : "FALSE"
 		},
 		{
-			"name" : "CMAKE_WARN_DEPRECATED",
-			"properties" : 
-			[
-				{
-					"name" : "HELPSTRING",
-					"value" : "Deprecated.  Use -W[no-]deprecated instead."
-				}
-			],
-			"type" : "INTERNAL",
-			"value" : "ON"
-		},
-		{
 			"name" : "MP_AR",
 			"properties" : 
 			[
@@ -1402,8 +1342,8 @@
 					"value" : "Legacy variable from MPLAB X pointing to the archiver binary."
 				}
 			],
-			"type" : "STRING",
-			"value" : "c:\\Program Files\\Microchip\\xc32\\v5.10\\bin\\xc32-ar.exe"
+			"type" : "FILEPATH",
+			"value" : "/Applications/microchip/xc32/v5.10/bin/xc32-ar"
 		},
 		{
 			"name" : "MP_AR_DIR",
@@ -1414,8 +1354,8 @@
 					"value" : "Legacy variable from MPLAB X pointing to the archiver base directory"
 				}
 			],
-			"type" : "STRING",
-			"value" : "c:\\Program Files\\Microchip\\xc32\\v5.10\\bin"
+			"type" : "PATH",
+			"value" : "/Applications/microchip/xc32/v5.10/bin"
 		},
 		{
 			"name" : "MP_AS",
@@ -1426,8 +1366,8 @@
 					"value" : "Legacy variable from MPLAB X pointing to the assembler"
 				}
 			],
-			"type" : "STRING",
-			"value" : "c:\\Program Files\\Microchip\\xc32\\v5.10\\bin\\xc32-gcc.exe"
+			"type" : "PATH",
+			"value" : "/Applications/microchip/xc32/v5.10/bin/xc32-gcc"
 		},
 		{
 			"name" : "MP_AS_DIR",
@@ -1438,8 +1378,8 @@
 					"value" : "Legacy variable from MPLAB X pointing to the assembler base directory"
 				}
 			],
-			"type" : "STRING",
-			"value" : "c:\\Program Files\\Microchip\\xc32\\v5.10\\bin"
+			"type" : "PATH",
+			"value" : "/Applications/microchip/xc32/v5.10/bin"
 		},
 		{
 			"name" : "MP_BIN2HEX",
@@ -1450,8 +1390,8 @@
 					"value" : "Legacy variable from MPLAB X pointing to the bin2hex binary."
 				}
 			],
-			"type" : "STRING",
-			"value" : "c:\\Program Files\\Microchip\\xc32\\v5.10\\bin\\xc32-bin2hex.exe"
+			"type" : "FILEPATH",
+			"value" : "/Applications/microchip/xc32/v5.10/bin/xc32-bin2hex"
 		},
 		{
 			"name" : "MP_CC",
@@ -1462,8 +1402,8 @@
 					"value" : "Legacy variable from MPLAB X pointing to the compiler"
 				}
 			],
-			"type" : "STRING",
-			"value" : "c:\\Program Files\\Microchip\\xc32\\v5.10\\bin\\xc32-gcc.exe"
+			"type" : "PATH",
+			"value" : "/Applications/microchip/xc32/v5.10/bin/xc32-gcc"
 		},
 		{
 			"name" : "MP_CC_DIR",
@@ -1474,8 +1414,8 @@
 					"value" : "Legacy variable from MPLAB X pointing to the compiler base directory"
 				}
 			],
-			"type" : "STRING",
-			"value" : "c:\\Program Files\\Microchip\\xc32\\v5.10\\bin"
+			"type" : "PATH",
+			"value" : "/Applications/microchip/xc32/v5.10/bin"
 		},
 		{
 			"name" : "MP_CPPC",
@@ -1486,8 +1426,8 @@
 					"value" : "Legacy variable from MPLAB X pointing to the c++ compiler"
 				}
 			],
-			"type" : "STRING",
-			"value" : "c:\\Program Files\\Microchip\\xc32\\v5.10\\bin\\xc32-g++.exe"
+			"type" : "PATH",
+			"value" : "/Applications/microchip/xc32/v5.10/bin/xc32-g++"
 		},
 		{
 			"name" : "MP_CPPC_DIR",
@@ -1498,8 +1438,8 @@
 					"value" : "Legacy variable from MPLAB X pointing to the c++ compiler base directory"
 				}
 			],
-			"type" : "STRING",
-			"value" : "c:\\Program Files\\Microchip\\xc32\\v5.10\\bin"
+			"type" : "PATH",
+			"value" : "/Applications/microchip/xc32/v5.10/bin"
 		},
 		{
 			"name" : "MP_LD",
@@ -1510,8 +1450,8 @@
 					"value" : "Legacy variable from MPLAB X pointing to the linker binary."
 				}
 			],
-			"type" : "STRING",
-			"value" : "c:\\Program Files\\Microchip\\xc32\\v5.10\\bin\\xc32-ld.exe"
+			"type" : "FILEPATH",
+			"value" : "/Applications/microchip/xc32/v5.10/bin/xc32-ld"
 		},
 		{
 			"name" : "MP_LD_DIR",
@@ -1522,8 +1462,8 @@
 					"value" : "Legacy variable from MPLAB X pointing to the linker base directory"
 				}
 			],
-			"type" : "STRING",
-			"value" : "c:\\Program Files\\Microchip\\xc32\\v5.10\\bin"
+			"type" : "PATH",
+			"value" : "/Applications/microchip/xc32/v5.10/bin"
 		},
 		{
 			"name" : "OBJCOPY",
@@ -1535,7 +1475,7 @@
 				}
 			],
 			"type" : "FILEPATH",
-			"value" : "c:/Program Files/Microchip/xc32/v5.10/bin/xc32-objcopy.exe"
+			"value" : "/Applications/microchip/xc32/v5.10/bin/xc32-objcopy"
 		},
 		{
 			"name" : "OBJDUMP",
@@ -1547,7 +1487,7 @@
 				}
 			],
 			"type" : "FILEPATH",
-			"value" : "c:/Program Files/Microchip/xc32/v5.10/bin/xc32-objdump.exe"
+			"value" : "/Applications/microchip/xc32/v5.10/bin/xc32-objdump"
 		},
 		{
 			"name" : "PACK_REPO_PATH",
@@ -1559,7 +1499,7 @@
 				}
 			],
 			"type" : "PATH",
-			"value" : "C:/Users/katarzynawcislo/.mchp_packs"
+			"value" : "/Users/kasiawcislo/.mchp_packs"
 		},
 		{
 			"name" : "gateway_abstract_layer_default_project_BINARY_DIR",
@@ -1571,7 +1511,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "C:/Users/katarzynawcislo/Documents/Zabijcie_mnie/Gateway_software/Gateway_abstract_layer/gateway_abstract_layer/_build/gateway_abstract_layer/default"
+			"value" : "/Users/kasiawcislo/Documents/Studia/Magisterka/Gateway_software/Gateway_abstract_layer/gateway_abstract_layer/_build/gateway_abstract_layer/default"
 		},
 		{
 			"name" : "gateway_abstract_layer_default_project_IS_TOP_LEVEL",
@@ -1595,7 +1535,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "C:/Users/katarzynawcislo/Documents/Zabijcie_mnie/Gateway_software/Gateway_abstract_layer/gateway_abstract_layer/cmake/gateway_abstract_layer/default"
+			"value" : "/Users/kasiawcislo/Documents/Studia/Magisterka/Gateway_software/Gateway_abstract_layer/gateway_abstract_layer/cmake/gateway_abstract_layer/default"
 		}
 	],
 	"kind" : "cache",
