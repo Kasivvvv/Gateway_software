@@ -19,10 +19,25 @@
 /* ~2 µs @ 300 MHz — visible at a few MS/s on a logic analyser. */
 #define HAL_CAN_MARK_MIN_CYCLES    (600U)
 
-static uint8_t CACHE_ALIGN __attribute__((coherent))
+/*
+ * MCAN Message RAM must not be D-cached: the MCAN DMA reads/writes it and the
+ * MCC plib accesses it without cache maintenance. MCC configures MPU region 5
+ * (0x2045F000, 4 KB, Normal non-cacheable, see plib_mpu.c). XC32 ignores
+ * __attribute__((coherent)) on Cortex-M, so the buffer is pinned explicitly to
+ * the upper 2 KB of that region (the GMAC descriptors use the lower part).
+ * DS60001527 ch. 48: Message RAM base = CCFG_CAN1.CAN1DMABA (upper 16 bits).
+ */
+#define HAL_CAN_MSG_RAM_ADDR       (0x2045F800UL)
+#define HAL_CAN_NOCACHE_REGION_END (0x20460000UL)
+
+_Static_assert((HAL_CAN_MSG_RAM_ADDR + MCAN1_MESSAGE_RAM_CONFIG_SIZE)
+        <= HAL_CAN_NOCACHE_REGION_END,
+        "MCAN1 Message RAM exceeds the non-cacheable MPU region");
+
+static uint8_t __attribute__((aligned(32), space(data),
+        address(HAL_CAN_MSG_RAM_ADDR)))
     s_mcan1MsgRam[MCAN1_MESSAGE_RAM_CONFIG_SIZE];
 
-static volatile uint32_t s_txBusyMask = 0U;
 static volatile uint32_t s_txDropCount = 0U;
 static volatile bool     s_busOff = false;
 
@@ -124,16 +139,6 @@ static void hal_can_rx_fifo_callback(uint8_t numberOfMessage, uintptr_t context)
     hal_marker_clear(HAL_MARKER_T1);
 }
 
-static void hal_can_tx_buffer_callback(uint8_t bufferNumber, uintptr_t context)
-{
-    (void)context;
-
-    if (bufferNumber < HAL_CAN_TX_DEDICATED_NUM)
-    {
-        s_txBusyMask &= ~(1UL << bufferNumber);
-    }
-}
-
 static void hal_can_status_callback(uint32_t interruptStatus, uintptr_t context)
 {
     (void)context;
@@ -148,7 +153,6 @@ static void hal_can_status_callback(uint32_t interruptStatus, uintptr_t context)
 
 void hal_can_init(void)
 {
-    s_txBusyMask = 0U;
     s_txDropCount = 0U;
     s_busOff = false;
     s_rxHead = 0U;
@@ -161,7 +165,6 @@ void hal_can_init(void)
     MCAN1_MessageRAMConfigSet(s_mcan1MsgRam);
 
     MCAN1_RxFifoCallbackRegister(MCAN_RX_FIFO_0, hal_can_rx_fifo_callback, (uintptr_t)NULL);
-    MCAN1_TxBuffersCallbackRegister(hal_can_tx_buffer_callback, (uintptr_t)NULL);
     MCAN1_CallbackRegister(hal_can_status_callback, (uintptr_t)NULL);
 
     hal_marker_clear(HAL_MARKER_BUSOFF);
@@ -170,7 +173,6 @@ void hal_can_init(void)
 void hal_can_deinit(void)
 {
     MCAN1_RxFifoCallbackRegister(MCAN_RX_FIFO_0, NULL, (uintptr_t)NULL);
-    MCAN1_TxBuffersCallbackRegister(NULL, (uintptr_t)NULL);
     MCAN1_CallbackRegister(NULL, (uintptr_t)NULL);
 }
 
@@ -178,7 +180,6 @@ hal_can_status_t hal_can_tx(const hal_can_frame_t *frame)
 {
     MCAN_TX_BUFFER txBuf;
     uint8_t slot;
-    bool irqState;
     uint8_t len;
 
     if ((frame == NULL) || (frame->len > 8U))
@@ -207,19 +208,21 @@ hal_can_status_t hal_can_tx(const hal_can_frame_t *frame)
         (void)memcpy(txBuf.data, frame->data, len);
     }
 
-    irqState = NVIC_INT_Disable();
+    /*
+     * Free slot = no pending request in MCAN_TXBRP (DS60001527 ch. 48, Tx Buffer Request
+     * Pending). TXBRP is set by the TXBAR write and cleared by hardware after
+     * transmission, so no software busy mask is needed. A mask cleared from the
+     * TX-complete callback leaked slots: the MCC plib writes MCAN_TXBTIE with
+     * '=' instead of '|=', disabling the interrupt of earlier pending buffers.
+     * hal_can_tx() is called only from the superloop (single producer).
+     */
     for (slot = 0U; slot < HAL_CAN_TX_DEDICATED_NUM; slot++)
     {
-        if (((s_txBusyMask >> slot) & 1UL) == 0UL)
+        if (!MCAN1_TxBufferIsBusy(slot))
         {
-            if (!MCAN1_TxBufferIsBusy(slot))
-            {
-                s_txBusyMask |= (1UL << slot);
-                break;
-            }
+            break;
         }
     }
-    NVIC_INT_Restore(irqState);
 
     if (slot >= HAL_CAN_TX_DEDICATED_NUM)
     {
@@ -233,9 +236,6 @@ hal_can_status_t hal_can_tx(const hal_can_frame_t *frame)
         hal_marker_set(HAL_MARKER_T4);
         if (!MCAN1_MessageTransmit(slot, &txBuf))
         {
-            irqState = NVIC_INT_Disable();
-            s_txBusyMask &= ~(1UL << slot);
-            NVIC_INT_Restore(irqState);
             s_txDropCount++;
             hal_marker_clear(HAL_MARKER_T4);
             return HAL_CAN_ERR_BUSY;

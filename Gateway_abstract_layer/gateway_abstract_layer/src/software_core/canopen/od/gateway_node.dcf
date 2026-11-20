@@ -54,13 +54,14 @@ SupportedObjects=3
 3=0x1018
 
 [OptionalObjects]
-SupportedObjects=6
+SupportedObjects=7
 1=0x1005
 2=0x1017
 3=0x1400
 4=0x1600
 5=0x1800
 6=0x1A00
+7=0x1F80
 
 [ManufacturerObjects]
 SupportedObjects=2
@@ -228,6 +229,14 @@ ObjectType=0x07
 DataType=0x0007
 AccessType=rw
 DefaultValue=0x20000040
+
+[1F80]
+ParameterName=NMT startup
+ObjectType=0x07
+DataType=0x0007
+AccessType=rw
+DefaultValue=0x00000004
+PDOMapping=0
 
 [2000]
 ParameterName=TX sequence counter

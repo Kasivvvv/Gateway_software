@@ -26,6 +26,8 @@
 
 #define CANOPEN_POOL_SIZE (48U * 1024U)
 #define CANOPEN_RX_MAX_PER_STEP 16U
+/* Outside the 11/29-bit identifier range: "no frame returned". */
+#define CANOPEN_RX_NO_FRAME 0xFFFFFFFFUL
 
 typedef struct
 {
@@ -121,7 +123,7 @@ static void canopen_feed_rx(void)
 
     for (n = 0U; n < CANOPEN_RX_MAX_PER_STEP; n++)
     {
-        uint32_t id = 0U;
+        uint32_t id = CANOPEN_RX_NO_FRAME;
         uint32_t subId = 0U;
         uint8_t data[8];
         uint8_t len = 0U;
@@ -132,9 +134,11 @@ static void canopen_feed_rx(void)
             break;
         }
 
+        /* len == 0 is a valid frame (SYNC, NMT error-control RTR), so an
+         * empty queue is detected by hwa_can_rx() leaving id untouched. */
         hwa_can_rx(&id, &subId, data, &len);
         (void)subId;
-        if (len == 0U)
+        if (id == CANOPEN_RX_NO_FRAME)
         {
             break;
         }

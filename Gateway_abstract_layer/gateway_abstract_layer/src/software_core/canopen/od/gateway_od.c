@@ -1,3 +1,7 @@
+#ifdef HAVE_CONFIG_H
+#include <config.h>
+#endif
+
 #if !LELY_NO_MALLOC
 #error Static object dictionaries are only supported when dynamic memory allocation is disabled.
 #endif
@@ -670,6 +674,48 @@ static co_sub_t gateway_od_1A00sub1 = {
 };
 
 static struct {
+	co_unsigned32_t sub0;
+} gateway_od_1F80_val = {
+	.sub0 = 0x00000004,
+};
+
+static co_obj_t gateway_od_1F80 = {
+	.node = { .key = &gateway_od_1F80.idx },
+	.idx = 0x1F80,
+	.code = CO_OBJECT_VAR,
+#if !LELY_NO_CO_OBJ_NAME
+	.name = CO_DEV_STRING("NMT startup"),
+#endif
+	.tree = { .cmp = &uint8_cmp },
+	.val = &gateway_od_1F80_val,
+	.size = sizeof(gateway_od_1F80_val)
+};
+
+static co_sub_t gateway_od_1F80sub0 = {
+	.node = { .key = &gateway_od_1F80sub0.subidx },
+	.subidx = 0x00,
+	.type = CO_DEFTYPE_UNSIGNED32,
+#if !LELY_NO_CO_OBJ_NAME
+	.name = CO_DEV_STRING("NMT startup"),
+#endif
+#if !LELY_NO_CO_OBJ_LIMITS
+	.min = { .u32 = CO_UNSIGNED32_MIN },
+	.max = { .u32 = CO_UNSIGNED32_MAX },
+#endif
+#if !LELY_NO_CO_OBJ_DEFAULT
+	.def = { .u32 = 0x00000004 },
+#endif
+	.val = &gateway_od_1F80_val.sub0,
+	.access = CO_ACCESS_RW,
+	.pdo_mapping = 0,
+	.flags = 0,
+	.dn_ind = &co_sub_default_dn_ind,
+#if !LELY_NO_CO_OBJ_UPLOAD
+	.up_ind = &co_sub_default_up_ind
+#endif
+};
+
+static struct {
 	co_unsigned64_t sub0;
 } gateway_od_2000_val = {
 	.sub0 = 0x0000000000000000,
@@ -797,6 +843,9 @@ gateway_od_init(void) {
 		co_dev_insert_obj(&gateway_od, &gateway_od_1A00);
 		co_obj_insert_sub(&gateway_od_1A00, &gateway_od_1A00sub0);
 		co_obj_insert_sub(&gateway_od_1A00, &gateway_od_1A00sub1);
+
+		co_dev_insert_obj(&gateway_od, &gateway_od_1F80);
+		co_obj_insert_sub(&gateway_od_1F80, &gateway_od_1F80sub0);
 
 		co_dev_insert_obj(&gateway_od, &gateway_od_2000);
 		co_obj_insert_sub(&gateway_od_2000, &gateway_od_2000sub0);

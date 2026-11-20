@@ -64,10 +64,6 @@ CMAKE_CXX_COMPILER_AR:FILEPATH=CMAKE_CXX_COMPILER_AR-NOTFOUND
 // for the GCC compiler
 CMAKE_CXX_COMPILER_RANLIB:FILEPATH=CMAKE_CXX_COMPILER_RANLIB-NOTFOUND
 
-//Tell CMake that the compiler works, but cannot be run during
-// the configuration stage
-CMAKE_CXX_COMPILER_WORKS:BOOL=YES
-
 //Flags used by the CXX compiler during all build types.
 CMAKE_CXX_FLAGS:STRING=
 
@@ -93,10 +89,6 @@ CMAKE_C_COMPILER_AR:FILEPATH=CMAKE_C_COMPILER_AR-NOTFOUND
 //A wrapper around 'ranlib' adding the appropriate '--plugin' option
 // for the GCC compiler
 CMAKE_C_COMPILER_RANLIB:FILEPATH=CMAKE_C_COMPILER_RANLIB-NOTFOUND
-
-//Tell CMake that the compiler works, but cannot be run during
-// the configuration stage
-CMAKE_C_COMPILER_WORKS:BOOL=YES
 
 //Flags used by the C compiler during all build types.
 CMAKE_C_FLAGS:STRING=
@@ -246,7 +238,7 @@ CMAKE_STRIP:FILEPATH=/Applications/microchip/xc32/v5.10/bin/xc32-strip
 //Path to a program.
 CMAKE_TAPI:FILEPATH=CMAKE_TAPI-NOTFOUND
 
-//No help, variable specified on the command line.
+//The CMake toolchain file
 CMAKE_TOOLCHAIN_FILE:FILEPATH=/Users/kasiawcislo/Documents/Studia/Magisterka/Gateway_software/Gateway_abstract_layer/gateway_abstract_layer/cmake/gateway_abstract_layer/default/.generated/toolchain.cmake
 
 //No help, variable specified on the command line.
