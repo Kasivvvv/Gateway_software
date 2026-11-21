@@ -29,6 +29,8 @@ uint64_t   hwa_time_now_us(void);
 void hwa_marker_set(hwa_marker_id_t id);
 void hwa_marker_clear(hwa_marker_id_t id);
 void hwa_marker_toggle(hwa_marker_id_t id);
+/** Pulse of at least ~2 us, visible to the logic analyser (t2/t3 markers). */
+void hwa_marker_pulse(hwa_marker_id_t id);
 void hwa_marker_enable(bool enabled);
 
 /* Status LED ------------------------------------------------------------ */
@@ -57,6 +59,12 @@ uint32_t hwa_can_rx_high_water(void);
 uint32_t hwa_can_tx_drop_count(void);
 bool     hwa_can_is_bus_off(void);
 void     hwa_can_diag_get(hwa_can_diag_t *diag);
+/** Bus-off recovery / CAN controller restart (T10). */
+void     hwa_can_recover(void);
+
+/* System ---------------------------------------------------------------- */
+/** Drain the console (bounded) and reset the microcontroller (T11). */
+void     hwa_system_reset(void);
 
 /* ETHERCAT -------------------------------------------------------------- */
 /* Raw Ethernet frames (GMAC); the EtherCAT stack runs on top of these. */

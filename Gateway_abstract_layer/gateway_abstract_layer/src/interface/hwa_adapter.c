@@ -91,6 +91,12 @@ void hwa_led_toggle(void)
     hal_led_toggle();
 }
 
+void hwa_marker_pulse(hwa_marker_id_t id)
+{
+    /* ~2 us @ 300 MHz, same width as the t1/t4 markers in the drivers */
+    hal_marker_pulse(id, 600U);
+}
+
 void hwa_marker_enable(bool enabled)
 {
     hal_marker_enable(enabled);
@@ -259,4 +265,15 @@ uint32_t hwa_eth_rx_isr_count(void)
 uint32_t hwa_eth_link_change_count(void)
 {
     return hal_eth_link_change_count();
+}
+
+void hwa_can_recover(void)
+{
+    hal_can_recover();
+}
+
+void hwa_system_reset(void)
+{
+    hal_console_flush(100000U);
+    hal_system_reset();
 }

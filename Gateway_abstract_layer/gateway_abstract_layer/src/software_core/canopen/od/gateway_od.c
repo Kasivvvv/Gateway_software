@@ -162,6 +162,74 @@ static co_sub_t gateway_od_1005sub0 = {
 };
 
 static struct {
+	co_unsigned8_t sub0;
+	co_unsigned32_t sub1;
+} gateway_od_1016_val = {
+	.sub0 = 0x01,
+	.sub1 = 0x007F00FA,
+};
+
+static co_obj_t gateway_od_1016 = {
+	.node = { .key = &gateway_od_1016.idx },
+	.idx = 0x1016,
+	.code = CO_OBJECT_ARRAY,
+#if !LELY_NO_CO_OBJ_NAME
+	.name = CO_DEV_STRING("Consumer heartbeat time"),
+#endif
+	.tree = { .cmp = &uint8_cmp },
+	.val = &gateway_od_1016_val,
+	.size = sizeof(gateway_od_1016_val)
+};
+
+static co_sub_t gateway_od_1016sub0 = {
+	.node = { .key = &gateway_od_1016sub0.subidx },
+	.subidx = 0x00,
+	.type = CO_DEFTYPE_UNSIGNED8,
+#if !LELY_NO_CO_OBJ_NAME
+	.name = CO_DEV_STRING("NrOfObjects"),
+#endif
+#if !LELY_NO_CO_OBJ_LIMITS
+	.min = { .u8 = CO_UNSIGNED8_MIN },
+	.max = { .u8 = CO_UNSIGNED8_MAX },
+#endif
+#if !LELY_NO_CO_OBJ_DEFAULT
+	.def = { .u8 = 0x01 },
+#endif
+	.val = &gateway_od_1016_val.sub0,
+	.access = CO_ACCESS_RO,
+	.pdo_mapping = 0,
+	.flags = 0,
+	.dn_ind = &co_sub_default_dn_ind,
+#if !LELY_NO_CO_OBJ_UPLOAD
+	.up_ind = &co_sub_default_up_ind
+#endif
+};
+
+static co_sub_t gateway_od_1016sub1 = {
+	.node = { .key = &gateway_od_1016sub1.subidx },
+	.subidx = 0x01,
+	.type = CO_DEFTYPE_UNSIGNED32,
+#if !LELY_NO_CO_OBJ_NAME
+	.name = CO_DEV_STRING("Consumer heartbeat time1"),
+#endif
+#if !LELY_NO_CO_OBJ_LIMITS
+	.min = { .u32 = CO_UNSIGNED32_MIN },
+	.max = { .u32 = CO_UNSIGNED32_MAX },
+#endif
+#if !LELY_NO_CO_OBJ_DEFAULT
+	.def = { .u32 = 0x00000000 },
+#endif
+	.val = &gateway_od_1016_val.sub1,
+	.access = CO_ACCESS_RW,
+	.pdo_mapping = 0,
+	.flags = 0,
+	.dn_ind = &co_sub_default_dn_ind,
+#if !LELY_NO_CO_OBJ_UPLOAD
+	.up_ind = &co_sub_default_up_ind
+#endif
+};
+
+static struct {
 	co_unsigned16_t sub0;
 } gateway_od_1017_val = {
 	.sub0 = 0x0064,
@@ -726,7 +794,7 @@ static co_obj_t gateway_od_2000 = {
 	.idx = 0x2000,
 	.code = CO_OBJECT_VAR,
 #if !LELY_NO_CO_OBJ_NAME
-	.name = CO_DEV_STRING("TX sequence counter"),
+	.name = CO_DEV_STRING("Data from EtherCAT (TPDO)"),
 #endif
 	.tree = { .cmp = &uint8_cmp },
 	.val = &gateway_od_2000_val,
@@ -738,7 +806,7 @@ static co_sub_t gateway_od_2000sub0 = {
 	.subidx = 0x00,
 	.type = CO_DEFTYPE_UNSIGNED64,
 #if !LELY_NO_CO_OBJ_NAME
-	.name = CO_DEV_STRING("TX sequence counter"),
+	.name = CO_DEV_STRING("Data from EtherCAT (TPDO)"),
 #endif
 #if !LELY_NO_CO_OBJ_LIMITS
 	.min = { .u64 = CO_UNSIGNED64_MIN },
@@ -768,7 +836,7 @@ static co_obj_t gateway_od_2100 = {
 	.idx = 0x2100,
 	.code = CO_OBJECT_VAR,
 #if !LELY_NO_CO_OBJ_NAME
-	.name = CO_DEV_STRING("RX process data"),
+	.name = CO_DEV_STRING("Data to EtherCAT (RPDO)"),
 #endif
 	.tree = { .cmp = &uint8_cmp },
 	.val = &gateway_od_2100_val,
@@ -780,7 +848,7 @@ static co_sub_t gateway_od_2100sub0 = {
 	.subidx = 0x00,
 	.type = CO_DEFTYPE_UNSIGNED64,
 #if !LELY_NO_CO_OBJ_NAME
-	.name = CO_DEV_STRING("RX process data"),
+	.name = CO_DEV_STRING("Data to EtherCAT (RPDO)"),
 #endif
 #if !LELY_NO_CO_OBJ_LIMITS
 	.min = { .u64 = CO_UNSIGNED64_MIN },
@@ -815,6 +883,10 @@ gateway_od_init(void) {
 
 		co_dev_insert_obj(&gateway_od, &gateway_od_1005);
 		co_obj_insert_sub(&gateway_od_1005, &gateway_od_1005sub0);
+
+		co_dev_insert_obj(&gateway_od, &gateway_od_1016);
+		co_obj_insert_sub(&gateway_od_1016, &gateway_od_1016sub0);
+		co_obj_insert_sub(&gateway_od_1016, &gateway_od_1016sub1);
 
 		co_dev_insert_obj(&gateway_od, &gateway_od_1017);
 		co_obj_insert_sub(&gateway_od_1017, &gateway_od_1017sub0);

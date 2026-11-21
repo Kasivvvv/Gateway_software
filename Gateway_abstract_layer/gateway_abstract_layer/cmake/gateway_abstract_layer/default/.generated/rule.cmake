@@ -59,17 +59,20 @@ function(gateway_abstract_layer_default_default_XC32_compile_rule target)
         PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/../../../src/interface"
         PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/../../../src/software_core/canopen"
         PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/../../../src/software_core/canopen/config"
+        PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/../../../src/software_core/conversion"
+        PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/../../../src/software_core/error_handler"
+        PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/../../../src/software_core/state_machine"
         PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/../../../src/software_core/core"
         PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/../../../src/software_core/ethercat"
+        PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/../../../src/software_core/ethercat/soem_port"
         PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/../../../src/software_core/interface"
+        PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/../../../third_party/SOEM/osal"
+        PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/../../../third_party/SOEM/soem"
         PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/../../../third_party/lely-core/include"
         PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/../../../third_party/lely-core/lib/can"
         PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/../../../third_party/lely-core/lib/co"
         PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/../../../third_party/lely-core/lib/compat"
         PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/../../../third_party/lely-core/lib/util"
-        PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/../../../third_party/SOEM/soem"
-        PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/../../../third_party/SOEM/osal"
-        PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/../../../src/software_core/ethercat/soem_port"
         PRIVATE "${PACK_REPO_PATH}/ARM/CMSIS/6.3.0/CMSIS/Core/Include")
 endfunction()
 function(gateway_abstract_layer_default_default_XC32_compile_cpp_rule target)

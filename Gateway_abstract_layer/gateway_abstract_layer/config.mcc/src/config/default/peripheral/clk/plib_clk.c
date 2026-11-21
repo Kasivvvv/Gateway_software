@@ -43,28 +43,19 @@ static void CLK_MainClockInitialize(void)
         /* Nothing to do */
     }
 
+    /* Main Crystal Oscillator is selected as the Main Clock (MAINCK) source.
+    Switch Main Clock (MAINCK) to Main Crystal Oscillator clock */
+    PMC_REGS->CKGR_MOR|= CKGR_MOR_KEY_PASSWD | CKGR_MOR_MOSCSEL_Msk;
 
-    /* Enable the RC Oscillator */
-    PMC_REGS->CKGR_MOR|= CKGR_MOR_KEY_PASSWD | CKGR_MOR_MOSCRCEN_Msk;
-
-    /* Wait until the RC oscillator clock is ready. */
-    while( (PMC_REGS->PMC_SR & PMC_SR_MOSCRCS_Msk) != PMC_SR_MOSCRCS_Msk)
+    /* Wait until MAINCK is switched to Main Crystal Oscillator */
+    while ( (PMC_REGS->PMC_SR & PMC_SR_MOSCSELS_Msk) != PMC_SR_MOSCSELS_Msk)
     {
         /* Nothing to do */
     }
 
-    /* Configure the RC Oscillator frequency */
-    PMC_REGS->CKGR_MOR = (PMC_REGS->CKGR_MOR & ~CKGR_MOR_MOSCRCF_Msk) | CKGR_MOR_KEY_PASSWD | CKGR_MOR_MOSCRCF_12_MHz;
 
-    /* Wait until the RC oscillator clock is ready */
-    while( (PMC_REGS->PMC_SR& PMC_SR_MOSCRCS_Msk) != PMC_SR_MOSCRCS_Msk)
-    {
-        /* Nothing to do */
-    }
-
-    /* Main RC Oscillator is selected as the Main Clock (MAINCK) source.
-       Switch Main Clock (MAINCK) to the RC Oscillator clock */
-    PMC_REGS->CKGR_MOR = (PMC_REGS->CKGR_MOR & ~CKGR_MOR_MOSCSEL_Msk) | CKGR_MOR_KEY_PASSWD;
+    /* Disable the RC Oscillator */
+    PMC_REGS->CKGR_MOR = CKGR_MOR_KEY_PASSWD | (PMC_REGS->CKGR_MOR & ~CKGR_MOR_MOSCRCEN_Msk);
 
 }
 

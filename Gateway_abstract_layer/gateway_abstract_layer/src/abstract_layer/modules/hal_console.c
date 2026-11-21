@@ -118,6 +118,23 @@ size_t hal_console_tx_free(void)
     return HAL_CONSOLE_TXQ_SIZE - (s_txqHead - s_txqTail);
 }
 
+/* Blocking drain of the TX queue, bounded (before a hardware reset only). */
+void hal_console_flush(uint32_t timeoutUs)
+{
+    uint32_t t0 = DWT->CYCCNT;
+    uint32_t limit = timeoutUs * 300U;
+
+    while ((s_txqHead != s_txqTail) || (USART1_WriteCountGet() > 0U)
+            || ((USART1_REGS->US_CSR & US_CSR_USART_TXEMPTY_Msk) == 0U))
+    {
+        hal_console_poll();
+        if ((DWT->CYCCNT - t0) > limit)
+        {
+            break;
+        }
+    }
+}
+
 uint32_t hal_console_tx_dropped(void)
 {
     return s_txqDropped;

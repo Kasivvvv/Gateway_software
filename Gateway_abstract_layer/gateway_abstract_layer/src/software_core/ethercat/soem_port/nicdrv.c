@@ -250,6 +250,37 @@ int ecx_inframe(ecx_portt *port, int idx, int stacknumber)
     return (rval >= 0) ? rval : EC_NOFRAME;
 }
 
+void nicdrv_rx_poll(ecx_portt *port)
+{
+    int n;
+
+    for (n = 0; n < NICDRV_RX_MAX_PER_CALL; n++)
+    {
+        ec_etherheadert *ehp;
+        ec_comt *ecp;
+        int idxf;
+
+        if (!ecx_recvpkt(port))
+        {
+            break;
+        }
+        ehp = (ec_etherheadert *)&(port->tempinbuf);
+        if ((port->tempinbufs < (ETH_HEADERSIZE + EC_HEADERSIZE))
+                || (ehp->etype != oshw_htons(ETH_P_ECAT)))
+        {
+            continue;
+        }
+        ecp = (ec_comt *)(&(port->tempinbuf[ETH_HEADERSIZE]));
+        idxf = ecp->index;
+        if ((idxf < EC_MAXBUF) && (port->rxbufstat[idxf] == EC_BUF_TX))
+        {
+            ecx_store(port, idxf, port->tempinbufs);
+            port->rxbufstat[idxf] = EC_BUF_RCVD;
+            port->rxsa[idxf] = oshw_ntohs(ehp->sa1);
+        }
+    }
+}
+
 int ecx_waitinframe(ecx_portt *port, int idx, int timeout)
 {
     int wkc;

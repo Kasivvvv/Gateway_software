@@ -67,6 +67,14 @@ int ecx_waitinframe(ecx_portt *port, int idx, int timeout);
 int ecx_srconfirm(ecx_portt *port, int idx, int timeout);
 int ecx_inframe(ecx_portt *port, int idx, int stacknumber);
 
+/*
+ * Gateway extension (non-blocking Working state): move every EtherCAT frame
+ * already received for a transmitted index into its rx buffer and mark it
+ * EC_BUF_RCVD, without completing it. A later ecx_receive_processdata(ctx, 0)
+ * then completes these indexes at once.
+ */
+void nicdrv_rx_poll(ecx_portt *port);
+
 #ifdef __cplusplus
 }
 #endif

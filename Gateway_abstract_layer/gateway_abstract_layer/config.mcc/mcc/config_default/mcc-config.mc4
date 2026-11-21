@@ -42,7 +42,7 @@ generatedFileHashHistoryMap:
 - file: ../src/config/default/libc_syscalls.c
   hash: c9afc1b1257829415a1a6746ce3744f0a768b339d59fff2ab3ca1fab58b2a916
 - file: ../src/config/default/peripheral/clk/plib_clk.c
-  hash: ea175bbf44578751f68f2641e8229e79a165f1594fc2c77e5b688e2ad41cb5cf
+  hash: c2d406058c6abbd669dad23c199ce16bc8519b18198a7e5c23945691392ef4e6
 - file: ../src/config/default/peripheral/clk/plib_clk.h
   hash: 4f80a7fdb2529a654f89f11159078b9ebad3e5dddbd7fe60c58df49c05c8e55d
 - file: ../src/config/default/peripheral/efc/plib_efc.c

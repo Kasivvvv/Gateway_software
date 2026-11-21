@@ -54,14 +54,15 @@ SupportedObjects=3
 3=0x1018
 
 [OptionalObjects]
-SupportedObjects=7
+SupportedObjects=8
 1=0x1005
-2=0x1017
-3=0x1400
-4=0x1600
-5=0x1800
-6=0x1A00
-7=0x1F80
+2=0x1016
+3=0x1017
+4=0x1400
+5=0x1600
+6=0x1800
+7=0x1A00
+8=0x1F80
 
 [ManufacturerObjects]
 SupportedObjects=2
@@ -91,6 +92,17 @@ DataType=0x0007
 AccessType=rw
 DefaultValue=0x00000080
 PDOMapping=0
+
+[1016]
+ParameterName=Consumer heartbeat time
+ObjectType=0x08
+DataType=0x0007
+AccessType=rw
+CompactSubObj=1
+
+[1016Value]
+NrOfEntries=1
+1=0x007F00FA
 
 [1017]
 ParameterName=Producer heartbeat time
@@ -239,7 +251,7 @@ DefaultValue=0x00000004
 PDOMapping=0
 
 [2000]
-ParameterName=TX sequence counter
+ParameterName=Data from EtherCAT (TPDO)
 ObjectType=0x07
 DataType=0x001B
 AccessType=rw
@@ -247,7 +259,7 @@ DefaultValue=0
 PDOMapping=1
 
 [2100]
-ParameterName=RX process data
+ParameterName=Data to EtherCAT (RPDO)
 ObjectType=0x07
 DataType=0x001B
 AccessType=rw

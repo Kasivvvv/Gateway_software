@@ -149,3 +149,8 @@ uint64_t hal_time_now_us(void)
 
     return cycles / (uint64_t)(HAL_CPU_HZ / 1000000UL);
 }
+
+void hal_system_reset(void)
+{
+    NVIC_SystemReset();
+}

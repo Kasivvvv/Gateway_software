@@ -143,7 +143,7 @@ static uint8_t *sm_reg(soft_esc_t *esc, uint32_t n)
     return &esc->mem[REG_SM0 + (n * SM_SIZE)];
 }
 
-static bool sm_get(soft_esc_t *esc, uint32_t n, sm_cfg_t *cfg)
+static void sm_read_cfg(soft_esc_t *esc, uint32_t n, sm_cfg_t *cfg)
 {
     const uint8_t *r = sm_reg(esc, n);
     uint8_t control = r[SM_CONTROL];
@@ -152,10 +152,28 @@ static bool sm_get(soft_esc_t *esc, uint32_t n, sm_cfg_t *cfg)
     cfg->length = rd16(&r[SM_LENGTH]);
     cfg->mailbox = (control & 0x03U) == 0x02U;
     cfg->ecatWrites = ((control >> 2) & 0x03U) == 0x01U;
+}
 
-    /* enabled by the master and not deactivated by the PDI */
+/* Enabled by the master and not deactivated by the PDI. */
+static bool sm_get(soft_esc_t *esc, uint32_t n, sm_cfg_t *cfg)
+{
+    const uint8_t *r = sm_reg(esc, n);
+
+    sm_read_cfg(esc, n, cfg);
     return ((r[SM_ACTIVATE] & 0x01U) != 0U)
             && ((r[SM_PDI_CONTROL] & 0x01U) == 0U)
+            && (cfg->length != 0U);
+}
+
+/* Enabled by the master but deactivated by the PDI (e.g. SM2 outside OP):
+ * the master cannot access the buffer and gets no working counter. */
+static bool sm_pdi_deactivated(soft_esc_t *esc, uint32_t n, sm_cfg_t *cfg)
+{
+    const uint8_t *r = sm_reg(esc, n);
+
+    sm_read_cfg(esc, n, cfg);
+    return ((r[SM_ACTIVATE] & 0x01U) != 0U)
+            && ((r[SM_PDI_CONTROL] & 0x01U) != 0U)
             && (cfg->length != 0U);
 }
 
@@ -191,6 +209,10 @@ static bool sm_ecat_access(soft_esc_t *esc, uint32_t addr, uint32_t len, bool wr
         sm_cfg_t sm;
         bool lastByte;
 
+        if (sm_pdi_deactivated(esc, n, &sm) && overlaps(addr, len, sm.start, sm.length))
+        {
+            return false;
+        }
         if (!sm_get(esc, n, &sm) || !overlaps(addr, len, sm.start, sm.length))
         {
             continue;

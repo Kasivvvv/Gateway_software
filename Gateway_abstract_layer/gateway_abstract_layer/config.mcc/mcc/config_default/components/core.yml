@@ -8626,6 +8626,28 @@ data:
         id: MPU_Region_6_Enable
         label: Enable MPU Region6
       type: Boolean
+    PMC_CKGR_MOR_MOSCSEL:
+      attributes:
+        id: PMC_CKGR_MOR_MOSCSEL
+        label: Main Clock Oscillator Selection
+      children:
+      - children:
+        - attributes:
+            value: 'true'
+          type: User
+        type: Values
+      type: Boolean
+    PMC_CKGR_MOR_MOSCRCEN:
+      attributes:
+        id: PMC_CKGR_MOR_MOSCRCEN
+        label: Main RC Oscillator Enable
+      children:
+      - children:
+        - attributes:
+            value: 'false'
+          type: User
+        type: Values
+      type: Boolean
   userData:
     children:
     - attributes:

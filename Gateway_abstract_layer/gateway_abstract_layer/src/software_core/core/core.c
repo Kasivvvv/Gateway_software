@@ -1,10 +1,21 @@
 #include "core.h"
 
+#include <string.h>
+
 #include "canopen.h"
+#include "conversion.h"
 #include "ecat_master.h"
 #include "hwa_interface.h"
+#include "supervision.h"
 
-/* Stage 4b: Tloop + CANopen node (set S1) + EtherCAT master (SOEM). */
+/*
+ * Stage 6b: role configuration 3 (thesis Table 5.1): EtherCAT master + CANopen
+ * node (set S1), EtherCAT cycle started by SYNC (thesis 7.2.4), strategy A,
+ * supervisory state machine T1..T12 with Error handler (supervision.c).
+ * Order of the calls follows the path of a message (thesis 7.2.2):
+ *   CANopen RX -> supervision + CAN->EC -> EtherCAT master -> EC->CAN.
+ * Fixed configuration until the configuration manager exists (stage 9).
+ */
 
 #define CORE_STATS_PERIOD_TICKS   (5000U)  /* 1 s */
 #define CORE_LED_PERIOD_TICKS     (2500U)  /* 500 ms */
@@ -154,7 +165,7 @@ static void core_report_link(void)
 
 static void core_report_stats(void)
 {
-    char buf[200];
+    char buf[256];
     char num[24];
     size_t pos = 0U;
 
@@ -192,6 +203,17 @@ static void core_report_stats(void)
             } \
         } while (0)
 
+    #define CORE_APPEND_HEX64(v) \
+        do { \
+            static const char hx[] = "0123456789ABCDEF"; \
+            uint64_t hv = (uint64_t)(v); \
+            int sh; \
+            for (sh = 60; (sh >= 0) && (pos + 1U < sizeof(buf)); sh -= 4) \
+            { \
+                buf[pos++] = hx[(hv >> (uint32_t)sh) & 0x0FU]; \
+            } \
+        } while (0)
+
     #define CORE_APPEND_U64(v) \
         do { \
             size_t k; \
@@ -218,12 +240,12 @@ static void core_report_stats(void)
     CORE_APPEND_U32(canopen_sync_count());
     CORE_APPEND_LIT(" tpdo=");
     CORE_APPEND_U32(canopen_tpdo_count());
-    CORE_APPEND_LIT(" seq=");
-    CORE_APPEND_U64(canopen_tpdo_seq());
     CORE_APPEND_LIT(" rpdo=");
     CORE_APPEND_U32(canopen_rpdo_count());
     CORE_APPEND_LIT(" rx=");
-    CORE_APPEND_U64(canopen_rpdo_last());
+    CORE_APPEND_HEX64(canopen_rpdo_last());
+    CORE_APPEND_LIT(" tx=");
+    CORE_APPEND_HEX64(canopen_tpdo_data());
     CORE_APPEND_LIT(" ovf=");
     CORE_APPEND_U32(hwa_can_rx_overflow_count());
     CORE_APPEND_LIT(" txdrop=");
@@ -323,13 +345,107 @@ static void core_report_stats(void)
         CORE_APPEND_LIT(" wkc=");
         CORE_APPEND_I32(ec.lastWkc);
         CORE_APPEND_LIT("/");
-        CORE_APPEND_I32(ec.expectedWkc);
-        CORE_APPEND_LIT(" out=");
-        CORE_APPEND_U32(ec.outValue);
-        CORE_APPEND_LIT(" in=");
-        CORE_APPEND_U32(ec.inValue);
-        CORE_APPEND_LIT(" lag=");
-        CORE_APPEND_U32(ec.echoLag);
+        CORE_APPEND_I32(ec.targetWkc);
+        CORE_APPEND_LIT(" inp=");
+        CORE_APPEND_U32(ec.inputsUpdates);
+        {
+            static const char hx[] = "0123456789ABCDEF";
+            CORE_APPEND_LIT(" al=0x");
+            if (pos + 3U < sizeof(buf))
+            {
+                buf[pos++] = hx[(ec.alStatus >> 4) & 0x0FU];
+                buf[pos++] = hx[ec.alStatus & 0x0FU];
+            }
+            CORE_APPEND_LIT("/0x");
+            if (pos + 3U < sizeof(buf))
+            {
+                buf[pos++] = hx[(ec.alTarget >> 4) & 0x0FU];
+                buf[pos++] = hx[ec.alTarget & 0x0FU];
+            }
+        }
+        CORE_APPEND_LIT(" missRun=");
+        CORE_APPEND_U32(ec.missRun);
+        CORE_APPEND_LIT(" cfgFail=");
+        CORE_APPEND_U32(ec.configFailures);
+        if (ec.syncLost)
+        {
+            CORE_APPEND_LIT(" sync=LOST tmr=");
+        }
+        else
+        {
+            CORE_APPEND_LIT(" sync=ok tmr=");
+        }
+        CORE_APPEND_U32(ec.timerCycles);
+    }
+    CORE_APPEND_LIT("\r\n");
+    buf[pos] = '\0';
+    (void)hwa_console_write_str(buf);
+
+    pos = 0U;
+    {
+        conv_stats_t c2e;
+        conv_stats_t e2c;
+
+        conversion_stats_get(CONV_DIR_CAN_TO_EC, &c2e);
+        conversion_stats_get(CONV_DIR_EC_TO_CAN, &e2c);
+        CORE_APPEND_LIT("CV: c2e ins=");
+        CORE_APPEND_U32(c2e.inserted);
+        CORE_APPEND_LIT(" rem=");
+        CORE_APPEND_U32(c2e.removed);
+        CORE_APPEND_LIT(" ovf=");
+        CORE_APPEND_U32(c2e.overflows);
+        CORE_APPEND_LIT(" hw=");
+        CORE_APPEND_U32(c2e.highWater);
+        CORE_APPEND_LIT(" | e2c ins=");
+        CORE_APPEND_U32(e2c.inserted);
+        CORE_APPEND_LIT(" rem=");
+        CORE_APPEND_U32(e2c.removed);
+        CORE_APPEND_LIT(" ovf=");
+        CORE_APPEND_U32(e2c.overflows);
+        CORE_APPEND_LIT(" hw=");
+        CORE_APPEND_U32(e2c.highWater);
+        CORE_APPEND_LIT(" fill=");
+        CORE_APPEND_U32(c2e.fill + e2c.fill);
+    }
+    CORE_APPEND_LIT("\r\n");
+    buf[pos] = '\0';
+    (void)hwa_console_write_str(buf);
+
+    pos = 0U;
+    {
+        supv_status_t sv;
+        const char *name;
+        size_t k;
+
+        supv_status_get(&sv);
+        CORE_APPEND_LIT("GW: st=");
+        name = sm_state_name(sv.state);
+        for (k = 0U; (name[k] != '\0') && (pos + 1U < sizeof(buf)); k++)
+        {
+            buf[pos++] = name[k];
+        }
+        CORE_APPEND_LIT(" err=");
+        name = eh_error_name(sv.error);
+        for (k = 0U; (name[k] != '\0') && (pos + 1U < sizeof(buf)); k++)
+        {
+            buf[pos++] = name[k];
+        }
+        CORE_APPEND_LIT(" cls=");
+        CORE_APPEND_U32((uint32_t)sv.errorClass);
+        CORE_APPEND_LIT(" reinit=");
+        CORE_APPEND_U32(sv.reinitCount);
+        CORE_APPEND_LIT(" lastT=");
+        CORE_APPEND_U32(sv.lastTransition);
+        CORE_APPEND_LIT(" nT=");
+        CORE_APPEND_U32(sv.transitions);
+        CORE_APPEND_LIT(" safe(link=");
+        CORE_APPEND_U32(sv.safeLink ? 1U : 0U);
+        CORE_APPEND_LIT(" nmt=");
+        CORE_APPEND_U32(sv.safeNmt ? 1U : 0U);
+        CORE_APPEND_LIT(" svc=");
+        CORE_APPEND_U32(sv.safeService ? 1U : 0U);
+        CORE_APPEND_LIT(") hbLost=");
+        CORE_APPEND_U32(sv.masterHbLost ? 1U : 0U);
     }
     CORE_APPEND_LIT("\r\n");
     buf[pos] = '\0';
@@ -340,6 +456,7 @@ static void core_report_stats(void)
     #undef CORE_APPEND_LIT
     #undef CORE_APPEND_U32
     #undef CORE_APPEND_U64
+    #undef CORE_APPEND_HEX64
     #undef CORE_APPEND_I32
 }
 
@@ -367,7 +484,6 @@ void core_init(void)
         (void)hwa_console_write_str("MEM: ERROR DMA window is cacheable - check MCC MPU region 5\r\n");
     }
 
-    ecat_master_init();
     (void)hwa_console_write_str("ETH: PHY addr=1 id=");
     core_write_hex32(hwa_eth_phy_id());
     if ((hwa_eth_phy_id() & 0xFFFFFFF0UL) == 0x00221570UL)
@@ -381,14 +497,16 @@ void core_init(void)
 
     if (!canopen_init())
     {
-        (void)hwa_console_write_str("Gateway core Stage 4b: CANopen init FAILED\r\n");
+        (void)hwa_console_write_str("Gateway core Stage 6b: CANopen init FAILED\r\n");
     }
     else
     {
-        (void)hwa_console_write_str("Gateway core Stage 4b: CANopen node=0x10 HB=100ms + EtherCAT master (SOEM), Tloop=");
+        (void)hwa_console_write_str("Gateway core Stage 6b: config 3 (EC master + CANopen node 0x10), EC cycle on SYNC, strategy A, state machine T1-T12, Tloop=");
         core_write_u32(hwa_time_tloop_us());
         (void)hwa_console_write_str(" us\r\n");
+        (void)hwa_console_write_str("SVC: console commands: S = safe-state request, R = resume, ? = help\r\n");
     }
+    supv_init();
 
     hwa_time_start();
 }
@@ -408,7 +526,9 @@ void core_step(void)
 
     hwa_eth_poll();
     canopen_step();
+    supv_step_input();
     ecat_master_step();
+    supv_step_output();
 
     elapsed = hwa_time_cycles() - t0;
 

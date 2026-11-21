@@ -1,6 +1,6 @@
 /*
  * EtherCAT test slave for Raspberry Pi (Linux): raw Ethernet socket +
- * software ESC + SOES. Partner of the gateway in configurations 3 and 4.
+ * software ESC + SOES, 8 bytes of process data per direction (echo). Partner of the gateway in configurations 3 and 4.
  *
  *   sudo ./rpi_ecat_slave [interface]      (default: eth0)
  *
@@ -29,7 +29,6 @@
 #include <unistd.h>
 
 #include "slave_app.h"
-#include "utypes.h"
 
 #define ETH_P_ECAT_TYPE     0x88A4
 #define FRAME_MAX           1518
@@ -139,7 +138,7 @@ int main(int argc, char **argv)
     go_realtime();
 
     slave_app_init(SOES_WATCHDOG_CALLS);
-    printf("rpi_ecat_slave on %s: soft-ESC + SOES (vendor 0x1337, product 1234)\n", ifname);
+    printf("rpi_ecat_slave on %s: soft-ESC + SOES, 8 B out / 8 B in (echo)\n", ifname);
 
     nextReport = now_ns() + 1000000000ULL;
     while (s_run)
@@ -189,10 +188,11 @@ int main(int argc, char **argv)
             const soft_esc_stats_t *st = &slave_app_esc()->stats;
 
             nextReport += 1000000000ULL;
-            printf("AL=0x%02X frames=%u dg=%u denied=%u sii=%u outUpd=%u LED0=%u Button1=%u "
+            printf("AL=0x%02X frames=%u dg=%u denied=%u sii=%u outUpd=%u out=%016llX in=%016llX "
                    "proc_avg=%.1fus proc_max=%.1fus txerr=%u\n",
                    slave_app_al_status(), frames, st->datagrams, st->denied, st->siiReads,
-                   slave_app_outputs_updates(), Obj.LEDs.LED0, Obj.Buttons.Button1,
+                   slave_app_outputs_updates(), (unsigned long long)slave_app_outputs(),
+                   (unsigned long long)slave_app_inputs(),
                    (procCount != 0U) ? ((double)procSumNs / procCount / 1000.0) : 0.0,
                    (double)procMaxNs / 1000.0, sendErrors);
             fflush(stdout);

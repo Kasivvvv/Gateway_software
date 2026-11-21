@@ -17,12 +17,19 @@ soft_esc_t *slave_app_esc(void)
 /* SOES callbacks */
 void cb_get_inputs(void)
 {
-    Obj.Buttons.Button1 = (uint8_t)(Obj.LEDs.LED0 + 1U);
+    Obj.Inputs.Data = Obj.Outputs.Data; /* echo */
 }
 
 void cb_set_outputs(void)
 {
     s_outputUpdates++;
+}
+
+/* Safe output values when the slave leaves OP (SOES calls this hook from
+ * ESC_stopoutput(); SOES v3.1.0 has no default). */
+static void slave_safe_outputs(void)
+{
+    Obj.Outputs.Data = 0U;
 }
 
 void slave_app_init(uint32_t watchdogCalls)
@@ -36,7 +43,7 @@ void slave_app_init(uint32_t watchdogCalls)
         .pre_state_change_hook = NULL,
         .post_state_change_hook = NULL,
         .application_hook = NULL,
-        .safeoutput_override = NULL,
+        .safeoutput_override = slave_safe_outputs,
         .pre_object_download_hook = NULL,
         .post_object_download_hook = NULL,
         .rxpdo_override = NULL,
@@ -68,4 +75,14 @@ uint8_t slave_app_al_status(void)
 uint32_t slave_app_outputs_updates(void)
 {
     return s_outputUpdates;
+}
+
+uint64_t slave_app_outputs(void)
+{
+    return Obj.Outputs.Data;
+}
+
+uint64_t slave_app_inputs(void)
+{
+    return Obj.Inputs.Data;
 }

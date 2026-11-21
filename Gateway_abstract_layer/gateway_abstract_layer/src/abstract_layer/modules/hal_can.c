@@ -318,3 +318,20 @@ void hal_can_diag_get(hal_can_diag_t *diag)
     diag->errorPassive = (psr & MCAN_PSR_EP_Msk) != 0U;
     diag->busOff = (psr & MCAN_PSR_BO_Msk) != 0U;
 }
+
+/*
+ * Bus-off recovery (re-initialisation of the communication, transition T10).
+ * After bus-off MCAN sets CCCR.INIT; clearing it starts the recovery
+ * sequence of 128 x 11 recessive bits (DS60001527 ch. 48, Bus-Off recovery).
+ * Pending transmissions are cancelled so no stale frame is sent afterwards.
+ */
+void hal_can_recover(void)
+{
+    MCAN1_REGS->MCAN_TXBCR = 0xFFFFFFFFUL;
+    if ((MCAN1_REGS->MCAN_CCCR & MCAN_CCCR_INIT_Msk) != 0U)
+    {
+        MCAN1_REGS->MCAN_CCCR &= ~MCAN_CCCR_INIT_Msk;
+    }
+    s_busOff = false;
+    hal_marker_clear(HAL_MARKER_BUSOFF);
+}

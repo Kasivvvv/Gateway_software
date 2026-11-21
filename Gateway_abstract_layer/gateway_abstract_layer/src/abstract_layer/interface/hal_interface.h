@@ -74,6 +74,13 @@ size_t hal_console_tx_free(void);
 void     hal_console_poll(void);
 /** Bytes dropped because the TX queue was full. */
 uint32_t hal_console_tx_dropped(void);
+/** Blocking drain of the TX queue (bounded); used before a hardware reset. */
+void     hal_console_flush(uint32_t timeoutUs);
+
+/* ---- System ------------------------------------------------------------ */
+
+/** Hardware reset of the microcontroller (transition T11). */
+void hal_system_reset(void);
 
 /* ---- CAN (MCAN1 / PLIB, non-blocking) ----------------------------------- */
 
@@ -93,6 +100,8 @@ uint32_t hal_can_tx_drop_count(void);
 bool     hal_can_is_bus_off(void);
 /** Error counters and last error code (reading clears the LEC). */
 void     hal_can_diag_get(hal_can_diag_t *diag);
+/** Leave bus-off: restart MCAN, cancel pending transmissions (T10). */
+void     hal_can_recover(void);
 
 /* ---- Memory ------------------------------------------------------------- */
 
