@@ -22,6 +22,8 @@ uint32_t   hwa_time_overrun_count(void);
 hwa_cycles_t hwa_time_cycles(void);
 uint32_t   hwa_time_cpu_hz(void);
 uint32_t   hwa_time_tloop_us(void);
+/** Monotonic microseconds since start-up (64-bit). */
+uint64_t   hwa_time_now_us(void);
 
 /* Markers --------------------------------------------------------------- */
 void hwa_marker_set(hwa_marker_id_t id);

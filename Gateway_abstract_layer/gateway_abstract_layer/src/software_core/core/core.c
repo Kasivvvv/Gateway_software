@@ -1,10 +1,10 @@
 #include "core.h"
 
 #include "canopen.h"
-#include "eth_probe.h"
+#include "ecat_master.h"
 #include "hwa_interface.h"
 
-/* Stage 4a: Tloop + CANopen node (set S1) + raw Ethernet probe. */
+/* Stage 4b: Tloop + CANopen node (set S1) + EtherCAT master (SOEM). */
 
 #define CORE_STATS_PERIOD_TICKS   (5000U)  /* 1 s */
 #define CORE_LED_PERIOD_TICKS     (2500U)  /* 500 ms */
@@ -16,6 +16,7 @@ typedef struct
     uint32_t longestCycles;
     uint32_t lastCycles;
     uint32_t iterationsAtReport;
+    uint32_t longestWindowCycles; /* longest cycle since the last report */
 } core_stats_t;
 
 static core_stats_t s_stats;
@@ -177,6 +178,20 @@ static void core_report_stats(void)
             } \
         } while (0)
 
+    #define CORE_APPEND_I32(v) \
+        do { \
+            int32_t sv = (int32_t)(v); \
+            if (sv < 0) \
+            { \
+                CORE_APPEND_LIT("-"); \
+                CORE_APPEND_U32((uint32_t)(-sv)); \
+            } \
+            else \
+            { \
+                CORE_APPEND_U32((uint32_t)sv); \
+            } \
+        } while (0)
+
     #define CORE_APPEND_U64(v) \
         do { \
             size_t k; \
@@ -217,6 +232,9 @@ static void core_report_stats(void)
     CORE_APPEND_U32(hwa_can_is_bus_off() ? 1U : 0U);
     CORE_APPEND_LIT(" max_cy=");
     CORE_APPEND_U32(s_stats.longestCycles);
+    CORE_APPEND_LIT(" win_cy=");
+    CORE_APPEND_U32(s_stats.longestWindowCycles);
+    s_stats.longestWindowCycles = 0U;
     {
         hwa_can_diag_t diag;
         hwa_can_diag_get(&diag);
@@ -253,16 +271,10 @@ static void core_report_stats(void)
             CORE_APPEND_LIT("down");
         }
     }
-    CORE_APPEND_LIT(" sigdet=");
-    CORE_APPEND_U32(hwa_eth_sigdet() ? 1U : 0U);
     CORE_APPEND_LIT(" ethtx=");
     CORE_APPEND_U32(hwa_eth_tx_count());
-    CORE_APPEND_LIT(" seq=");
-    CORE_APPEND_U32(eth_probe_tx_seq());
     CORE_APPEND_LIT(" ethrx=");
-    CORE_APPEND_U32(eth_probe_rx_frames());
-    CORE_APPEND_LIT(" ecrx=");
-    CORE_APPEND_U32(eth_probe_rx_ecat_frames());
+    CORE_APPEND_U32(hwa_eth_rx_count());
     CORE_APPEND_LIT(" rxisr=");
     CORE_APPEND_U32(hwa_eth_rx_isr_count());
     CORE_APPEND_LIT(" rxdrop=");
@@ -275,11 +287,54 @@ static void core_report_stats(void)
     buf[pos] = '\0';
     (void)hwa_console_write_str(buf);
 
+    pos = 0U;
+    {
+        ecat_master_stats_t ec;
+        const char *name;
+        size_t k;
+
+        ecat_master_stats_get(&ec);
+        name = ecat_master_state_name(ec.state);
+        CORE_APPEND_LIT("EC: st=");
+        for (k = 0U; (name[k] != '\0') && (pos + 1U < sizeof(buf)); k++)
+        {
+            buf[pos++] = name[k];
+        }
+        CORE_APPEND_LIT(" pwkc=");
+        CORE_APPEND_I32(ec.probeWkc);
+        CORE_APPEND_LIT(" ptx=");
+        CORE_APPEND_U32(ec.probeTx);
+        CORE_APPEND_LIT(" prx=");
+        CORE_APPEND_U32(ec.probeRx);
+        CORE_APPEND_LIT(" cfg=");
+        CORE_APPEND_U32(ec.configs);
+        CORE_APPEND_LIT(" cfg_us=");
+        CORE_APPEND_U32(ec.lastConfigUs);
+        CORE_APPEND_LIT(" sl=");
+        CORE_APPEND_I32(ec.slaves);
+        CORE_APPEND_LIT(" io=");
+        CORE_APPEND_U32(ec.iomapBytes);
+        CORE_APPEND_LIT(" cyc=");
+        CORE_APPEND_U32(ec.cycles);
+        CORE_APPEND_LIT(" ok=");
+        CORE_APPEND_U32(ec.wkcOk);
+        CORE_APPEND_LIT(" miss=");
+        CORE_APPEND_U32(ec.wkcMiss);
+        CORE_APPEND_LIT(" wkc=");
+        CORE_APPEND_I32(ec.lastWkc);
+        CORE_APPEND_LIT("/");
+        CORE_APPEND_I32(ec.expectedWkc);
+    }
+    CORE_APPEND_LIT("\r\n");
+    buf[pos] = '\0';
+    (void)hwa_console_write_str(buf);
+
     s_stats.iterationsAtReport = s_stats.iterations;
 
     #undef CORE_APPEND_LIT
     #undef CORE_APPEND_U32
     #undef CORE_APPEND_U64
+    #undef CORE_APPEND_I32
 }
 
 void core_init(void)
@@ -306,7 +361,7 @@ void core_init(void)
         (void)hwa_console_write_str("MEM: ERROR DMA window is cacheable - check MCC MPU region 5\r\n");
     }
 
-    eth_probe_init();
+    ecat_master_init();
     (void)hwa_console_write_str("ETH: PHY addr=1 id=");
     core_write_hex32(hwa_eth_phy_id());
     if ((hwa_eth_phy_id() & 0xFFFFFFF0UL) == 0x00221570UL)
@@ -320,11 +375,11 @@ void core_init(void)
 
     if (!canopen_init())
     {
-        (void)hwa_console_write_str("Gateway core Stage 4a: CANopen init FAILED\r\n");
+        (void)hwa_console_write_str("Gateway core Stage 4b: CANopen init FAILED\r\n");
     }
     else
     {
-        (void)hwa_console_write_str("Gateway core Stage 4a: CANopen node=0x10 HB=100ms + raw ETH, Tloop=");
+        (void)hwa_console_write_str("Gateway core Stage 4b: CANopen node=0x10 HB=100ms + EtherCAT master (SOEM), Tloop=");
         core_write_u32(hwa_time_tloop_us());
         (void)hwa_console_write_str(" us\r\n");
     }
@@ -347,7 +402,7 @@ void core_step(void)
 
     hwa_eth_poll();
     canopen_step();
-    eth_probe_step();
+    ecat_master_step();
 
     elapsed = hwa_time_cycles() - t0;
 
@@ -362,6 +417,10 @@ void core_step(void)
     if (elapsed > s_stats.longestCycles)
     {
         s_stats.longestCycles = elapsed;
+    }
+    if (elapsed > s_stats.longestWindowCycles)
+    {
+        s_stats.longestWindowCycles = elapsed;
     }
 
     s_ticksSinceLed++;

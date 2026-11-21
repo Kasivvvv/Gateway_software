@@ -31,6 +31,9 @@ uint32_t hal_time_cpu_hz(void);
 /** Nominal Tloop period in microseconds. */
 uint32_t hal_time_tloop_us(void);
 
+/** Monotonic time since hal_time_init() in microseconds (64-bit, no wrap). */
+uint64_t hal_time_now_us(void);
+
 /* ---- HIL markers -------------------------------------------------------- */
 
 void hal_marker_init(void);

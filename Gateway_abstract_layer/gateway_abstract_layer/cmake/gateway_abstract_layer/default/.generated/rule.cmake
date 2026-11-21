@@ -67,6 +67,9 @@ function(gateway_abstract_layer_default_default_XC32_compile_rule target)
         PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/../../../third_party/lely-core/lib/co"
         PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/../../../third_party/lely-core/lib/compat"
         PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/../../../third_party/lely-core/lib/util"
+        PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/../../../third_party/SOEM/soem"
+        PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/../../../third_party/SOEM/osal"
+        PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/../../../src/software_core/ethercat/soem_port"
         PRIVATE "${PACK_REPO_PATH}/ARM/CMSIS/6.3.0/CMSIS/Core/Include")
 endfunction()
 function(gateway_abstract_layer_default_default_XC32_compile_cpp_rule target)

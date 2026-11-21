@@ -15,14 +15,30 @@
 #define HAL_TLOOP_US              (200U)
 #define HAL_CPU_HZ                (300000000UL)
 
+/* 64-bit extension of DWT->CYCCNT (wraps every 14.3 s at 300 MHz). Updated
+ * in the Tloop ISR and on every read, so it never misses a wrap. */
+static volatile uint64_t s_cycAccum = 0U;
+static volatile uint32_t s_cycLast = 0U;
+
 static volatile bool s_tickPending = false;
 static volatile uint32_t s_tickCount = 0U;
 static volatile uint32_t s_overrunCount = 0U;
+
+/* Caller must prevent concurrent execution (ISR or interrupts disabled). */
+static void hal_time_extend(void)
+{
+    uint32_t now = DWT->CYCCNT;
+
+    s_cycAccum += (uint32_t)(now - s_cycLast);
+    s_cycLast = now;
+}
 
 static void hal_time_tloop_isr(TC_TIMER_STATUS status, uintptr_t context)
 {
     (void)status;
     (void)context;
+
+    hal_time_extend();
 
     s_tickCount++;
     if (s_tickPending)
@@ -52,6 +68,8 @@ void hal_time_init(void)
     s_overrunCount = 0U;
 
     hal_time_dwt_init();
+    s_cycAccum = 0U;
+    s_cycLast = DWT->CYCCNT;
 
     freqHz = TC0_CH1_TimerFrequencyGet();
     periodCounts = ((freqHz / 1000000UL) * (uint32_t)HAL_TLOOP_US) - 1UL;
@@ -118,4 +136,16 @@ uint32_t hal_time_cpu_hz(void)
 uint32_t hal_time_tloop_us(void)
 {
     return HAL_TLOOP_US;
+}
+
+uint64_t hal_time_now_us(void)
+{
+    uint64_t cycles;
+    bool irqState = NVIC_INT_Disable();
+
+    hal_time_extend();
+    cycles = s_cycAccum;
+    NVIC_INT_Restore(irqState);
+
+    return cycles / (uint64_t)(HAL_CPU_HZ / 1000000UL);
 }

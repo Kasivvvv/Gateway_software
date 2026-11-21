@@ -61,6 +61,11 @@ uint32_t hwa_time_tloop_us(void)
     return hal_time_tloop_us();
 }
 
+uint64_t hwa_time_now_us(void)
+{
+    return hal_time_now_us();
+}
+
 void hwa_marker_set(hwa_marker_id_t id)
 {
     hal_marker_set(id);

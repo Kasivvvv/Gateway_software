@@ -58,7 +58,10 @@
                     "third_party/lely-core/lib/can",
                     "third_party/lely-core/lib/co",
                     "third_party/lely-core/lib/compat",
-                    "third_party/lely-core/lib/util"
+                    "third_party/lely-core/lib/util",
+                    "third_party/SOEM/soem",
+                    "third_party/SOEM/osal",
+                    "src/software_core/ethercat/soem_port"
                 ],
                 "compiler++.extra-include-directories": [
                     "config.mcc/src",
@@ -140,6 +143,14 @@
                 "third_party/lely-core/lib/co/tpdo.c",
                 "third_party/lely-core/lib/co/type.c",
                 "third_party/lely-core/lib/co/val.c",
+                "third_party/SOEM/soem/ethercatbase.c",
+                "third_party/SOEM/soem/ethercatcoe.c",
+                "third_party/SOEM/soem/ethercatconfig.c",
+                "third_party/SOEM/soem/ethercatdc.c",
+                "third_party/SOEM/soem/ethercateoe.c",
+                "third_party/SOEM/soem/ethercatfoe.c",
+                "third_party/SOEM/soem/ethercatmain.c",
+                "third_party/SOEM/soem/ethercatsoe.c",
                 "src/software_core/canopen/od/gateway_od.c",
                 "config.mcc/src/config/default/bsp/bsp.c",
                 "config.mcc/src/main.c",

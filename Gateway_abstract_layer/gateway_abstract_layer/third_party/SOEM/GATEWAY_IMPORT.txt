@@ -1,0 +1,1 @@
+VERSION: SOEM v1.4.0 (github.com/OpenEtherCATsociety/SOEM tag v1.4.0, sha256 e58e1e0c216dade84a76d2c10ab34d2fa156ca639eac00a8081be6e88911d86e); 'test' directory omitted

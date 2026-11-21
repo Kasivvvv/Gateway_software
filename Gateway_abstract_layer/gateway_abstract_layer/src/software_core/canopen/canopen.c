@@ -152,12 +152,13 @@ static void canopen_feed_rx(void)
     }
 }
 
+/* Network time follows the real clock, so a blocking EtherCAT configuration
+ * (several Tloop periods) does not make lely timers (heartbeat) drift. */
 static void canopen_advance_time(void)
 {
     struct timespec ts;
-    uint32_t tloopUs = hwa_time_tloop_us();
 
-    s_co.netTimeNs += (uint64_t)tloopUs * 1000ULL;
+    s_co.netTimeNs = hwa_time_now_us() * 1000ULL;
     ts.tv_sec = (time_t)(s_co.netTimeNs / 1000000000ULL);
     ts.tv_nsec = (long)(s_co.netTimeNs % 1000000000ULL);
     (void)can_net_set_time(s_co.net, &ts);
