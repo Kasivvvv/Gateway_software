@@ -56,6 +56,10 @@ uint32_t hwa_get_number_of_massages(void);
 
 uint32_t hwa_can_rx_overflow_count(void);
 uint32_t hwa_can_rx_high_water(void);
+/** Frames received from the bus since init (also the discarded ones). */
+uint32_t hwa_can_rx_total(void);
+/** Extended (29-bit) frames discarded by the driver. */
+uint32_t hwa_can_rx_ext_drop_count(void);
 uint32_t hwa_can_tx_drop_count(void);
 bool     hwa_can_is_bus_off(void);
 void     hwa_can_diag_get(hwa_can_diag_t *diag);

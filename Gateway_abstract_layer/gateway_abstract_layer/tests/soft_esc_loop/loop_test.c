@@ -138,7 +138,7 @@ int main(void)
     ecat_master_set_config_enabled(false);
     ecat_master_stats_get(&s);
     ok = ok && (s.state == ECAT_ST_OP) && (s.slaves == 1) && (s.lastWkc == s.expectedWkc)
-         && (s.expectedWkc == 3) && (s.iomapBytes == 16U) && (s.wkcMiss == 0U)
+         && (s.expectedWkc == 3) && (s.iomapBytes == 32U)   /* 16 B out + 16 B in */ && (s.wkcMiss == 0U)
          && (s_echoOk > 1000U) && (s_echoBad <= 2U) && (slave_app_al_status() == 0x08U);
 
     /* safe reaction: zero outputs, slaves to SAFE-OP: no WKC fault reported */

@@ -2,8 +2,8 @@
  * @file config.h
  * @brief Compile-time configuration for lely-core (N7S) on SAM V71 bare-metal.
  *
- * Included when HAVE_CONFIG_H is defined. Stage 3: slave node, no malloc,
- * classic CAN, RPDO/TPDO/SYNC/SSDO only.
+ * Included when HAVE_CONFIG_H is defined. Node (stage 3) and NMT master
+ * (stage 7) roles, no malloc, classic CAN, RPDO/TPDO/SYNC/SSDO only.
  */
 #ifndef GATEWAY_LELY_CONFIG_H_
 #define GATEWAY_LELY_CONFIG_H_
@@ -31,7 +31,9 @@
 #define LELY_NO_CO_EMCY 1
 #define LELY_NO_CO_LSS 1
 #define LELY_NO_CO_WTM 1
-#define LELY_NO_CO_MASTER 1
+/* LELY_NO_CO_MASTER not defined: NMT master (configurations 2 and 4, stage 7);
+ * the slave boot-up process stays disabled (NMT_BOOT, NMT_CFG, CSDO), the
+ * gateway starts and stops the nodes itself. */
 #define LELY_NO_CO_NG 1
 #define LELY_NO_CO_NMT_BOOT 1
 #define LELY_NO_CO_NMT_CFG 1

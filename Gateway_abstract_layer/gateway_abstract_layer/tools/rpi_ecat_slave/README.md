@@ -4,13 +4,13 @@ EtherCAT partner of the gateway for configurations 3 and 4 (gateway = master).
 Raw Ethernet socket + software ESC (`src/abstract_layer/modules/esc/soft_esc.c`)
 + SOES v3.1.0 (`third_party/SOES`). The SII image is the one of the SOES
 `linux_lan9252demo` (vendor 0x1337, product 1234, name `evb9252_dig`); the
-object dictionary (`od/`) carries 8 bytes per direction, matching the 8-byte
-CANopen PDOs of test set S1:
+object dictionary (`od/`) carries 2 x 8 bytes per direction, one 8-byte
+CANopen PDO each:
 
-| Direction | Object | Size | Test behaviour |
-|---|---|---|---|
-| outputs (RxPDO 0x1600, master → slave) | 0x7000:01 UNSIGNED64 | 8 B | data from the CAN RPDO 0x210 |
-| inputs (TxPDO 0x1A00, slave → master) | 0x6000:01 UNSIGNED64 | 8 B | echo: inputs = outputs |
+| Direction | Object | Size | Configuration 3 (S1) | Configuration 4 (S2) |
+|---|---|---|---|---|
+| outputs (RxPDO 0x1600, master → slave) | 0x7000:01, 0x7000:02 UNSIGNED64 | 16 B | :01 = RPDO 0x210 | :01 = TPDO 0x181 of node 1, :02 = TPDO 0x182 of node 2 |
+| inputs (TxPDO 0x1A00, slave → master) | 0x6000:01, 0x6000:02 UNSIGNED64 | 16 B | echo, :01 -> TPDO 0x190 | echo, :01 -> RPDO 0x201, :02 -> RPDO 0x202 |
 
 The slave updates its inputs after a frame has passed, so the inputs read in
 cycle n echo the outputs of cycle n-1.
@@ -73,7 +73,7 @@ sudo ./build-slave/rpi_ecat_slave eth0
 Status line once per second:
 
 ```
-AL=0x08 frames=500 dg=... denied=0 sii=18 outUpd=... out=8877665544332211 in=8877665544332211 proc_avg=..us proc_max=..us txerr=0
+AL=0x08 frames=500 dg=... denied=0 sii=18 outUpd=... out=8877665544332211:0000000000000000 in=8877665544332211 proc_avg=..us proc_max=..us txerr=0
 ```
 
 - `AL` — AL status: 0x01 INIT, 0x02 PRE-OP, 0x04 SAFE-OP, 0x08 OP, +0x10 error

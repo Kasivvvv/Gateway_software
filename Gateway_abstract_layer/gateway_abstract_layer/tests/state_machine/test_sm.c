@@ -191,6 +191,23 @@ int main(void)
     si.safeCause = false; ei.canOperational = true;
     CHECK(step() == 9 && so.state == GW_ST_WORKING);
 
+    /* configuration 4 (CANopen master): failure of a node -> T6 (NMT stop of
+     * the nodes as the communication stop), T9 automatically when every node
+     * is alive again; in the Safe State -> T12 */
+    sm_init(); eh_init(); boot_to_working(); ei.canOperational = true;
+    ei.canNodeFault = true;
+    CHECK(step() == 6 && so.commStop && eo.code == GW_ERR_CAN_NODE_FAULT
+          && eo.cls == GW_ERR_CLASS_RECOVERABLE);
+    CHECK(step() == 0 && so.state == GW_ST_ERROR);    /* node still silent */
+    ei.canNodeFault = false;                          /* heartbeat back */
+    CHECK(step() == 9 && so.state == GW_ST_WORKING);
+    si.safeCause = true; CHECK(step() == 7);
+    ei.canNodeFault = true;
+    CHECK(step() == 12 && eo.code == GW_ERR_CAN_NODE_FAULT);
+    ei.canNodeFault = false;
+    CHECK(step() == 9); CHECK(step() == 7);           /* service request still set */
+    si.safeCause = false;
+
     /* T3: self-test failure -> FATAL -> T11 */
     sm_init(); eh_init(); memset(&si, 0, sizeof si); memset(&ei, 0, sizeof ei);
     si.lowLevelInitDone = true; CHECK(step() == 1);

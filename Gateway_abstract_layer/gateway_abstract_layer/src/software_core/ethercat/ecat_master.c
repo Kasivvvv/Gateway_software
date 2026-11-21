@@ -630,15 +630,22 @@ void ecat_master_step(void)
 
 void ecat_master_outputs_write(const uint8_t *data, uint32_t len)
 {
+    ecat_master_outputs_write_at(0U, data, len);
+}
+
+void ecat_master_outputs_write_at(uint32_t offset, const uint8_t *data, uint32_t len)
+{
     uint32_t n;
 
-    if (!s_configured || (data == NULL) || (s_slaves[0].outputs == NULL))
+    if (!s_configured || (data == NULL) || (s_slaves[0].outputs == NULL)
+            || (offset >= s_slaves[0].Obytes))
     {
         return;
     }
-    n = (len < s_slaves[0].Obytes) ? len : s_slaves[0].Obytes;
-    (void)memcpy(s_slaves[0].outputs, data, n);
-    if (n > 0U)
+    n = s_slaves[0].Obytes - offset;
+    n = (len < n) ? len : n;
+    (void)memcpy(&s_slaves[0].outputs[offset], data, n);
+    if ((offset == 0U) && (n > 0U))
     {
         s_st.out0 = data[0];
     }

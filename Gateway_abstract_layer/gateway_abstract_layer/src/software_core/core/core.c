@@ -5,16 +5,20 @@
 #include "canopen.h"
 #include "conversion.h"
 #include "ecat_master.h"
+#include "gw_config.h"
 #include "hwa_interface.h"
 #include "supervision.h"
 
 /*
- * Stage 6b: role configuration 3 (thesis Table 5.1): EtherCAT master + CANopen
- * node (set S1), EtherCAT cycle started by SYNC (thesis 7.2.4), strategy A,
- * supervisory state machine T1..T12 with Error handler (supervision.c).
- * Order of the calls follows the path of a message (thesis 7.2.2):
- *   CANopen RX -> supervision + CAN->EC -> EtherCAT master -> EC->CAN.
- * Fixed configuration until the configuration manager exists (stage 9).
+ * Role configurations 3 and 4 (thesis Table 5.1, gw_config.h):
+ *   3  EtherCAT master + CANopen node (set S1), EtherCAT cycle started by SYNC;
+ *   4  EtherCAT master + CANopen master (set S2), EtherCAT cycle and SYNC from
+ *      the cycle generator with a fixed phase (R5).
+ * Strategy A, supervisory state machine T1..T12 with Error handler
+ * (supervision.c). Order of the calls follows the path of a message (thesis
+ * 7.2.2): CANopen RX -> supervision + CAN->EC (+ cycle generator) ->
+ * EtherCAT master -> EC->CAN. Fixed configuration until the configuration
+ * manager exists (stage 9).
  */
 
 #define CORE_STATS_PERIOD_TICKS   (5000U)  /* 1 s */
@@ -248,6 +252,22 @@ static void core_report_stats(void)
     CORE_APPEND_HEX64(canopen_tpdo_data());
     CORE_APPEND_LIT(" ovf=");
     CORE_APPEND_U32(hwa_can_rx_overflow_count());
+    /* bus view: frames received, 29-bit frames discarded, last identifier */
+    CORE_APPEND_LIT(" crx=");
+    CORE_APPEND_U32(hwa_can_rx_total());
+    CORE_APPEND_LIT(" ext=");
+    CORE_APPEND_U32(hwa_can_rx_ext_drop_count());
+    CORE_APPEND_LIT(" lid=0x");
+    {
+        static const char hex[] = "0123456789ABCDEF";
+        uint16_t lid = canopen_rx_last_id();
+        if (pos + 3U < sizeof(buf))
+        {
+            buf[pos++] = hex[(lid >> 8) & 0x07U];
+            buf[pos++] = hex[(lid >> 4) & 0x0FU];
+            buf[pos++] = hex[lid & 0x0FU];
+        }
+    }
     CORE_APPEND_LIT(" txdrop=");
     CORE_APPEND_U32(hwa_can_tx_drop_count());
     CORE_APPEND_LIT(" busoff=");
@@ -446,10 +466,60 @@ static void core_report_stats(void)
         CORE_APPEND_U32(sv.safeService ? 1U : 0U);
         CORE_APPEND_LIT(") hbLost=");
         CORE_APPEND_U32(sv.masterHbLost ? 1U : 0U);
+        CORE_APPEND_LIT(" nodeFault=");
+        CORE_APPEND_U32(sv.nodeFault ? 1U : 0U);
     }
     CORE_APPEND_LIT("\r\n");
     buf[pos] = '\0';
     (void)hwa_console_write_str(buf);
+
+    if (canopen_is_master())
+    {
+        /* state of each node (R7): NMT state from its heartbeat, timeout,
+         * TPDOs received, last TPDO handed to EtherCAT, next set-point */
+        uint8_t node;
+        static const char hx[] = "0123456789ABCDEF";
+
+        for (node = 1U; node <= canopen_master_node_count(); node++)
+        {
+            canopen_node_info_t ni;
+
+            canopen_master_node_get(node, &ni);
+            pos = 0U;
+            CORE_APPEND_LIT("CM");
+            CORE_APPEND_U32(node);
+            CORE_APPEND_LIT(": st=0x");
+            if (pos + 3U < sizeof(buf))
+            {
+                buf[pos++] = hx[(ni.st >> 4) & 0x0FU];
+                buf[pos++] = hx[ni.st & 0x0FU];
+            }
+            CORE_APPEND_LIT(" seen=");
+            CORE_APPEND_U32(ni.seen ? 1U : 0U);
+            CORE_APPEND_LIT(" lost=");
+            CORE_APPEND_U32(ni.lost ? 1U : 0U);
+            CORE_APPEND_LIT(" hb=");
+            CORE_APPEND_U32(ni.hbRx);
+            CORE_APPEND_LIT(" pdo=");
+            CORE_APPEND_U32(ni.pdoRx);
+            CORE_APPEND_LIT(" fb=");
+            CORE_APPEND_U32(ni.fbCount);
+            CORE_APPEND_LIT(" rx=");
+            CORE_APPEND_HEX64(ni.fbLast);
+            CORE_APPEND_LIT(" sp=");
+            CORE_APPEND_HEX64(ni.setpoint);
+            if (node == 1U)
+            {
+                CORE_APPEND_LIT(" nmtCmd=");
+                CORE_APPEND_U32(canopen_master_nmt_commands());
+                CORE_APPEND_LIT(" fbOvf=");
+                CORE_APPEND_U32(canopen_master_fb_overflows());
+            }
+            CORE_APPEND_LIT("\r\n");
+            buf[pos] = '\0';
+            (void)hwa_console_write_str(buf);
+        }
+    }
 
     s_stats.iterationsAtReport = s_stats.iterations;
 
@@ -462,6 +532,9 @@ static void core_report_stats(void)
 
 void core_init(void)
 {
+    bool cfgOk;
+    const gw_config_t *cfg;
+
     hwa_init();
 
     s_stats.iterations = 0U;
@@ -495,18 +568,39 @@ void core_init(void)
         (void)hwa_console_write_str(" (unexpected - check MDIO/reset)\r\n");
     }
 
-    if (!canopen_init())
+    cfgOk = gw_config_init(hwa_time_tloop_us());
+    cfg = gw_config_get();
+    if (!cfgOk)
     {
-        (void)hwa_console_write_str("Gateway core Stage 6b: CANopen init FAILED\r\n");
+        (void)hwa_console_write_str("CFG: ERROR inconsistent configuration (self-test fails, T3)\r\n");
+    }
+    if (!canopen_init(gw_config_can_master() ? CANOPEN_ROLE_MASTER : CANOPEN_ROLE_NODE,
+            cfg->nodeCount))
+    {
+        (void)hwa_console_write_str("Gateway core Stage 7: CANopen init FAILED\r\n");
+    }
+    else if (gw_config_can_master())
+    {
+        (void)hwa_console_write_str("Gateway core Stage 7: config 4 (EC master + CANopen master 0x7F, nodes 1..");
+        core_write_u32(cfg->nodeCount);
+        (void)hwa_console_write_str("), cycles from timer T_EC=");
+        core_write_u32(cfg->tecUs);
+        (void)hwa_console_write_str(" us T_SYNC=");
+        core_write_u32(cfg->tsyncUs);
+        (void)hwa_console_write_str(" us SYNC phase=");
+        core_write_u32(cfg->syncPhaseUs);
+        (void)hwa_console_write_str(" us, strategy A, state machine T1-T12, Tloop=");
+        core_write_u32(hwa_time_tloop_us());
+        (void)hwa_console_write_str(" us\r\n");
     }
     else
     {
-        (void)hwa_console_write_str("Gateway core Stage 6b: config 3 (EC master + CANopen node 0x10), EC cycle on SYNC, strategy A, state machine T1-T12, Tloop=");
+        (void)hwa_console_write_str("Gateway core Stage 7: config 3 (EC master + CANopen node 0x10), EC cycle on SYNC, strategy A, state machine T1-T12, Tloop=");
         core_write_u32(hwa_time_tloop_us());
         (void)hwa_console_write_str(" us\r\n");
-        (void)hwa_console_write_str("SVC: console commands: S = safe-state request, R = resume, ? = help\r\n");
     }
-    supv_init();
+    (void)hwa_console_write_str("SVC: console commands: S = safe-state request, R = resume, ? = help\r\n");
+    supv_init(cfgOk);
 
     hwa_time_start();
 }
@@ -524,6 +618,7 @@ void core_step(void)
     hwa_marker_set(HAL_MARKER_LOOP);
     t0 = hwa_time_cycles();
 
+    supv_step_cycle();
     hwa_eth_poll();
     canopen_step();
     supv_step_input();

@@ -2,9 +2,10 @@
  * Object dictionary of the gateway test slave (Raspberry Pi, soft-ESC + SOES).
  * Derived from SOES applications/linux_lan9252demo/slave_objectlist.c (same
  * identity 0x1337/1234 as the reused SII image); process data changed to
- * 8 bytes per direction to match the 8-byte CANopen PDOs of test set S1:
- *   RxPDO 0x1600 -> 0x7000:01 UNSIGNED64 (outputs, master -> slave)
- *   TxPDO 0x1A00 -> 0x6000:01 UNSIGNED64 (inputs, slave -> master)
+ * 2 x 8 bytes per direction, one 8-byte CANopen PDO each: configuration 3
+ * (set S1) uses the first entry, configuration 4 (set S2) one per node:
+ *   RxPDO 0x1600 -> 0x7000:01, 0x7000:02 UNSIGNED64 (outputs, master -> slave)
+ *   TxPDO 0x1A00 -> 0x6000:01, 0x6000:02 UNSIGNED64 (inputs, slave -> master)
  */
 #include "esc_coe.h"
 #include "utypes.h"
@@ -31,9 +32,11 @@ static const char acName1018_04[] = "Serial Number";
 static const char acName1600[] = "RxPDO data";
 static const char acName1600_00[] = "Max SubIndex";
 static const char acName1600_01[] = "Data to slave";
+static const char acName1600_02[] = "Data to slave 2";
 static const char acName1A00[] = "TxPDO data";
 static const char acName1A00_00[] = "Max SubIndex";
 static const char acName1A00_01[] = "Data from slave";
+static const char acName1A00_02[] = "Data from slave 2";
 static const char acName1C00[] = "Sync Manager Communication Type";
 static const char acName1C00_00[] = "Max SubIndex";
 static const char acName1C00_01[] = "Communications Type SM0";
@@ -49,9 +52,11 @@ static const char acName1C13_01[] = "PDO Mapping";
 static const char acName6000[] = "Inputs";
 static const char acName6000_00[] = "Max SubIndex";
 static const char acName6000_01[] = "Data from slave";
+static const char acName6000_02[] = "Data from slave 2";
 static const char acName7000[] = "Outputs";
 static const char acName7000_00[] = "Max SubIndex";
 static const char acName7000_01[] = "Data to slave";
+static const char acName7000_02[] = "Data to slave 2";
 
 const _objd SDO1000[] =
 {
@@ -79,13 +84,15 @@ const _objd SDO1018[] =
 };
 const _objd SDO1600[] =
 {
-  {0x00, DTYPE_UNSIGNED8, 8, ATYPE_RO, acName1600_00, 1, NULL},
+  {0x00, DTYPE_UNSIGNED8, 8, ATYPE_RO, acName1600_00, 2, NULL},
   {0x01, DTYPE_UNSIGNED32, 32, ATYPE_RO, acName1600_01, 0x70000140, NULL},
+  {0x02, DTYPE_UNSIGNED32, 32, ATYPE_RO, acName1600_02, 0x70000240, NULL},
 };
 const _objd SDO1A00[] =
 {
-  {0x00, DTYPE_UNSIGNED8, 8, ATYPE_RO, acName1A00_00, 1, NULL},
+  {0x00, DTYPE_UNSIGNED8, 8, ATYPE_RO, acName1A00_00, 2, NULL},
   {0x01, DTYPE_UNSIGNED32, 32, ATYPE_RO, acName1A00_01, 0x60000140, NULL},
+  {0x02, DTYPE_UNSIGNED32, 32, ATYPE_RO, acName1A00_02, 0x60000240, NULL},
 };
 const _objd SDO1C00[] =
 {
@@ -107,13 +114,15 @@ const _objd SDO1C13[] =
 };
 const _objd SDO6000[] =
 {
-  {0x00, DTYPE_UNSIGNED8, 8, ATYPE_RO, acName6000_00, 1, NULL},
+  {0x00, DTYPE_UNSIGNED8, 8, ATYPE_RO, acName6000_00, 2, NULL},
   {0x01, DTYPE_UNSIGNED64, 64, ATYPE_RO, acName6000_01, 0, &Obj.Inputs.Data},
+  {0x02, DTYPE_UNSIGNED64, 64, ATYPE_RO, acName6000_02, 0, &Obj.Inputs.Data2},
 };
 const _objd SDO7000[] =
 {
-  {0x00, DTYPE_UNSIGNED8, 8, ATYPE_RO, acName7000_00, 1, NULL},
+  {0x00, DTYPE_UNSIGNED8, 8, ATYPE_RO, acName7000_00, 2, NULL},
   {0x01, DTYPE_UNSIGNED64, 64, ATYPE_RO, acName7000_01, 0, &Obj.Outputs.Data},
+  {0x02, DTYPE_UNSIGNED64, 64, ATYPE_RO, acName7000_02, 0, &Obj.Outputs.Data2},
 };
 
 const _objectlist SDOobjects[] =
@@ -123,12 +132,12 @@ const _objectlist SDOobjects[] =
   {0x1009, OTYPE_VAR, 0, 0, acName1009, SDO1009},
   {0x100A, OTYPE_VAR, 0, 0, acName100A, SDO100A},
   {0x1018, OTYPE_RECORD, 4, 0, acName1018, SDO1018},
-  {0x1600, OTYPE_RECORD, 1, 0, acName1600, SDO1600},
-  {0x1A00, OTYPE_RECORD, 1, 0, acName1A00, SDO1A00},
+  {0x1600, OTYPE_RECORD, 2, 0, acName1600, SDO1600},
+  {0x1A00, OTYPE_RECORD, 2, 0, acName1A00, SDO1A00},
   {0x1C00, OTYPE_ARRAY, 4, 0, acName1C00, SDO1C00},
   {0x1C12, OTYPE_ARRAY, 1, 0, acName1C12, SDO1C12},
   {0x1C13, OTYPE_ARRAY, 1, 0, acName1C13, SDO1C13},
-  {0x6000, OTYPE_RECORD, 1, 0, acName6000, SDO6000},
-  {0x7000, OTYPE_RECORD, 1, 0, acName7000, SDO7000},
+  {0x6000, OTYPE_RECORD, 2, 0, acName6000, SDO6000},
+  {0x7000, OTYPE_RECORD, 2, 0, acName7000, SDO7000},
   {0xffff, 0xff, 0xff, 0xff, NULL, NULL}
 };

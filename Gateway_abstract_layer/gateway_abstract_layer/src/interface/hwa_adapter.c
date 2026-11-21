@@ -186,6 +186,16 @@ uint32_t hwa_can_rx_high_water(void)
     return hal_can_rx_high_water();
 }
 
+uint32_t hwa_can_rx_total(void)
+{
+    return hal_can_rx_total();
+}
+
+uint32_t hwa_can_rx_ext_drop_count(void)
+{
+    return hal_can_rx_ext_drop_count();
+}
+
 uint32_t hwa_can_tx_drop_count(void)
 {
     return hal_can_tx_drop_count();

@@ -5,12 +5,18 @@
 
 #include "canopen.h"
 #include "conversion.h"
+#include "cycle_gen.h"
 #include "ecat_master.h"
+#include "gw_config.h"
 #include "hwa_interface.h"
 
 #define SUPV_PDO_BYTES     (8U)
 #define SUPV_SOURCE_RPDO   (0x210U)
 #define SUPV_SOURCE_ECAT   (0x0001U)
+/* configuration 4: node n <-> bytes 8(n-1)..8n-1 of the EtherCAT process data */
+#define SUPV_SOURCE_NODE_TPDO (0x180U)   /* + node: CAN -> EC */
+#define SUPV_SOURCE_NODE_RPDO (0x200U)   /* + node: EC -> CAN */
+#define SUPV_PD_BYTES_MAX  (SUPV_PDO_BYTES * CANOPEN_NODES_MAX)
 
 /*
  * Buffer capacity from Eq. (5.12): the CAN->EC buffer is handed over once per
@@ -32,6 +38,10 @@ static bool     s_resumeLatched;
 static bool     s_serviceSafe;
 static uint32_t s_lastOpEntries;
 static uint32_t s_lastCanOverflows;
+static bool     s_master;          /* configuration 4: CANopen master */
+static cycle_gen_t s_cg;           /* configuration 4: EC cycle + SYNC */
+static cycle_gen_out_t s_cyc;      /* cycles due in this iteration */
+static bool     s_cfgOk;
 
 /* ---- Helpers ---------------------------------------------------------------- */
 
@@ -60,26 +70,45 @@ static uint64_t supv_can_recover_delay(uint32_t n)
     return (d < SUPV_CAN_RECOVER_MAX_US) ? d : SUPV_CAN_RECOVER_MAX_US;
 }
 
-/* Self-test of Startup (thesis Table 7.1): DMA memory not cached, PHY found.
- * The configuration CRC check comes with the configuration manager. */
+/* Self-test of Startup (thesis Table 7.1): DMA memory not cached, PHY found,
+ * consistent configuration. The configuration CRC check comes with the
+ * configuration manager. */
 static bool supv_self_test(void)
 {
-    return hwa_mem_dma_nocache_ok()
+    return s_cfgOk && hwa_mem_dma_nocache_ok()
             && ((hwa_eth_phy_id() & 0xFFFFFFF0UL) == 0x00221570UL);
 }
 
-/* Safe reaction of configuration 3 (thesis Table 5.5). */
+/* Safe reaction (thesis Table 5.5) for the roles of the configuration:
+ * CANopen master  - NMT stop of all nodes (one frame, highest priority),
+ *                   own NMT state Stopped;
+ * CANopen node    - own NMT state Pre-operational;
+ * EtherCAT master - safe outputs in the next frame, slaves to SAFE-OP.
+ * The CAN command comes first: it is handed to MCAN at once, the EtherCAT
+ * part takes effect with the next frame anyway. */
 static void supv_safe_reaction(void)
 {
+    if (s_master)
+    {
+        canopen_master_stop();
+    }
+    else
+    {
+        canopen_enter_preop();
+    }
     conversion_flush();
     ecat_master_outputs_safe();
     ecat_master_request_al_state(ECAT_AL_SAFE_OP);
-    canopen_enter_preop();
     hwa_marker_set(HAL_MARKER_STATE);
 }
 
 static void supv_on_transition(uint64_t nowUs)
 {
+    /* the safe reaction before the log line (formatting costs time) */
+    if (s_so.commStop)
+    {
+        supv_safe_reaction();
+    }
     supv_log_transition(&s_so, &s_eo, nowUs);
     s_status.lastTransition = s_so.transition;
     s_status.transitions++;
@@ -91,11 +120,6 @@ static void supv_on_transition(uint64_t nowUs)
     if (s_so.previous == GW_ST_STARTUP)
     {
         s_si.selfTestDone = false;
-    }
-
-    if (s_so.commStop)
-    {
-        supv_safe_reaction();
     }
 
     switch (s_so.state)
@@ -145,6 +169,10 @@ static void supv_on_transition(uint64_t nowUs)
         if (!s_si.safeCause)
         {
             ecat_master_request_al_state(ECAT_AL_OP);
+            if (s_master)
+            {
+                canopen_master_start();     /* NMT start of all nodes */
+            }
         }
         hwa_marker_clear(HAL_MARKER_STATE);
         break;
@@ -197,6 +225,65 @@ static void supv_console_commands(void)
 
 /* ---- Data path (Working State only, strategy A) ---------------------------------- */
 
+/* Configuration 4, CAN -> EC: the TPDOs of the nodes are inserted when they
+ * are received (t2) and handed over to EtherCAT at the start of each
+ * EtherCAT cycle (t3), node n into bytes 8(n-1)..8n-1 of the outputs. */
+static void supv_master_can_to_ec(bool ecDue, uint64_t nowUs)
+{
+    conv_msg_t msg;
+    uint8_t node;
+    uint8_t data[SUPV_PDO_BYTES];
+
+    while (canopen_master_feedback_take(&node, data))
+    {
+        if (s_so.convert)
+        {
+            (void)memset(&msg, 0, sizeof(msg));
+            (void)memcpy(msg.data, data, SUPV_PDO_BYTES);
+            msg.len = (uint8_t)SUPV_PDO_BYTES;
+            msg.source = (uint16_t)(SUPV_SOURCE_NODE_TPDO + node);
+            (void)conversion_push(CONV_DIR_CAN_TO_EC, &msg, nowUs);      /* t2 */
+        }
+    }
+    if (ecDue && s_so.convert)
+    {
+        while (conversion_pop(CONV_DIR_CAN_TO_EC, &msg, nowUs))          /* t3 */
+        {
+            uint32_t n = (uint32_t)msg.source - SUPV_SOURCE_NODE_TPDO;
+
+            ecat_master_outputs_write_at((n - 1U) * SUPV_PDO_BYTES, msg.data, msg.len);
+        }
+    }
+}
+
+/* Configuration 4, EC -> CAN: the inputs of the slave, 8 bytes per node, are
+ * the set-points of the nodes, transmitted after the next SYNC (t4). */
+static void supv_master_ec_to_can(const uint8_t *in, uint32_t len, uint64_t nowUs)
+{
+    conv_msg_t msg;
+    uint8_t node;
+    uint8_t nodes = gw_config_get()->nodeCount;
+
+    for (node = 1U; node <= nodes; node++)
+    {
+        uint32_t off = (uint32_t)(node - 1U) * SUPV_PDO_BYTES;
+
+        if ((off + SUPV_PDO_BYTES) > len)
+        {
+            break;
+        }
+        (void)memset(&msg, 0, sizeof(msg));
+        (void)memcpy(msg.data, &in[off], SUPV_PDO_BYTES);
+        msg.len = (uint8_t)SUPV_PDO_BYTES;
+        msg.source = (uint16_t)(SUPV_SOURCE_NODE_RPDO + node);
+        (void)conversion_push(CONV_DIR_EC_TO_CAN, &msg, nowUs);          /* t2 */
+    }
+    while (conversion_pop(CONV_DIR_EC_TO_CAN, &msg, nowUs))              /* t3 */
+    {
+        canopen_master_setpoint_set((uint8_t)(msg.source - SUPV_SOURCE_NODE_RPDO), msg.data);
+    }
+}
+
 static void supv_can_to_ec(bool sync, const uint8_t rpdo[SUPV_PDO_BYTES], bool rpdoValid,
         uint64_t nowUs)
 {
@@ -221,12 +308,22 @@ static void supv_can_to_ec(bool sync, const uint8_t rpdo[SUPV_PDO_BYTES], bool r
 
 /* ---- Public ----------------------------------------------------------------- */
 
-void supv_init(void)
+void supv_init(bool cfgOk)
 {
     conv_config_t conv;
+    const gw_config_t *cfg = gw_config_get();
+    uint32_t tloop = hwa_time_tloop_us();
+
+    s_cfgOk = cfgOk;
+    s_master = gw_config_can_master();
+    if (s_master)
+    {
+        s_cfgOk = s_cfgOk && cycle_gen_init(&s_cg, cfg->tecUs / tloop, cfg->tsyncUs / tloop,
+                cfg->syncPhaseUs / tloop);
+    }
 
     (void)memset(&conv, 0, sizeof(conv));
-    conv.strategy = CONV_STRATEGY_A;
+    conv.strategy = cfg->strategy;
     conv.dir[CONV_DIR_CAN_TO_EC].capacity = SUPV_CONV_CAPACITY;
     conv.dir[CONV_DIR_EC_TO_CAN].capacity = SUPV_CONV_CAPACITY;
     (void)conversion_init(&conv);
@@ -251,6 +348,22 @@ void supv_init(void)
 
     /* T1 is taken in the first iteration: low-level initialisation is done */
     s_si.lowLevelInitDone = true;
+}
+
+void supv_step_cycle(void)
+{
+    if (!s_master)
+    {
+        return;
+    }
+    /* configuration 4: both cycles from the absolute Tloop tick (R5); the
+     * SYNC leaves at a fixed point at the start of the iteration, the
+     * EtherCAT frame of a due cycle in ecat_master_step() */
+    s_cyc = cycle_gen_step(&s_cg, (uint32_t)hwa_time_tick_count());
+    if (s_cyc.syncDue && !s_canRecoverPending && s_cfgOk)
+    {
+        canopen_master_sync_send();
+    }
 }
 
 void supv_step_input(void)
@@ -293,8 +406,20 @@ void supv_step_input(void)
     s_ei.ecWkcFault = ecFault;
     s_si.stacksFailed = (st == GW_ST_CONFIGURATION)
             && (s_ei.ecInitFailed || ecFault || s_ei.canBusOff);
-    s_ei.canHbLost = canopen_master_hb_lost();
-    s_ei.canOperational = canopen_operational();
+    if (s_master)
+    {
+        /* configuration 4: the nodes have to be present before T4 */
+        s_si.stacksReady = s_si.stacksReady && canopen_master_nodes_alive();
+        s_ei.canHbLost = false;
+        s_ei.canNodeFault = canopen_master_node_fault();
+        s_ei.canOperational = true;    /* the gateway starts the nodes itself */
+    }
+    else
+    {
+        s_ei.canHbLost = canopen_master_hb_lost();
+        s_ei.canNodeFault = false;
+        s_ei.canOperational = canopen_operational();
+    }
     n = hwa_can_rx_overflow_count();
     s_ei.canRxOverflow = (n != s_lastCanOverflows);
     s_lastCanOverflows = n;
@@ -329,6 +454,19 @@ void supv_step_input(void)
     s_status.errorClass = s_eo.cls;
     s_status.reinitCount = s_eo.reinitCount;
     s_status.masterHbLost = s_ei.canHbLost;
+    s_status.nodeFault = s_ei.canNodeFault;
+
+    if (s_master)
+    {
+        /* --- configuration 4: EtherCAT cycle due (supv_step_cycle) ------- */
+        supv_master_can_to_ec(s_cyc.ecDue, now);
+        if (s_cyc.ecDue)
+        {
+            /* the cycles go on outside Working too: safe outputs reach the slaves */
+            ecat_master_trigger();
+        }
+        return;
+    }
 
     /* --- SYNC: start of the EtherCAT cycle (configuration 3) ----------- */
     sync = canopen_sync_take(rpdo, &rpdoValid);
@@ -345,16 +483,22 @@ void supv_step_input(void)
 
 void supv_step_output(void)
 {
-    uint8_t in[SUPV_PDO_BYTES];
+    uint8_t in[SUPV_PD_BYTES_MAX];
     uint32_t len = 0U;
     conv_msg_t msg;
     uint64_t now;
 
-    if (!ecat_master_inputs_take(in, SUPV_PDO_BYTES, &len) || !s_so.convert)
+    if (!ecat_master_inputs_take(in, s_master ? SUPV_PD_BYTES_MAX : SUPV_PDO_BYTES, &len)
+            || !s_so.convert)
     {
         return;
     }
     now = hwa_time_now_us();
+    if (s_master)
+    {
+        supv_master_ec_to_can(in, len, now);
+        return;
+    }
     (void)memset(&msg, 0, sizeof(msg));
     (void)memcpy(msg.data, in, len);
     msg.len = (uint8_t)len;

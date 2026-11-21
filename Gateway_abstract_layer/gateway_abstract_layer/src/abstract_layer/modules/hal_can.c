@@ -43,6 +43,8 @@ static volatile uint32_t s_rxTail = 0U;
 static volatile uint32_t s_rxCount = 0U;
 static volatile uint32_t s_rxOverflow = 0U;
 static volatile uint32_t s_rxHighWater = 0U;
+static volatile uint32_t s_rxTotal = 0U;     /* frames read from RX FIFO 0 */
+static volatile uint32_t s_rxExtDrop = 0U;   /* 29-bit frames (not used) */
 
 static uint32_t hal_can_std_id_to_mcan(uint32_t stdId)
 {
@@ -77,8 +79,10 @@ static void hal_can_rx_push_isr(const MCAN_RX_BUFFER *rxBuf)
     uint32_t nextHead;
     uint32_t count;
 
+    s_rxTotal++;
     if (rxBuf->xtd != 0U)
     {
+        s_rxExtDrop++;
         return;
     }
 
@@ -287,6 +291,16 @@ uint32_t hal_can_rx_overflow_count(void)
 uint32_t hal_can_rx_high_water(void)
 {
     return s_rxHighWater;
+}
+
+uint32_t hal_can_rx_total(void)
+{
+    return s_rxTotal;
+}
+
+uint32_t hal_can_rx_ext_drop_count(void)
+{
+    return s_rxExtDrop;
 }
 
 uint32_t hal_can_tx_drop_count(void)

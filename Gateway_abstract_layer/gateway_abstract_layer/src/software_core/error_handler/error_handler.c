@@ -21,6 +21,7 @@ static gw_err_class_t eh_class_of(gw_error_t code)
     case GW_ERR_CAN_HB_TIMEOUT:
     case GW_ERR_CAN_RX_OVERFLOW:
     case GW_ERR_CONV_OVERFLOW:
+    case GW_ERR_CAN_NODE_FAULT:
         return GW_ERR_CLASS_RECOVERABLE;
 
     case GW_ERR_CAN_BUSOFF:
@@ -149,6 +150,10 @@ static gw_error_t eh_detect(gw_state_t state, const eh_inputs_t *in)
         {
             return GW_ERR_CAN_HB_TIMEOUT;
         }
+        if (in->canNodeFault)
+        {
+            return GW_ERR_CAN_NODE_FAULT;
+        }
         if (in->canRxOverflow)
         {
             return GW_ERR_CAN_RX_OVERFLOW;
@@ -173,6 +178,10 @@ static gw_error_t eh_detect(gw_state_t state, const eh_inputs_t *in)
         if (in->canHbLost)
         {
             return GW_ERR_CAN_HB_TIMEOUT;
+        }
+        if (in->canNodeFault)
+        {
+            return GW_ERR_CAN_NODE_FAULT;
         }
         break;
 
@@ -257,9 +266,21 @@ void eh_step(gw_state_t state, const eh_inputs_t *in, uint64_t nowUs, eh_output_
         {
             /* Overflows are removed by the communication stop (buffers
              * flushed); a heartbeat timeout when the heartbeat is back and
-             * the master has started the node again. */
-            reset = (s_code != GW_ERR_CAN_HB_TIMEOUT)
-                    || (!in->canHbLost && in->canOperational);
+             * the master has started the node again; the failure of a node
+             * when every node is alive again (the gateway as the master
+             * starts them in the Working State). */
+            if (s_code == GW_ERR_CAN_HB_TIMEOUT)
+            {
+                reset = !in->canHbLost && in->canOperational;
+            }
+            else if (s_code == GW_ERR_CAN_NODE_FAULT)
+            {
+                reset = !in->canNodeFault;
+            }
+            else
+            {
+                reset = true;
+            }
         }
     }
 
@@ -285,6 +306,7 @@ const char *eh_error_name(gw_error_t code)
     case GW_ERR_CAN_HB_TIMEOUT:  return "CAN_HB_TIMEOUT";
     case GW_ERR_CAN_RX_OVERFLOW: return "CAN_RX_OVERFLOW";
     case GW_ERR_CONV_OVERFLOW:   return "CONV_OVERFLOW";
+    case GW_ERR_CAN_NODE_FAULT:  return "CAN_NODE_FAULT";
     default:                     return "?";
     }
 }

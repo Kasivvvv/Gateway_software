@@ -15,11 +15,15 @@
  *
  * Classes (hierarchy of recovery, thesis 7.3):
  *   RECOVERABLE (T9)  master heartbeat timeout, CAN receive buffer overflow,
- *                     conversion buffer overflow. A heartbeat timeout puts the
- *                     node in Pre-operational (safe reaction); it is removed
- *                     when the heartbeat is back and the master has started
- *                     the node again (NMT start), so the Working State is
- *                     never entered with inactive PDOs.
+ *                     conversion buffer overflow, failure of a node (master
+ *                     role). A heartbeat timeout puts the node in
+ *                     Pre-operational (safe reaction); it is removed when the
+ *                     heartbeat is back and the master has started the node
+ *                     again (NMT start), so the Working State is never entered
+ *                     with inactive PDOs. As the CANopen master the gateway
+ *                     stops all nodes (NMT stop, Table 5.5); the failure is
+ *                     removed when every node sends its heartbeat again, and
+ *                     the Working State starts the nodes (NMT start).
  *   REINIT      (T10) bus-off, EtherCAT working counter fault, failed stack
  *                     initialisation
  *   FATAL       (T11) configuration CRC, self-test; and failed stack
@@ -32,7 +36,8 @@
  *
  * Detection: all errors in the Working State (T6); in the Safe State only the
  * critical ones - bus-off, EtherCAT working counter fault, heartbeat timeout
- * of the master (T12); in the Configuration State the failed initialisations
+ * of the master, failure of a node in the master role (T12); in the
+ * Configuration State the failed initialisations
  * and the failure of a running stack - bus-off, loss of the configured
  * EtherCAT network (T5).
  *
@@ -59,6 +64,7 @@ typedef enum
     GW_ERR_CAN_HB_TIMEOUT,
     GW_ERR_CAN_RX_OVERFLOW,
     GW_ERR_CONV_OVERFLOW,
+    GW_ERR_CAN_NODE_FAULT,
     GW_ERR_COUNT
 } gw_error_t;
 
@@ -74,6 +80,7 @@ typedef struct
     bool canRxOverflow;     /* event since the previous step */
     bool ecWkcFault;        /* level */
     bool convOverflow;      /* event since the previous step */
+    bool canNodeFault;      /* level, CANopen master: failure of a node */
 } eh_inputs_t;
 
 typedef struct

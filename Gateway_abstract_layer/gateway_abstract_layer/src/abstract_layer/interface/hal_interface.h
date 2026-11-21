@@ -96,6 +96,10 @@ hal_can_status_t hal_can_rx(hal_can_frame_t *frame);
 uint32_t hal_can_rx_count(void);
 uint32_t hal_can_rx_overflow_count(void);
 uint32_t hal_can_rx_high_water(void);
+/** Frames read from the controller since init (also the discarded ones). */
+uint32_t hal_can_rx_total(void);
+/** Extended (29-bit) frames discarded: CANopen uses 11-bit identifiers. */
+uint32_t hal_can_rx_ext_drop_count(void);
 uint32_t hal_can_tx_drop_count(void);
 bool     hal_can_is_bus_off(void);
 /** Error counters and last error code (reading clears the LEC). */

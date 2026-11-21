@@ -1,0 +1,975 @@
+; Stage-7 OD of the gateway as CANopen master (configurations 2 and 4).
+; Node-ID 0x7F -> heartbeat 0x77F (100 ms). Up to 7 nodes (set S7; S2 uses
+; nodes 1 and 2, the PDOs of the others are disabled at run time).
+;   RPDO n (0x1400+n-1): TPDO of node n, COB-ID 0x180+n, asynchronous (255),
+;                        mapped to 0x2200:n (feedback of node n, to EtherCAT)
+;   TPDO n (0x1800+n-1): RPDO of node n, COB-ID 0x200+n, synchronous (1),
+;                        mapped to 0x2300:n (set-point of node n, from EtherCAT)
+; SYNC producer 0x080 with period 0: the SYNC is transmitted by the cycle
+; generator of the gateway (fixed phase to the EtherCAT cycle, R5), not by
+; the timer of the stack. Heartbeat consumers of nodes 1..7: 250 ms.
+; Generated objects only; regenerate gateway_master_od.c with dcf2dev.
+
+[FileInfo]
+FileName=gateway_master.dcf
+FileVersion=1
+FileRevision=0
+Description=Gateway CANopen master Stage 7
+
+[DeviceInfo]
+VendorName=Gateway
+VendorNumber=0x00000000
+ProductName=EtherCAT-CAN Gateway master
+ProductNumber=0x00000002
+RevisionNumber=0x00000001
+OrderCode=
+BaudRate_10=0
+BaudRate_20=0
+BaudRate_50=0
+BaudRate_125=0
+BaudRate_250=0
+BaudRate_500=0
+BaudRate_800=0
+BaudRate_1000=1
+SimpleBootUpMaster=1
+SimpleBootUpSlave=0
+Granularity=8
+DynamicChannelsSupported=0
+GroupMessaging=0
+NrOfRxPDO=7
+NrOfTxPDO=7
+LSS_Supported=0
+
+[DummyUsage]
+Dummy0001=0
+Dummy0002=1
+Dummy0003=1
+Dummy0004=1
+Dummy0005=1
+Dummy0006=1
+Dummy0007=1
+
+[DeviceComissioning]
+NodeName=GatewayMaster
+NodeID=0x7F
+Baudrate=1000
+NetNumber=0
+LSS_SerialNumber=0x00000001
+
+[MandatoryObjects]
+SupportedObjects=3
+1=0x1000
+2=0x1001
+3=0x1018
+
+[OptionalObjects]
+SupportedObjects=33
+1=0x1005
+2=0x1006
+3=0x1016
+4=0x1017
+5=0x1400
+6=0x1401
+7=0x1402
+8=0x1403
+9=0x1404
+10=0x1405
+11=0x1406
+12=0x1600
+13=0x1601
+14=0x1602
+15=0x1603
+16=0x1604
+17=0x1605
+18=0x1606
+19=0x1800
+20=0x1801
+21=0x1802
+22=0x1803
+23=0x1804
+24=0x1805
+25=0x1806
+26=0x1A00
+27=0x1A01
+28=0x1A02
+29=0x1A03
+30=0x1A04
+31=0x1A05
+32=0x1A06
+33=0x1F80
+
+[ManufacturerObjects]
+SupportedObjects=2
+1=0x2200
+2=0x2300
+
+[1000]
+ParameterName=Device type
+ObjectType=0x07
+DataType=0x0007
+AccessType=ro
+DefaultValue=0x00000000
+PDOMapping=0
+
+[1001]
+ParameterName=Error register
+ObjectType=0x07
+DataType=0x0005
+AccessType=ro
+DefaultValue=0x00
+PDOMapping=0
+
+[1005]
+ParameterName=COB-ID SYNC message
+ObjectType=0x07
+DataType=0x0007
+AccessType=rw
+DefaultValue=0x40000080
+PDOMapping=0
+
+[1006]
+ParameterName=Communication cycle period
+ObjectType=0x07
+DataType=0x0007
+AccessType=rw
+DefaultValue=0
+PDOMapping=0
+
+[1016]
+ParameterName=Consumer heartbeat time
+ObjectType=0x08
+DataType=0x0007
+AccessType=rw
+CompactSubObj=7
+
+[1016Value]
+NrOfEntries=7
+1=0x000100FA
+2=0x000200FA
+3=0x000300FA
+4=0x000400FA
+5=0x000500FA
+6=0x000600FA
+7=0x000700FA
+
+[1017]
+ParameterName=Producer heartbeat time
+ObjectType=0x07
+DataType=0x0006
+AccessType=rw
+DefaultValue=100
+PDOMapping=0
+
+[1018]
+SubNumber=5
+ParameterName=Identity object
+ObjectType=0x09
+
+[1018sub0]
+ParameterName=Highest sub-index supported
+ObjectType=0x07
+DataType=0x0005
+AccessType=const
+DefaultValue=4
+
+[1018sub1]
+ParameterName=Vendor-ID
+ObjectType=0x07
+DataType=0x0007
+AccessType=ro
+DefaultValue=0x00000000
+
+[1018sub2]
+ParameterName=Product code
+ObjectType=0x07
+DataType=0x0007
+AccessType=ro
+DefaultValue=0x00000002
+
+[1018sub3]
+ParameterName=Revision number
+ObjectType=0x07
+DataType=0x0007
+AccessType=ro
+DefaultValue=0x00000001
+
+[1018sub4]
+ParameterName=Serial number
+ObjectType=0x07
+DataType=0x0007
+AccessType=ro
+DefaultValue=0x00000001
+
+[1400]
+SubNumber=3
+ParameterName=RPDO 1 communication parameter
+ObjectType=0x09
+
+[1400sub0]
+ParameterName=Highest sub-index supported
+ObjectType=0x07
+DataType=0x0005
+AccessType=const
+DefaultValue=2
+
+[1400sub1]
+ParameterName=COB-ID used by RPDO
+ObjectType=0x07
+DataType=0x0007
+AccessType=rw
+DefaultValue=0x00000181
+
+[1400sub2]
+ParameterName=Transmission type
+ObjectType=0x07
+DataType=0x0005
+AccessType=rw
+DefaultValue=255
+
+[1600]
+SubNumber=2
+ParameterName=RPDO 1 mapping parameter
+ObjectType=0x09
+
+[1600sub0]
+ParameterName=Number of mapped objects
+ObjectType=0x07
+DataType=0x0005
+AccessType=rw
+DefaultValue=1
+
+[1600sub1]
+ParameterName=Mapped object 1
+ObjectType=0x07
+DataType=0x0007
+AccessType=rw
+DefaultValue=0x22000140
+
+[1800]
+SubNumber=3
+ParameterName=TPDO 1 communication parameter
+ObjectType=0x09
+
+[1800sub0]
+ParameterName=Highest sub-index supported
+ObjectType=0x07
+DataType=0x0005
+AccessType=const
+DefaultValue=2
+
+[1800sub1]
+ParameterName=COB-ID used by TPDO
+ObjectType=0x07
+DataType=0x0007
+AccessType=rw
+DefaultValue=0x00000201
+
+[1800sub2]
+ParameterName=Transmission type
+ObjectType=0x07
+DataType=0x0005
+AccessType=rw
+DefaultValue=1
+
+[1A00]
+SubNumber=2
+ParameterName=TPDO 1 mapping parameter
+ObjectType=0x09
+
+[1A00sub0]
+ParameterName=Number of mapped objects
+ObjectType=0x07
+DataType=0x0005
+AccessType=rw
+DefaultValue=1
+
+[1A00sub1]
+ParameterName=Mapped object 1
+ObjectType=0x07
+DataType=0x0007
+AccessType=rw
+DefaultValue=0x23000140
+
+[1401]
+SubNumber=3
+ParameterName=RPDO 2 communication parameter
+ObjectType=0x09
+
+[1401sub0]
+ParameterName=Highest sub-index supported
+ObjectType=0x07
+DataType=0x0005
+AccessType=const
+DefaultValue=2
+
+[1401sub1]
+ParameterName=COB-ID used by RPDO
+ObjectType=0x07
+DataType=0x0007
+AccessType=rw
+DefaultValue=0x00000182
+
+[1401sub2]
+ParameterName=Transmission type
+ObjectType=0x07
+DataType=0x0005
+AccessType=rw
+DefaultValue=255
+
+[1601]
+SubNumber=2
+ParameterName=RPDO 2 mapping parameter
+ObjectType=0x09
+
+[1601sub0]
+ParameterName=Number of mapped objects
+ObjectType=0x07
+DataType=0x0005
+AccessType=rw
+DefaultValue=1
+
+[1601sub1]
+ParameterName=Mapped object 1
+ObjectType=0x07
+DataType=0x0007
+AccessType=rw
+DefaultValue=0x22000240
+
+[1801]
+SubNumber=3
+ParameterName=TPDO 2 communication parameter
+ObjectType=0x09
+
+[1801sub0]
+ParameterName=Highest sub-index supported
+ObjectType=0x07
+DataType=0x0005
+AccessType=const
+DefaultValue=2
+
+[1801sub1]
+ParameterName=COB-ID used by TPDO
+ObjectType=0x07
+DataType=0x0007
+AccessType=rw
+DefaultValue=0x00000202
+
+[1801sub2]
+ParameterName=Transmission type
+ObjectType=0x07
+DataType=0x0005
+AccessType=rw
+DefaultValue=1
+
+[1A01]
+SubNumber=2
+ParameterName=TPDO 2 mapping parameter
+ObjectType=0x09
+
+[1A01sub0]
+ParameterName=Number of mapped objects
+ObjectType=0x07
+DataType=0x0005
+AccessType=rw
+DefaultValue=1
+
+[1A01sub1]
+ParameterName=Mapped object 1
+ObjectType=0x07
+DataType=0x0007
+AccessType=rw
+DefaultValue=0x23000240
+
+[1402]
+SubNumber=3
+ParameterName=RPDO 3 communication parameter
+ObjectType=0x09
+
+[1402sub0]
+ParameterName=Highest sub-index supported
+ObjectType=0x07
+DataType=0x0005
+AccessType=const
+DefaultValue=2
+
+[1402sub1]
+ParameterName=COB-ID used by RPDO
+ObjectType=0x07
+DataType=0x0007
+AccessType=rw
+DefaultValue=0x00000183
+
+[1402sub2]
+ParameterName=Transmission type
+ObjectType=0x07
+DataType=0x0005
+AccessType=rw
+DefaultValue=255
+
+[1602]
+SubNumber=2
+ParameterName=RPDO 3 mapping parameter
+ObjectType=0x09
+
+[1602sub0]
+ParameterName=Number of mapped objects
+ObjectType=0x07
+DataType=0x0005
+AccessType=rw
+DefaultValue=1
+
+[1602sub1]
+ParameterName=Mapped object 1
+ObjectType=0x07
+DataType=0x0007
+AccessType=rw
+DefaultValue=0x22000340
+
+[1802]
+SubNumber=3
+ParameterName=TPDO 3 communication parameter
+ObjectType=0x09
+
+[1802sub0]
+ParameterName=Highest sub-index supported
+ObjectType=0x07
+DataType=0x0005
+AccessType=const
+DefaultValue=2
+
+[1802sub1]
+ParameterName=COB-ID used by TPDO
+ObjectType=0x07
+DataType=0x0007
+AccessType=rw
+DefaultValue=0x00000203
+
+[1802sub2]
+ParameterName=Transmission type
+ObjectType=0x07
+DataType=0x0005
+AccessType=rw
+DefaultValue=1
+
+[1A02]
+SubNumber=2
+ParameterName=TPDO 3 mapping parameter
+ObjectType=0x09
+
+[1A02sub0]
+ParameterName=Number of mapped objects
+ObjectType=0x07
+DataType=0x0005
+AccessType=rw
+DefaultValue=1
+
+[1A02sub1]
+ParameterName=Mapped object 1
+ObjectType=0x07
+DataType=0x0007
+AccessType=rw
+DefaultValue=0x23000340
+
+[1403]
+SubNumber=3
+ParameterName=RPDO 4 communication parameter
+ObjectType=0x09
+
+[1403sub0]
+ParameterName=Highest sub-index supported
+ObjectType=0x07
+DataType=0x0005
+AccessType=const
+DefaultValue=2
+
+[1403sub1]
+ParameterName=COB-ID used by RPDO
+ObjectType=0x07
+DataType=0x0007
+AccessType=rw
+DefaultValue=0x00000184
+
+[1403sub2]
+ParameterName=Transmission type
+ObjectType=0x07
+DataType=0x0005
+AccessType=rw
+DefaultValue=255
+
+[1603]
+SubNumber=2
+ParameterName=RPDO 4 mapping parameter
+ObjectType=0x09
+
+[1603sub0]
+ParameterName=Number of mapped objects
+ObjectType=0x07
+DataType=0x0005
+AccessType=rw
+DefaultValue=1
+
+[1603sub1]
+ParameterName=Mapped object 1
+ObjectType=0x07
+DataType=0x0007
+AccessType=rw
+DefaultValue=0x22000440
+
+[1803]
+SubNumber=3
+ParameterName=TPDO 4 communication parameter
+ObjectType=0x09
+
+[1803sub0]
+ParameterName=Highest sub-index supported
+ObjectType=0x07
+DataType=0x0005
+AccessType=const
+DefaultValue=2
+
+[1803sub1]
+ParameterName=COB-ID used by TPDO
+ObjectType=0x07
+DataType=0x0007
+AccessType=rw
+DefaultValue=0x00000204
+
+[1803sub2]
+ParameterName=Transmission type
+ObjectType=0x07
+DataType=0x0005
+AccessType=rw
+DefaultValue=1
+
+[1A03]
+SubNumber=2
+ParameterName=TPDO 4 mapping parameter
+ObjectType=0x09
+
+[1A03sub0]
+ParameterName=Number of mapped objects
+ObjectType=0x07
+DataType=0x0005
+AccessType=rw
+DefaultValue=1
+
+[1A03sub1]
+ParameterName=Mapped object 1
+ObjectType=0x07
+DataType=0x0007
+AccessType=rw
+DefaultValue=0x23000440
+
+[1404]
+SubNumber=3
+ParameterName=RPDO 5 communication parameter
+ObjectType=0x09
+
+[1404sub0]
+ParameterName=Highest sub-index supported
+ObjectType=0x07
+DataType=0x0005
+AccessType=const
+DefaultValue=2
+
+[1404sub1]
+ParameterName=COB-ID used by RPDO
+ObjectType=0x07
+DataType=0x0007
+AccessType=rw
+DefaultValue=0x00000185
+
+[1404sub2]
+ParameterName=Transmission type
+ObjectType=0x07
+DataType=0x0005
+AccessType=rw
+DefaultValue=255
+
+[1604]
+SubNumber=2
+ParameterName=RPDO 5 mapping parameter
+ObjectType=0x09
+
+[1604sub0]
+ParameterName=Number of mapped objects
+ObjectType=0x07
+DataType=0x0005
+AccessType=rw
+DefaultValue=1
+
+[1604sub1]
+ParameterName=Mapped object 1
+ObjectType=0x07
+DataType=0x0007
+AccessType=rw
+DefaultValue=0x22000540
+
+[1804]
+SubNumber=3
+ParameterName=TPDO 5 communication parameter
+ObjectType=0x09
+
+[1804sub0]
+ParameterName=Highest sub-index supported
+ObjectType=0x07
+DataType=0x0005
+AccessType=const
+DefaultValue=2
+
+[1804sub1]
+ParameterName=COB-ID used by TPDO
+ObjectType=0x07
+DataType=0x0007
+AccessType=rw
+DefaultValue=0x00000205
+
+[1804sub2]
+ParameterName=Transmission type
+ObjectType=0x07
+DataType=0x0005
+AccessType=rw
+DefaultValue=1
+
+[1A04]
+SubNumber=2
+ParameterName=TPDO 5 mapping parameter
+ObjectType=0x09
+
+[1A04sub0]
+ParameterName=Number of mapped objects
+ObjectType=0x07
+DataType=0x0005
+AccessType=rw
+DefaultValue=1
+
+[1A04sub1]
+ParameterName=Mapped object 1
+ObjectType=0x07
+DataType=0x0007
+AccessType=rw
+DefaultValue=0x23000540
+
+[1405]
+SubNumber=3
+ParameterName=RPDO 6 communication parameter
+ObjectType=0x09
+
+[1405sub0]
+ParameterName=Highest sub-index supported
+ObjectType=0x07
+DataType=0x0005
+AccessType=const
+DefaultValue=2
+
+[1405sub1]
+ParameterName=COB-ID used by RPDO
+ObjectType=0x07
+DataType=0x0007
+AccessType=rw
+DefaultValue=0x00000186
+
+[1405sub2]
+ParameterName=Transmission type
+ObjectType=0x07
+DataType=0x0005
+AccessType=rw
+DefaultValue=255
+
+[1605]
+SubNumber=2
+ParameterName=RPDO 6 mapping parameter
+ObjectType=0x09
+
+[1605sub0]
+ParameterName=Number of mapped objects
+ObjectType=0x07
+DataType=0x0005
+AccessType=rw
+DefaultValue=1
+
+[1605sub1]
+ParameterName=Mapped object 1
+ObjectType=0x07
+DataType=0x0007
+AccessType=rw
+DefaultValue=0x22000640
+
+[1805]
+SubNumber=3
+ParameterName=TPDO 6 communication parameter
+ObjectType=0x09
+
+[1805sub0]
+ParameterName=Highest sub-index supported
+ObjectType=0x07
+DataType=0x0005
+AccessType=const
+DefaultValue=2
+
+[1805sub1]
+ParameterName=COB-ID used by TPDO
+ObjectType=0x07
+DataType=0x0007
+AccessType=rw
+DefaultValue=0x00000206
+
+[1805sub2]
+ParameterName=Transmission type
+ObjectType=0x07
+DataType=0x0005
+AccessType=rw
+DefaultValue=1
+
+[1A05]
+SubNumber=2
+ParameterName=TPDO 6 mapping parameter
+ObjectType=0x09
+
+[1A05sub0]
+ParameterName=Number of mapped objects
+ObjectType=0x07
+DataType=0x0005
+AccessType=rw
+DefaultValue=1
+
+[1A05sub1]
+ParameterName=Mapped object 1
+ObjectType=0x07
+DataType=0x0007
+AccessType=rw
+DefaultValue=0x23000640
+
+[1406]
+SubNumber=3
+ParameterName=RPDO 7 communication parameter
+ObjectType=0x09
+
+[1406sub0]
+ParameterName=Highest sub-index supported
+ObjectType=0x07
+DataType=0x0005
+AccessType=const
+DefaultValue=2
+
+[1406sub1]
+ParameterName=COB-ID used by RPDO
+ObjectType=0x07
+DataType=0x0007
+AccessType=rw
+DefaultValue=0x00000187
+
+[1406sub2]
+ParameterName=Transmission type
+ObjectType=0x07
+DataType=0x0005
+AccessType=rw
+DefaultValue=255
+
+[1606]
+SubNumber=2
+ParameterName=RPDO 7 mapping parameter
+ObjectType=0x09
+
+[1606sub0]
+ParameterName=Number of mapped objects
+ObjectType=0x07
+DataType=0x0005
+AccessType=rw
+DefaultValue=1
+
+[1606sub1]
+ParameterName=Mapped object 1
+ObjectType=0x07
+DataType=0x0007
+AccessType=rw
+DefaultValue=0x22000740
+
+[1806]
+SubNumber=3
+ParameterName=TPDO 7 communication parameter
+ObjectType=0x09
+
+[1806sub0]
+ParameterName=Highest sub-index supported
+ObjectType=0x07
+DataType=0x0005
+AccessType=const
+DefaultValue=2
+
+[1806sub1]
+ParameterName=COB-ID used by TPDO
+ObjectType=0x07
+DataType=0x0007
+AccessType=rw
+DefaultValue=0x00000207
+
+[1806sub2]
+ParameterName=Transmission type
+ObjectType=0x07
+DataType=0x0005
+AccessType=rw
+DefaultValue=1
+
+[1A06]
+SubNumber=2
+ParameterName=TPDO 7 mapping parameter
+ObjectType=0x09
+
+[1A06sub0]
+ParameterName=Number of mapped objects
+ObjectType=0x07
+DataType=0x0005
+AccessType=rw
+DefaultValue=1
+
+[1A06sub1]
+ParameterName=Mapped object 1
+ObjectType=0x07
+DataType=0x0007
+AccessType=rw
+DefaultValue=0x23000740
+
+[1F80]
+ParameterName=NMT startup
+ObjectType=0x07
+DataType=0x0007
+AccessType=rw
+DefaultValue=0x00000005
+PDOMapping=0
+
+[2200]
+SubNumber=8
+ParameterName=Feedback of node (TPDO of node n, to EtherCAT)
+ObjectType=0x08
+
+[2200sub0]
+ParameterName=Highest sub-index supported
+ObjectType=0x07
+DataType=0x0005
+AccessType=const
+DefaultValue=7
+
+[2200sub1]
+ParameterName=Node 1
+ObjectType=0x07
+DataType=0x001B
+AccessType=rw
+DefaultValue=0
+PDOMapping=1
+
+[2200sub2]
+ParameterName=Node 2
+ObjectType=0x07
+DataType=0x001B
+AccessType=rw
+DefaultValue=0
+PDOMapping=1
+
+[2200sub3]
+ParameterName=Node 3
+ObjectType=0x07
+DataType=0x001B
+AccessType=rw
+DefaultValue=0
+PDOMapping=1
+
+[2200sub4]
+ParameterName=Node 4
+ObjectType=0x07
+DataType=0x001B
+AccessType=rw
+DefaultValue=0
+PDOMapping=1
+
+[2200sub5]
+ParameterName=Node 5
+ObjectType=0x07
+DataType=0x001B
+AccessType=rw
+DefaultValue=0
+PDOMapping=1
+
+[2200sub6]
+ParameterName=Node 6
+ObjectType=0x07
+DataType=0x001B
+AccessType=rw
+DefaultValue=0
+PDOMapping=1
+
+[2200sub7]
+ParameterName=Node 7
+ObjectType=0x07
+DataType=0x001B
+AccessType=rw
+DefaultValue=0
+PDOMapping=1
+
+[2300]
+SubNumber=8
+ParameterName=Set-point of node (RPDO of node n, from EtherCAT)
+ObjectType=0x08
+
+[2300sub0]
+ParameterName=Highest sub-index supported
+ObjectType=0x07
+DataType=0x0005
+AccessType=const
+DefaultValue=7
+
+[2300sub1]
+ParameterName=Node 1
+ObjectType=0x07
+DataType=0x001B
+AccessType=rw
+DefaultValue=0
+PDOMapping=1
+
+[2300sub2]
+ParameterName=Node 2
+ObjectType=0x07
+DataType=0x001B
+AccessType=rw
+DefaultValue=0
+PDOMapping=1
+
+[2300sub3]
+ParameterName=Node 3
+ObjectType=0x07
+DataType=0x001B
+AccessType=rw
+DefaultValue=0
+PDOMapping=1
+
+[2300sub4]
+ParameterName=Node 4
+ObjectType=0x07
+DataType=0x001B
+AccessType=rw
+DefaultValue=0
+PDOMapping=1
+
+[2300sub5]
+ParameterName=Node 5
+ObjectType=0x07
+DataType=0x001B
+AccessType=rw
+DefaultValue=0
+PDOMapping=1
+
+[2300sub6]
+ParameterName=Node 6
+ObjectType=0x07
+DataType=0x001B
+AccessType=rw
+DefaultValue=0
+PDOMapping=1
+
+[2300sub7]
+ParameterName=Node 7
+ObjectType=0x07
+DataType=0x001B
+AccessType=rw
+DefaultValue=0
+PDOMapping=1

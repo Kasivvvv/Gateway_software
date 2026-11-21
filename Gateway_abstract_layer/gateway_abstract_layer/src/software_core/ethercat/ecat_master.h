@@ -107,6 +107,10 @@ void ecat_master_trigger(void);
 /** Outputs of the next cycle (bytes beyond the mapped size are ignored). */
 void ecat_master_outputs_write(const uint8_t *data, uint32_t len);
 
+/** Outputs of the slave from byte offset on (one CAN node per 8 bytes in
+ *  configuration 4). */
+void ecat_master_outputs_write_at(uint32_t offset, const uint8_t *data, uint32_t len);
+
 /** Safe output values (all zero) from the next cycle on. */
 void ecat_master_outputs_safe(void);
 

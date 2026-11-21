@@ -17,7 +17,8 @@ soft_esc_t *slave_app_esc(void)
 /* SOES callbacks */
 void cb_get_inputs(void)
 {
-    Obj.Inputs.Data = Obj.Outputs.Data; /* echo */
+    Obj.Inputs.Data = Obj.Outputs.Data;   /* echo */
+    Obj.Inputs.Data2 = Obj.Outputs.Data2;
 }
 
 void cb_set_outputs(void)
@@ -30,6 +31,7 @@ void cb_set_outputs(void)
 static void slave_safe_outputs(void)
 {
     Obj.Outputs.Data = 0U;
+    Obj.Outputs.Data2 = 0U;
 }
 
 void slave_app_init(uint32_t watchdogCalls)
@@ -85,4 +87,9 @@ uint64_t slave_app_outputs(void)
 uint64_t slave_app_inputs(void)
 {
     return Obj.Inputs.Data;
+}
+
+uint64_t slave_app_outputs2(void)
+{
+    return Obj.Outputs.Data2;
 }

@@ -27,5 +27,7 @@ uint8_t slave_app_al_status(void);
 uint32_t slave_app_outputs_updates(void);
 uint64_t slave_app_outputs(void);
 uint64_t slave_app_inputs(void);
+/** Second 8-byte entry of the outputs (node 2 in configuration 4). */
+uint64_t slave_app_outputs2(void);
 
 #endif /* SLAVE_APP_H */

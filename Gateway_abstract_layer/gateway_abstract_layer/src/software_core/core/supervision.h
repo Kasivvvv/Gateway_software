@@ -14,8 +14,13 @@
  * communication reset / hardware reset) and moves the data between the
  * stacks and the Conversion module in the Working State.
  *
- * Role configuration 3 (fixed until the configuration manager, stage 9):
- * EtherCAT master + CANopen node 0x10, EtherCAT cycle started by SYNC.
+ * Role configurations (gw_config.h, fixed until the configuration manager,
+ * stage 9):
+ *   3  EtherCAT master + CANopen node 0x10, EtherCAT cycle started by SYNC;
+ *   4  EtherCAT master + CANopen master 0x7F, EtherCAT cycle and SYNC from
+ *      the cycle generator (fixed phase, R5); the nodes must be present
+ *      (heartbeat) before T4; T7 only by link loss or service command, T8 only
+ *      by the service command (no external master).
  *
  * Transitions T1..T11 of thesis Table 7.2 plus T12 Safe -> Error (critical
  * error while in the Safe State).
@@ -24,6 +29,7 @@
  *   conversion stopped and buffers flushed;
  *   EtherCAT master: safe (zero) outputs in the next frame, slaves -> SAFE-OP;
  *   CANopen node: own NMT state -> Pre-operational (seen in its heartbeat);
+ *   CANopen master: NMT stop of all nodes, own state Pre-operational;
  *   then MARK_STATE is set (end of the time to the safe state, HIL-06).
  *
  * Service commands on the console: 'S' safe-state request (T7),
@@ -54,9 +60,14 @@ typedef struct
     bool           safeNmt;      /* safe cause: master left Operational */
     bool           safeService;  /* safe cause: service command */
     bool           masterHbLost;
+    bool           nodeFault;    /* CANopen master: failure of a node */
 } supv_status_t;
 
-void supv_init(void);
+/** cfgOk: result of gw_config_init(), part of the self-test (T2/T3). */
+void supv_init(bool cfgOk);
+
+/** First call of the iteration: cycle generator of configuration 4 (SYNC). */
+void supv_step_cycle(void);
 
 /** Before ecat_master_step(): supervision, then CAN -> EtherCAT. */
 void supv_step_input(void);
