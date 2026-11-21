@@ -250,6 +250,11 @@ static void ecat_cycle(void)
         {
             s_st.wkcOk++;
             s_missRun = 0U;
+            if ((s_slaves[0].Ibytes > 0U) && (s_slaves[0].inputs != NULL))
+            {
+                s_st.inValue = s_slaves[0].inputs[0];
+                s_st.echoLag = (uint8_t)(s_st.outValue - (uint8_t)(s_st.inValue - 1U));
+            }
         }
         else
         {
@@ -267,6 +272,11 @@ static void ecat_cycle(void)
         return;
     }
 
+    if ((s_slaves[0].Obytes > 0U) && (s_slaves[0].outputs != NULL))
+    {
+        s_st.outValue++;
+        s_slaves[0].outputs[0] = s_st.outValue; /* Stage 5 test pattern */
+    }
     (void)ecx_send_processdata(&s_ctx);
     s_pdPending = true;
     s_st.cycles++;

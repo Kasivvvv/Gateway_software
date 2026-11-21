@@ -44,6 +44,11 @@ typedef struct
     uint32_t cycles;        /* process data cycles sent */
     uint32_t wkcOk;
     uint32_t wkcMiss;       /* frame missing or WKC below expected */
+    /* Stage 5 test pattern (replaced by the conversion in Stage 6):
+     * outputs[0] = counter, the test slave answers inputs[0] = outputs[0] + 1 */
+    uint8_t  outValue;      /* last counter written to outputs[0] */
+    uint8_t  inValue;       /* last inputs[0] received */
+    uint8_t  echoLag;       /* outValue - (inValue - 1): cycles until echo */
 } ecat_master_stats_t;
 
 void ecat_master_init(void);

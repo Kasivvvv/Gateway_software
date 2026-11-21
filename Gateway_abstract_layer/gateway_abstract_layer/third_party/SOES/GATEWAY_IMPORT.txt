@@ -1,0 +1,1 @@
+VERSION: SOES v3.1.0 (github.com/OpenEtherCATsociety/SOES tag v3.1.0, sha256 c64fe600f94f49dcf32548ae3196c8a5ab5c6e24c25ac3cd60db6a9e4529f685), unmodified

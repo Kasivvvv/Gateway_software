@@ -324,6 +324,12 @@ static void core_report_stats(void)
         CORE_APPEND_I32(ec.lastWkc);
         CORE_APPEND_LIT("/");
         CORE_APPEND_I32(ec.expectedWkc);
+        CORE_APPEND_LIT(" out=");
+        CORE_APPEND_U32(ec.outValue);
+        CORE_APPEND_LIT(" in=");
+        CORE_APPEND_U32(ec.inValue);
+        CORE_APPEND_LIT(" lag=");
+        CORE_APPEND_U32(ec.echoLag);
     }
     CORE_APPEND_LIT("\r\n");
     buf[pos] = '\0';

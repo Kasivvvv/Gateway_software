@@ -35,6 +35,7 @@ set(gateway_abstract_layer_default_default_XC32_FILE_TYPE_compile
     "${CMAKE_CURRENT_SOURCE_DIR}/../../../config.mcc/src/config/default/system/cache/sys_cache.c"
     "${CMAKE_CURRENT_SOURCE_DIR}/../../../config.mcc/src/config/default/system/int/src/sys_int.c"
     "${CMAKE_CURRENT_SOURCE_DIR}/../../../config.mcc/src/main.c"
+    "${CMAKE_CURRENT_SOURCE_DIR}/../../../src/abstract_layer/modules/esc/soft_esc.c"
     "${CMAKE_CURRENT_SOURCE_DIR}/../../../src/abstract_layer/modules/hal_can.c"
     "${CMAKE_CURRENT_SOURCE_DIR}/../../../src/abstract_layer/modules/hal_console.c"
     "${CMAKE_CURRENT_SOURCE_DIR}/../../../src/abstract_layer/modules/hal_eth.c"
