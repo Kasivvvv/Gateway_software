@@ -48,7 +48,6 @@
 // Section: Included Files
 // *****************************************************************************
 // *****************************************************************************
-#include "configuration.h"
 #include "device_vectors.h"
 #include "interrupts.h"
 #include "definitions.h"
@@ -79,7 +78,7 @@ void __attribute__((optimize("-O1"), long_call, noreturn, used))Dummy_Handler(vo
 }
 
 /* MISRAC 2023 deviation block start */
-/* MISRA C-2023 Rule 8.6 deviated 67 times.  Deviation record ID -  H3_MISRAC_2023_R_8_6_DR_1 */
+/* MISRA C-2023 Rule 8.6 deviated 68 times.  Deviation record ID -  H3_MISRAC_2023_R_8_6_DR_1 */
 /* Device vectors list dummy definition*/
 extern void SVCall_Handler             ( void ) __attribute__((weak, alias("Dummy_Handler"),noreturn));
 extern void PendSV_Handler             ( void ) __attribute__((weak, alias("Dummy_Handler"),noreturn));
@@ -104,6 +103,7 @@ extern void HSMCI_Handler              ( void ) __attribute__((weak, alias("Dumm
 extern void TWIHS1_Handler             ( void ) __attribute__((weak, alias("Dummy_Handler"),noreturn));
 extern void SPI0_Handler               ( void ) __attribute__((weak, alias("Dummy_Handler"),noreturn));
 extern void SSC_Handler                ( void ) __attribute__((weak, alias("Dummy_Handler"),noreturn));
+extern void TC0_CH0_Handler            ( void ) __attribute__((weak, alias("Dummy_Handler"),noreturn));
 extern void TC0_CH2_Handler            ( void ) __attribute__((weak, alias("Dummy_Handler"),noreturn));
 extern void TC1_CH0_Handler            ( void ) __attribute__((weak, alias("Dummy_Handler"),noreturn));
 extern void TC1_CH1_Handler            ( void ) __attribute__((weak, alias("Dummy_Handler"),noreturn));
@@ -157,7 +157,7 @@ extern void GMAC_Q5_Handler            ( void ) __attribute__((weak, alias("Dumm
 
 
 /* MISRAC 2023 deviation block start */
-/* MISRA C-2023 Rule 2.8 deviated 67 times.  Deviation record ID -  H3_MISRAC_2023_R_2_8_DR_1 */
+/* MISRA C-2023 Rule 2.8 deviated 68 times.  Deviation record ID -  H3_MISRAC_2023_R_2_8_DR_1 */
 
 __attribute__ ((section(".vectors"), used))
 const H3DeviceVectors exception_table=
@@ -197,7 +197,7 @@ const H3DeviceVectors exception_table=
     .pfnTWIHS1_Handler             = TWIHS1_Handler,
     .pfnSPI0_Handler               = SPI0_Handler,
     .pfnSSC_Handler                = SSC_Handler,
-    .pfnTC0_CH0_Handler            = TC0_CH0_InterruptHandler,
+    .pfnTC0_CH0_Handler            = TC0_CH0_Handler,
     .pfnTC0_CH1_Handler            = TC0_CH1_InterruptHandler,
     .pfnTC0_CH2_Handler            = TC0_CH2_Handler,
     .pfnTC1_CH0_Handler            = TC1_CH0_Handler,

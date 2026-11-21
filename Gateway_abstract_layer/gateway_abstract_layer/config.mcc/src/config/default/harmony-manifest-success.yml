@@ -4,8 +4,8 @@
 
 
 project: config_default
-creation_date: 2026-11-20T15:11:01.407+01:00[Europe/Belgrade]    # ISO 8601 format: https://www.w3.org/TR/NOTE-datetime
-operating_system: Windows 11
+creation_date: 2026-11-21T07:32:20.194+01:00[Europe/Warsaw]    # ISO 8601 format: https://www.w3.org/TR/NOTE-datetime
+operating_system: Mac OS X
 mcc_mode: VSCodePlugin            # [IDE|Standalone|Headless]
 mcc_version: v5.7.2
 mcc_core_version: v5.9.2
@@ -17,9 +17,8 @@ modules:
     - {name: "CMSIS_6", version: "v6.3.0"}
     - {name: "csp", version: "v3.26.0"}
     - {name: "core", version: "v3.17.0"}
-    - {name: "net", version: "v3.14.6"}
-    - {name: "bsp", version: "v3.25.0"}
     - {name: "shd", version: "v1.4.0"}
+    - {name: "bsp", version: "v3.25.0"}
 
 packs:
     - {name: "SAMV71_DFP", version: "4.10.230"}

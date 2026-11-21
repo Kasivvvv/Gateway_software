@@ -37,7 +37,7 @@ data:
       - children:
         - attributes:
             id: core
-            value: '160'
+            value: '32'
           type: Dynamic
         type: Values
       type: Hex
@@ -103,7 +103,7 @@ data:
       - children:
         - attributes:
             id: core
-            value: '1073816064'
+            value: '1073817088'
           type: Dynamic
         type: Values
       type: Hex
@@ -120,7 +120,7 @@ data:
       - children:
         - attributes:
             id: core
-            value: '512'
+            value: '1536'
           type: Dynamic
         type: Values
       type: Hex
@@ -849,13 +849,6 @@ data:
       attributes:
         id: GMAC_CLOCK_ENABLE
         label: GMAC
-      children:
-      - children:
-        - attributes:
-            id: drvGmac
-            value: 'true'
-          type: Dynamic
-        type: Values
       type: Boolean
     GMAC_INTERRUPT_ENABLE_UPDATE:
       attributes:
@@ -877,21 +870,17 @@ data:
       - children:
         - attributes:
             id: core
-            value: 'true'
+            value: 'false'
           type: Dynamic
+        - attributes:
+            value: 'true'
+          type: User
         type: Values
       type: Boolean
     GMAC_INTERRUPT_ENABLE:
       attributes:
         id: GMAC_INTERRUPT_ENABLE
         label: Vector Peripheral Enable
-      children:
-      - children:
-        - attributes:
-            id: drvGmac
-            value: 'true'
-          type: Dynamic
-        type: Values
       type: Boolean
     NVIC_39_0_HANDLER:
       attributes:
@@ -901,21 +890,17 @@ data:
       - children:
         - attributes:
             id: core
-            value: GMAC_InterruptHandler
+            value: GMAC_Handler
           type: Dynamic
+        - attributes:
+            value: GMAC_InterruptHandler
+          type: User
         type: Values
       type: String
     GMAC_INTERRUPT_HANDLER:
       attributes:
         id: GMAC_INTERRUPT_HANDLER
         label: Vector Peripheral Handler
-      children:
-      - children:
-        - attributes:
-            id: drvGmac
-            value: GMAC_InterruptHandler
-          type: Dynamic
-        type: Values
       type: String
     NVIC_39_0_HANDLER_LOCK:
       attributes:
@@ -925,7 +910,7 @@ data:
       - children:
         - attributes:
             id: core
-            value: 'true'
+            value: 'false'
           type: Dynamic
         type: Values
       type: Boolean
@@ -933,13 +918,6 @@ data:
       attributes:
         id: GMAC_INTERRUPT_HANDLER_LOCK
         label: Vector Peripheral Handler Lock
-      children:
-      - children:
-        - attributes:
-            id: drvGmac
-            value: 'true'
-          type: Dynamic
-        type: Values
       type: Boolean
     PIN_129_FUNCTION_TYPE:
       attributes:
@@ -954,6 +932,11 @@ data:
             value: 'false'
           type: Boolean
         type: Attributes
+      - children:
+        - attributes:
+            value: GPIO
+          type: User
+        type: Values
       type: String
     PIOA_PDR_VALUE:
       attributes:
@@ -1004,6 +987,11 @@ data:
             value: 'false'
           type: Boolean
         type: Attributes
+      - children:
+        - attributes:
+            value: GPIO
+          type: User
+        type: Values
       type: String
     PIN_129_FUNCTION_NAME:
       attributes:
@@ -1018,6 +1006,11 @@ data:
             value: 'false'
           type: Boolean
         type: Attributes
+      - children:
+        - attributes:
+            value: ETH_SIGDET
+          type: User
+        type: Values
       type: String
     PIN_129_DIR:
       attributes:
@@ -1460,9 +1453,8 @@ data:
       children:
       - children:
         - attributes:
-            id: drvGmac
             value: 'true'
-          type: Dynamic
+          type: User
         type: Values
       type: Boolean
     MPU_Region_0_Enable:
@@ -1473,7 +1465,7 @@ data:
       - children:
         - attributes:
             id: core
-            value: 'true'
+            value: 'false'
           type: Dynamic
         type: Values
       type: Boolean
@@ -1581,7 +1573,7 @@ data:
       - children:
         - attributes:
             id: core
-            value: 'true'
+            value: 'false'
           type: Dynamic
         type: Values
       type: Boolean
@@ -1689,7 +1681,7 @@ data:
       - children:
         - attributes:
             id: core
-            value: 'true'
+            value: 'false'
           type: Dynamic
         type: Values
       type: Boolean
@@ -1797,7 +1789,7 @@ data:
       - children:
         - attributes:
             id: core
-            value: 'true'
+            value: 'false'
           type: Dynamic
         type: Values
       type: Boolean
@@ -1905,8 +1897,11 @@ data:
       - children:
         - attributes:
             id: core
-            value: 'true'
+            value: 'false'
           type: Dynamic
+        - attributes:
+            value: 'false'
+          type: User
         type: Values
       type: Boolean
     MPU_Region_4_Access:
@@ -2012,9 +2007,8 @@ data:
       children:
       - children:
         - attributes:
-            id: drvGmac
-            value: 'true'
-          type: Dynamic
+            value: 'false'
+          type: User
         type: Values
       type: Boolean
     MPU_Region_5_Enable:
@@ -2024,22 +2018,14 @@ data:
       children:
       - children:
         - attributes:
-            id: drvGmac
             value: 'true'
-          type: Dynamic
+          type: User
         type: Values
       type: Boolean
     MPU_Region_Name5:
       attributes:
         id: MPU_Region_Name5
         label: Region Name
-      children:
-      - children:
-        - attributes:
-            id: drvGmac
-            value: GMAC Descriptor
-          type: Dynamic
-        type: Values
       type: String
     MPU_Region_5_Type:
       attributes:
@@ -2048,9 +2034,12 @@ data:
       children:
       - children:
         - attributes:
-            id: drvGmac
-            value: '5'
+            id: core
+            value: '0'
           type: Dynamic
+        - attributes:
+            value: '5'
+          type: User
         type: Values
       type: KeyValueSet
     MPU_Region_5_Length:
@@ -2061,7 +2050,7 @@ data:
       - children:
         - attributes:
             id: core
-            value: 4KB
+            value: 2KB
           type: Dynamic
         type: Values
       type: String
@@ -2072,9 +2061,12 @@ data:
       children:
       - children:
         - attributes:
-            id: drvGmac
-            value: '7'
+            id: core
+            value: '15'
           type: Dynamic
+        - attributes:
+            value: '6'
+          type: User
         type: Values
       type: KeyValueSet
     MPU_Region_5_Access:
@@ -2084,9 +2076,12 @@ data:
       children:
       - children:
         - attributes:
-            id: drvGmac
+            id: core
             value: '3'
           type: Dynamic
+        - attributes:
+            value: '3'
+          type: User
         type: Values
       type: KeyValueSet
     MPU_Region_5_Address:
@@ -2096,9 +2091,12 @@ data:
       children:
       - children:
         - attributes:
-            id: drvGmac
-            value: '541454336'
+            id: core
+            value: '3758096384'
           type: Dynamic
+        - attributes:
+            value: '541456384'
+          type: User
         type: Values
       type: Hex
     TC0_CH0_INTERRUPT_ENABLE_UPDATE:
@@ -2109,7 +2107,7 @@ data:
       - children:
         - attributes:
             id: core
-            value: 'false'
+            value: 'true'
           type: Dynamic
         type: Values
       type: Boolean
@@ -2121,7 +2119,7 @@ data:
       - children:
         - attributes:
             id: core
-            value: 'true'
+            value: 'false'
           type: Dynamic
         type: Values
       type: Boolean
@@ -2133,7 +2131,7 @@ data:
       - children:
         - attributes:
             id: tc0
-            value: 'true'
+            value: 'false'
           type: Dynamic
         type: Values
       type: Boolean
@@ -2145,7 +2143,7 @@ data:
       - children:
         - attributes:
             id: core
-            value: TC0_CH0_InterruptHandler
+            value: TC0_CH0_Handler
           type: Dynamic
         type: Values
       type: String
@@ -2157,7 +2155,7 @@ data:
       - children:
         - attributes:
             id: tc0
-            value: TC0_CH0_InterruptHandler
+            value: TC0_CH0_Handler
           type: Dynamic
         type: Values
       type: String
@@ -2169,7 +2167,7 @@ data:
       - children:
         - attributes:
             id: core
-            value: 'true'
+            value: 'false'
           type: Dynamic
         type: Values
       type: Boolean
@@ -2181,7 +2179,7 @@ data:
       - children:
         - attributes:
             id: tc0
-            value: 'true'
+            value: 'false'
           type: Dynamic
         type: Values
       type: Boolean
@@ -2205,7 +2203,7 @@ data:
       - children:
         - attributes:
             id: core
-            value: '25910272'
+            value: '17521664'
           type: Dynamic
         type: Values
       type: Hex
@@ -2217,7 +2215,7 @@ data:
       - children:
         - attributes:
             id: tc0
-            value: 'true'
+            value: 'false'
           type: Dynamic
         type: Values
       type: Boolean
@@ -8510,6 +8508,123 @@ data:
             value: 'true'
           type: Dynamic
         type: Values
+      type: Boolean
+    PIN_90_FUNCTION_TYPE:
+      attributes:
+        id: PIN_90_FUNCTION_TYPE
+        label: Type
+      children:
+      - children:
+        - attributes:
+            value: GPIO
+          type: User
+        type: Values
+      type: String
+    PIN_90_PERIPHERAL_FUNCTION:
+      attributes:
+        id: PIN_90_PERIPHERAL_FUNCTION
+        label: Peripheral Selection
+      children:
+      - children:
+        - attributes:
+            value: GPIO
+          type: User
+        type: Values
+      type: String
+    PIN_90_FUNCTION_NAME:
+      attributes:
+        id: PIN_90_FUNCTION_NAME
+        label: Name
+      children:
+      - children:
+        - attributes:
+            value: ETH_RESET
+          type: User
+        type: Values
+      type: String
+    PIN_90_DIR:
+      attributes:
+        id: PIN_90_DIR
+        label: Direction
+      children:
+      - children:
+        - attributes:
+            value: Out
+          type: User
+        type: Values
+      type: String
+    PIN_90_LAT:
+      attributes:
+        id: PIN_90_LAT
+        label: Initial Latch Value
+      children:
+      - children:
+        - attributes:
+            value: High
+          type: User
+        type: Values
+      type: String
+    PIN_23_FUNCTION_TYPE:
+      attributes:
+        id: PIN_23_FUNCTION_TYPE
+        label: Type
+      children:
+      - children:
+        - attributes:
+            value: GPIO
+          type: User
+        type: Values
+      type: String
+    PIN_23_PERIPHERAL_FUNCTION:
+      attributes:
+        id: PIN_23_PERIPHERAL_FUNCTION
+        label: Peripheral Selection
+      children:
+      - children:
+        - attributes:
+            value: GPIO
+          type: User
+        type: Values
+      type: String
+    PIN_23_FUNCTION_NAME:
+      attributes:
+        id: PIN_23_FUNCTION_NAME
+        label: Name
+      children:
+      - children:
+        - attributes:
+            value: ETH_INT
+          type: User
+        type: Values
+      type: String
+    MPU_Region_5_Share:
+      attributes:
+        id: MPU_Region_5_Share
+        label: Shareable Attribute
+      children:
+      - children:
+        - attributes:
+            id: core
+            value: 'false'
+          type: Dynamic
+        type: Values
+      type: Boolean
+    MPU_Region_5_Execute:
+      attributes:
+        id: MPU_Region_5_Execute
+        label: Instruction Access Permission
+      children:
+      - children:
+        - attributes:
+            id: core
+            value: 'false'
+          type: Dynamic
+        type: Values
+      type: Boolean
+    MPU_Region_6_Enable:
+      attributes:
+        id: MPU_Region_6_Enable
+        label: Enable MPU Region6
       type: Boolean
   userData:
     children:

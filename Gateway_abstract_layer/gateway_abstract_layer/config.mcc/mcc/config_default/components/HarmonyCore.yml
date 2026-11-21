@@ -30,7 +30,7 @@ data:
       - children:
         - attributes:
             id: HarmonyCore
-            value: 'true'
+            value: 'false'
           type: Dynamic
         type: Values
       type: Boolean
@@ -38,13 +38,6 @@ data:
       attributes:
         id: ENABLE_DRV_COMMON
         label: Generate Harmony Driver Common Files
-      children:
-      - children:
-        - attributes:
-            id: tcpipStack
-            value: 'true'
-          type: Dynamic
-        type: Values
       type: Boolean
     ENABLE_OSAL:
       attributes:
@@ -54,7 +47,7 @@ data:
       - children:
         - attributes:
             id: HarmonyCore
-            value: 'true'
+            value: 'false'
           type: Dynamic
         type: Values
       type: Boolean
@@ -79,13 +72,6 @@ data:
       attributes:
         id: ENABLE_SYS_COMMON
         label: Generate Harmony System Service Common Files
-      children:
-      - children:
-        - attributes:
-            id: tcpipStack
-            value: 'true'
-          type: Dynamic
-        type: Values
       type: Boolean
     ENABLE_SYS_DMA:
       attributes:
@@ -105,7 +91,7 @@ data:
       - children:
         - attributes:
             id: HarmonyCore
-            value: 'true'
+            value: 'false'
           type: Dynamic
         - attributes:
             value: 'true'
@@ -4875,7 +4861,7 @@ data:
             id: enabled
           children:
           - type: Value
-            value: 'true'
+            value: 'false'
           type: Boolean
         type: Attributes
       type: File
@@ -4888,7 +4874,7 @@ data:
             id: enabled
           children:
           - type: Value
-            value: 'true'
+            value: 'false'
           type: Boolean
         type: Attributes
       type: File
@@ -4901,7 +4887,7 @@ data:
             id: enabled
           children:
           - type: Value
-            value: 'true'
+            value: 'false'
           type: Boolean
         type: Attributes
       type: File
@@ -4914,7 +4900,7 @@ data:
             id: enabled
           children:
           - type: Value
-            value: 'true'
+            value: 'false'
           type: Boolean
         type: Attributes
       type: File
@@ -4927,7 +4913,7 @@ data:
             id: enabled
           children:
           - type: Value
-            value: 'true'
+            value: 'false'
           type: Boolean
         type: Attributes
       type: File
@@ -4940,7 +4926,7 @@ data:
             id: enabled
           children:
           - type: Value
-            value: 'true'
+            value: 'false'
           type: Boolean
         type: Attributes
       type: File
@@ -4953,7 +4939,7 @@ data:
             id: enabled
           children:
           - type: Value
-            value: 'true'
+            value: 'false'
           type: Boolean
         type: Attributes
       type: File
@@ -4966,7 +4952,7 @@ data:
             id: enabled
           children:
           - type: Value
-            value: 'true'
+            value: 'false'
           type: Boolean
         type: Attributes
       type: File
@@ -4979,7 +4965,7 @@ data:
             id: enabled
           children:
           - type: Value
-            value: 'true'
+            value: 'false'
           type: Boolean
         type: Attributes
       type: File
@@ -4992,7 +4978,7 @@ data:
             id: enabled
           children:
           - type: Value
-            value: 'true'
+            value: 'false'
           type: Boolean
         type: Attributes
       type: File
@@ -5005,7 +4991,7 @@ data:
             id: enabled
           children:
           - type: Value
-            value: 'true'
+            value: 'false'
           type: Boolean
         type: Attributes
       type: File
@@ -5018,7 +5004,7 @@ data:
             id: enabled
           children:
           - type: Value
-            value: 'true'
+            value: 'false'
           type: Boolean
         type: Attributes
       type: File
@@ -5031,7 +5017,7 @@ data:
             id: enabled
           children:
           - type: Value
-            value: 'true'
+            value: 'false'
           type: Boolean
         type: Attributes
       type: File
@@ -5044,7 +5030,7 @@ data:
             id: enabled
           children:
           - type: Value
-            value: 'true'
+            value: 'false'
           type: Boolean
         type: Attributes
       type: File
@@ -5096,7 +5082,7 @@ data:
             id: enabled
           children:
           - type: Value
-            value: 'true'
+            value: 'false'
           type: Boolean
         type: Attributes
       type: File
@@ -5109,7 +5095,7 @@ data:
             id: enabled
           children:
           - type: Value
-            value: 'true'
+            value: 'false'
           type: Boolean
         type: Attributes
       type: File
@@ -5122,7 +5108,7 @@ data:
             id: enabled
           children:
           - type: Value
-            value: 'true'
+            value: 'false'
           type: Boolean
         type: Attributes
       type: File
@@ -5135,7 +5121,7 @@ data:
             id: enabled
           children:
           - type: Value
-            value: 'true'
+            value: 'false'
           type: Boolean
         type: Attributes
       type: File

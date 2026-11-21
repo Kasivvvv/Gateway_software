@@ -1,4 +1,5 @@
 #include "hal_interface.h"
+#include "hal_nocache.h"
 
 #include <string.h>
 
@@ -21,21 +22,16 @@
 
 /*
  * MCAN Message RAM must not be D-cached: the MCAN DMA reads/writes it and the
- * MCC plib accesses it without cache maintenance. MCC configures MPU region 5
- * (0x2045F000, 4 KB, Normal non-cacheable, see plib_mpu.c). XC32 ignores
- * __attribute__((coherent)) on Cortex-M, so the buffer is pinned explicitly to
- * the upper 2 KB of that region (the GMAC descriptors use the lower part).
+ * MCC plib accesses it without cache maintenance. XC32 ignores
+ * __attribute__((coherent)) on Cortex-M, so the buffer is pinned into the
+ * non-cacheable window (hal_nocache.h, MCC MPU region 5).
  * DS60001527 ch. 48: Message RAM base = CCFG_CAN1.CAN1DMABA (upper 16 bits).
  */
-#define HAL_CAN_MSG_RAM_ADDR       (0x2045F800UL)
-#define HAL_CAN_NOCACHE_REGION_END (0x20460000UL)
-
-_Static_assert((HAL_CAN_MSG_RAM_ADDR + MCAN1_MESSAGE_RAM_CONFIG_SIZE)
-        <= HAL_CAN_NOCACHE_REGION_END,
-        "MCAN1 Message RAM exceeds the non-cacheable MPU region");
+_Static_assert(MCAN1_MESSAGE_RAM_CONFIG_SIZE <= HAL_NOCACHE_MCAN_MAX,
+        "MCAN1 Message RAM exceeds its part of the non-cacheable window");
 
 static uint8_t __attribute__((aligned(32), space(data),
-        address(HAL_CAN_MSG_RAM_ADDR)))
+        address(HAL_NOCACHE_MCAN_ADDR)))
     s_mcan1MsgRam[MCAN1_MESSAGE_RAM_CONFIG_SIZE];
 
 static volatile uint32_t s_txDropCount = 0U;
@@ -301,4 +297,24 @@ uint32_t hal_can_tx_drop_count(void)
 bool hal_can_is_bus_off(void)
 {
     return s_busOff;
+}
+
+void hal_can_diag_get(hal_can_diag_t *diag)
+{
+    uint32_t ecr;
+    uint32_t psr;
+
+    if (diag == NULL)
+    {
+        return;
+    }
+
+    ecr = MCAN1_REGS->MCAN_ECR;
+    psr = MCAN1_REGS->MCAN_PSR; /* LEC is set to 7 by this read */
+
+    diag->tec = (uint8_t)((ecr & MCAN_ECR_TEC_Msk) >> MCAN_ECR_TEC_Pos);
+    diag->rec = (uint8_t)((ecr & MCAN_ECR_REC_Msk) >> MCAN_ECR_REC_Pos);
+    diag->lec = (uint8_t)((psr & MCAN_PSR_LEC_Msk) >> MCAN_PSR_LEC_Pos);
+    diag->errorPassive = (psr & MCAN_PSR_EP_Msk) != 0U;
+    diag->busOff = (psr & MCAN_PSR_BO_Msk) != 0U;
 }

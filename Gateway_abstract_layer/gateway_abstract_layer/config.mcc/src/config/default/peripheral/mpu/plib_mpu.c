@@ -55,34 +55,29 @@ void MPU_Initialize(void)
 
     /*** Configure MPU Regions  ***/
 
-    /* Region 0 Name: ITCM, Base Address: 0x0, Size: 4MB  */
-    MPU->RBAR = MPU_REGION(0U, 0x0U);
-    MPU->RASR = MPU_REGION_SIZE(21U) | MPU_RASR_AP(MPU_RASR_AP_READWRITE_Val) | MPU_ATTR_NORMAL \
-                | MPU_ATTR_ENABLE  ;
+    /* Disable Region 0*/
+    MPU->RBAR = MPU_RBAR_REGION(0U) | MPU_RBAR_VALID_Msk;
+    MPU->RASR &= ~MPU_ATTR_ENABLE;
 
-    /* Region 1 Name: DTCM, Base Address: 0x20000000, Size: 4MB  */
-    MPU->RBAR = MPU_REGION(1U, 0x20000000U);
-    MPU->RASR = MPU_REGION_SIZE(21U) | MPU_RASR_AP(MPU_RASR_AP_READWRITE_Val) | MPU_ATTR_NORMAL \
-                | MPU_ATTR_ENABLE  ;
+    /* Disable Region 1*/
+    MPU->RBAR = MPU_RBAR_REGION(1U) | MPU_RBAR_VALID_Msk;
+    MPU->RASR &= ~MPU_ATTR_ENABLE;
 
-    /* Region 2 Name: SRAM, Base Address: 0x20400000, Size: 8MB  */
-    MPU->RBAR = MPU_REGION(2U, 0x20400000U);
-    MPU->RASR = MPU_REGION_SIZE(22U) | MPU_RASR_AP(MPU_RASR_AP_READWRITE_Val) | MPU_ATTR_NORMAL_WB_WA \
-                | MPU_ATTR_ENABLE  ;
+    /* Disable Region 2*/
+    MPU->RBAR = MPU_RBAR_REGION(2U) | MPU_RBAR_VALID_Msk;
+    MPU->RASR &= ~MPU_ATTR_ENABLE;
 
-    /* Region 3 Name: EBI_SMC, Base Address: 0x60000000, Size: 256MB  */
-    MPU->RBAR = MPU_REGION(3U, 0x60000000U);
-    MPU->RASR = MPU_REGION_SIZE(27U) | MPU_RASR_AP(MPU_RASR_AP_READWRITE_Val) | MPU_ATTR_STRONGLY_ORDERED \
-                | MPU_ATTR_ENABLE  ;
+    /* Disable Region 3*/
+    MPU->RBAR = MPU_RBAR_REGION(3U) | MPU_RBAR_VALID_Msk;
+    MPU->RASR &= ~MPU_ATTR_ENABLE;
 
-    /* Region 4 Name: QSPI, Base Address: 0x80000000, Size: 256MB  */
-    MPU->RBAR = MPU_REGION(4U, 0x80000000U);
-    MPU->RASR = MPU_REGION_SIZE(27U) | MPU_RASR_AP(MPU_RASR_AP_READWRITE_Val) | MPU_ATTR_STRONGLY_ORDERED \
-                | MPU_ATTR_ENABLE  ;
+    /* Disable Region 4*/
+    MPU->RBAR = MPU_RBAR_REGION(4U) | MPU_RBAR_VALID_Msk;
+    MPU->RASR &= ~MPU_ATTR_ENABLE;
 
-    /* Region 5 Name: GMAC Descriptor, Base Address: 0x2045f000, Size: 4KB  */
-    MPU->RBAR = MPU_REGION(5U, 0x2045f000U);
-    MPU->RASR = MPU_REGION_SIZE(11U) | MPU_RASR_AP(MPU_RASR_AP_READWRITE_Val) | MPU_ATTR_NORMAL \
+    /* Region 5 Name: , Base Address: 0x2045f800, Size: 2KB  */
+    MPU->RBAR = MPU_REGION(5U, 0x2045f800U);
+    MPU->RASR = MPU_REGION_SIZE(10U) | MPU_RASR_AP(MPU_RASR_AP_READWRITE_Val) | MPU_ATTR_NORMAL \
                 | MPU_ATTR_ENABLE | MPU_ATTR_EXECUTE_NEVER ;
 
     /* Disable Region 6*/

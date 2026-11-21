@@ -2,8 +2,8 @@
 
 manifest_file_version: 1.0.0
 project: config_default
-creation_date: 2026-11-20T15:11:01.360+01:00[Europe/Belgrade]
-operating_system: Windows 11
+creation_date: 2026-11-21T07:32:20.188+01:00[Europe/Warsaw]
+operating_system: Mac OS X
 mcc_mode: VSCodePlugin
 mcc_mode_version: Unknown
 device_name: ATSAMV71Q21B
@@ -21,6 +21,5 @@ modules:
 - {name: CMSIS_6, type: HARMONY, version: v6.3.0}
 - {name: csp, type: HARMONY, version: v3.26.0}
 - {name: core, type: HARMONY, version: v3.17.0}
-- {name: net, type: HARMONY, version: v3.14.6}
-- {name: bsp, type: HARMONY, version: v3.25.0}
 - {name: shd, type: HARMONY, version: v1.4.0}
+- {name: bsp, type: HARMONY, version: v3.25.0}

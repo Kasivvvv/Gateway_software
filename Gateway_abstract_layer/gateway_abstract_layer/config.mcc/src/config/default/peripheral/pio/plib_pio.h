@@ -84,6 +84,15 @@
 #define MARK_LOOP_Get()               ((PIOC_REGS->PIO_PDSR >> 13U) & 0x1U)
 #define MARK_LOOP_PIN                  PIO_PIN_PC13
 
+/*** Macros for ETH_INT pin ***/
+#define ETH_INT_Set()               (PIOA_REGS->PIO_SODR = ((uint32_t)1U<<19U))
+#define ETH_INT_Clear()             (PIOA_REGS->PIO_CODR = ((uint32_t)1U<<19U))
+#define ETH_INT_Toggle()            (PIOA_REGS->PIO_ODSR ^= ((uint32_t)1U<<19U))
+#define ETH_INT_OutputEnable()      (PIOA_REGS->PIO_OER = ((uint32_t)1U<<19U))
+#define ETH_INT_InputEnable()       (PIOA_REGS->PIO_ODR = ((uint32_t)1U<<19U))
+#define ETH_INT_Get()               ((PIOA_REGS->PIO_PDSR >> 19U) & 0x1U)
+#define ETH_INT_PIN                  PIO_PIN_PA19
+
 /*** Macros for MARK_T2 pin ***/
 #define MARK_T2_Set()               (PIOB_REGS->PIO_SODR = ((uint32_t)1U<<2U))
 #define MARK_T2_Clear()             (PIOB_REGS->PIO_CODR = ((uint32_t)1U<<2U))
@@ -128,6 +137,15 @@
 #define AT24MAC402_I2C_SCL_Get()               ((PIOA_REGS->PIO_PDSR >> 4U) & 0x1U)
 #define AT24MAC402_I2C_SCL_PIN                  PIO_PIN_PA4
 
+/*** Macros for ETH_RESET pin ***/
+#define ETH_RESET_Set()               (PIOC_REGS->PIO_SODR = ((uint32_t)1U<<10U))
+#define ETH_RESET_Clear()             (PIOC_REGS->PIO_CODR = ((uint32_t)1U<<10U))
+#define ETH_RESET_Toggle()            (PIOC_REGS->PIO_ODSR ^= ((uint32_t)1U<<10U))
+#define ETH_RESET_OutputEnable()      (PIOC_REGS->PIO_OER = ((uint32_t)1U<<10U))
+#define ETH_RESET_InputEnable()       (PIOC_REGS->PIO_ODR = ((uint32_t)1U<<10U))
+#define ETH_RESET_Get()               ((PIOC_REGS->PIO_PDSR >> 10U) & 0x1U)
+#define ETH_RESET_PIN                  PIO_PIN_PC10
+
 /*** Macros for AT24MAC402_I2C_SDA pin ***/
 #define AT24MAC402_I2C_SDA_Get()               ((PIOA_REGS->PIO_PDSR >> 3U) & 0x1U)
 #define AT24MAC402_I2C_SDA_PIN                  PIO_PIN_PA3
@@ -148,6 +166,15 @@
 /*** Macros for UART_Tx pin ***/
 #define UART_Tx_Get()               ((PIOB_REGS->PIO_PDSR >> 4U) & 0x1U)
 #define UART_Tx_PIN                  PIO_PIN_PB4
+
+/*** Macros for ETH_SIGDET pin ***/
+#define ETH_SIGDET_Set()               (PIOA_REGS->PIO_SODR = ((uint32_t)1U<<29U))
+#define ETH_SIGDET_Clear()             (PIOA_REGS->PIO_CODR = ((uint32_t)1U<<29U))
+#define ETH_SIGDET_Toggle()            (PIOA_REGS->PIO_ODSR ^= ((uint32_t)1U<<29U))
+#define ETH_SIGDET_OutputEnable()      (PIOA_REGS->PIO_OER = ((uint32_t)1U<<29U))
+#define ETH_SIGDET_InputEnable()       (PIOA_REGS->PIO_ODR = ((uint32_t)1U<<29U))
+#define ETH_SIGDET_Get()               ((PIOA_REGS->PIO_PDSR >> 29U) & 0x1U)
+#define ETH_SIGDET_PIN                  PIO_PIN_PA29
 
 
 // *****************************************************************************

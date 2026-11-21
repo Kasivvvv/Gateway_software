@@ -58,6 +58,19 @@ void hal_time_init(void)
     TC0_CH1_TimerPeriodSet((uint16_t)periodCounts);
 
     TC0_CH1_TimerCallbackRegister(hal_time_tloop_isr, (uintptr_t)NULL);
+}
+
+/* Start Tloop once initialisation is finished, so start-up work that takes
+ * longer than one period is not counted as an overrun. */
+void hal_time_start(void)
+{
+    bool irqState = NVIC_INT_Disable();
+
+    s_tickPending = false;
+    s_tickCount = 0U;
+    s_overrunCount = 0U;
+    NVIC_INT_Restore(irqState);
+
     TC0_CH1_TimerStart();
 }
 

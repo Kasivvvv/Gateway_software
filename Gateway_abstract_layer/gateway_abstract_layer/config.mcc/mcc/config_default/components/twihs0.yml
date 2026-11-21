@@ -14,29 +14,7 @@ dependency:
   version: v3.26.0
 customDataClassName: com.microchip.utils_mh3.utils.persistence.CustomModuleData
 data:
-  attachments:
-    children:
-    - children:
-      - attributes:
-          id: TWIHS0_I2C
-        children:
-        - children:
-          - attributes:
-              id: targetComponentID
-            children:
-            - type: Value
-              value: drv_at24
-            type: String
-          - attributes:
-              id: targetAttachmentID
-            children:
-            - type: Value
-              value: drv_at24_I2C_dependency
-            type: String
-          type: Attributes
-        type: DirectCapability
-      type: Attachments
-    type: twihs0
+  attachments: {}
   elementPosition:
     attributes:
       id: __ROOTVIEW
@@ -117,7 +95,7 @@ data:
             id: readOnly
           children:
           - type: Value
-            value: 'true'
+            value: 'false'
           type: Boolean
         type: Attributes
       - children:

@@ -17,7 +17,7 @@
 
 // DOM-IGNORE-BEGIN
 /*******************************************************************************
-* Copyright (C) 2018 Microchip Technology Inc. and its subsidiaries.
+* Copyright (C) 2023 Microchip Technology Inc. and its subsidiaries.
 *
 * Subject to your compliance with these terms, you may use Microchip software
 * and any derivatives exclusively with Microchip products. It is your
@@ -54,35 +54,88 @@
 #include <stdint.h>
 #include <stdbool.h>
 #include "device.h"
+#include "peripheral/pio/plib_pio.h"
 
 // *****************************************************************************
 // *****************************************************************************
 // Section: BSP Macros
 // *****************************************************************************
 // *****************************************************************************
-#define sam_v71_xult
-#define BSP_NAME             "sam_v71_xult"
+#define SAMV71_XPLAINED_ULTRA
+#define BOARD_NAME    "SAMV71-XPLAINED-ULTRA"
 
-/*** LED Macros for LED0 ***/
-#define LED0_Toggle() (PIOA_REGS->PIO_ODSR ^= (1UL<<23))
-#define LED0_On() (PIOA_REGS->PIO_CODR = (1UL<<23))
-#define LED0_Off() (PIOA_REGS->PIO_SODR = (1UL<<23))
-/*** LED Macros for LED1 ***/
-#define LED1_Toggle() (PIOC_REGS->PIO_ODSR ^= (1UL<<9))
-#define LED1_On() (PIOC_REGS->PIO_CODR = (1UL<<9))
-#define LED1_Off() (PIOC_REGS->PIO_SODR = (1UL<<9))
-/*** SWITCH Macros for SWITCH0 ***/
-#define SWITCH0_Get() ((PIOA_REGS->PIO_PDSR >> 9) & 0x1U)
-#define SWITCH0_STATE_PRESSED 0
-#define SWITCH0_STATE_RELEASED 1
-/*** SWITCH Macros for SWITCH1 ***/
-#define SWITCH1_Get() ((PIOB_REGS->PIO_PDSR >> 12) & 0x1U)
-#define SWITCH1_STATE_PRESSED 0
-#define SWITCH1_STATE_RELEASED 1
-/*** VBUS Macros for VBUS_HOST_EN ***/
-#define VBUS_HOST_EN_PowerEnable() (PIOC_REGS->PIO_CODR = (1UL<<16))
-#define VBUS_HOST_EN_PowerDisable() (PIOC_REGS->PIO_SODR = (1UL<<16))
+/*** OUTPUT PIO Macros for MARK_T4 ***/
+#define BSP_MARK_T4_PIN        PIO_PIN_PC30
+#define BSP_MARK_T4_Get()      ((PIOC_REGS->PIO_PDSR >> 30) & 0x1)
+#define BSP_MARK_T4_On()       (PIOC_REGS->PIO_SODR = (1UL<<30))
+#define BSP_MARK_T4_Off()      (PIOC_REGS->PIO_CODR = (1UL<<30))
+#define BSP_MARK_T4_Toggle()   (PIOC_REGS->PIO_ODSR ^= (1UL<<30))
 
+/*** OUTPUT PIO Macros for MARK_LOOP ***/
+#define BSP_MARK_LOOP_PIN        PIO_PIN_PC13
+#define BSP_MARK_LOOP_Get()      ((PIOC_REGS->PIO_PDSR >> 13) & 0x1)
+#define BSP_MARK_LOOP_On()       (PIOC_REGS->PIO_SODR = (1UL<<13))
+#define BSP_MARK_LOOP_Off()      (PIOC_REGS->PIO_CODR = (1UL<<13))
+#define BSP_MARK_LOOP_Toggle()   (PIOC_REGS->PIO_ODSR ^= (1UL<<13))
+
+/*** OUTPUT PIO Macros for MARK_T2 ***/
+#define BSP_MARK_T2_PIN        PIO_PIN_PB2
+#define BSP_MARK_T2_Get()      ((PIOB_REGS->PIO_PDSR >> 2) & 0x1)
+#define BSP_MARK_T2_On()       (PIOB_REGS->PIO_SODR = (1UL<<2))
+#define BSP_MARK_T2_Off()      (PIOB_REGS->PIO_CODR = (1UL<<2))
+#define BSP_MARK_T2_Toggle()   (PIOB_REGS->PIO_ODSR ^= (1UL<<2))
+
+/*** OUTPUT PIO Macros for MARK_T1 ***/
+#define BSP_MARK_T1_PIN        PIO_PIN_PB3
+#define BSP_MARK_T1_Get()      ((PIOB_REGS->PIO_PDSR >> 3) & 0x1)
+#define BSP_MARK_T1_On()       (PIOB_REGS->PIO_SODR = (1UL<<3))
+#define BSP_MARK_T1_Off()      (PIOB_REGS->PIO_CODR = (1UL<<3))
+#define BSP_MARK_T1_Toggle()   (PIOB_REGS->PIO_ODSR ^= (1UL<<3))
+
+/*** OUTPUT PIO Macros for MARK_BUFFER ***/
+#define BSP_MARK_BUFFER_PIN        PIO_PIN_PA25
+#define BSP_MARK_BUFFER_Get()      ((PIOA_REGS->PIO_PDSR >> 25) & 0x1)
+#define BSP_MARK_BUFFER_On()       (PIOA_REGS->PIO_SODR = (1UL<<25))
+#define BSP_MARK_BUFFER_Off()      (PIOA_REGS->PIO_CODR = (1UL<<25))
+#define BSP_MARK_BUFFER_Toggle()   (PIOA_REGS->PIO_ODSR ^= (1UL<<25))
+
+/*** OUTPUT PIO Macros for MARK_STATE ***/
+#define BSP_MARK_STATE_PIN        PIO_PIN_PA5
+#define BSP_MARK_STATE_Get()      ((PIOA_REGS->PIO_PDSR >> 5) & 0x1)
+#define BSP_MARK_STATE_On()       (PIOA_REGS->PIO_SODR = (1UL<<5))
+#define BSP_MARK_STATE_Off()      (PIOA_REGS->PIO_CODR = (1UL<<5))
+#define BSP_MARK_STATE_Toggle()   (PIOA_REGS->PIO_ODSR ^= (1UL<<5))
+
+/*** OUTPUT PIO Macros for ETH_RESET ***/
+#define BSP_ETH_RESET_PIN        PIO_PIN_PC10
+#define BSP_ETH_RESET_Get()      ((PIOC_REGS->PIO_PDSR >> 10) & 0x1)
+#define BSP_ETH_RESET_On()       (PIOC_REGS->PIO_CODR = (1UL<<10))
+#define BSP_ETH_RESET_Off()      (PIOC_REGS->PIO_SODR = (1UL<<10))
+#define BSP_ETH_RESET_Toggle()   (PIOC_REGS->PIO_ODSR ^= (1UL<<10))
+
+/*** OUTPUT PIO Macros for MARK_T3 ***/
+#define BSP_MARK_T3_PIN        PIO_PIN_PA0
+#define BSP_MARK_T3_Get()      ((PIOA_REGS->PIO_PDSR >> 0) & 0x1)
+#define BSP_MARK_T3_On()       (PIOA_REGS->PIO_SODR = (1UL<<0))
+#define BSP_MARK_T3_Off()      (PIOA_REGS->PIO_CODR = (1UL<<0))
+#define BSP_MARK_T3_Toggle()   (PIOA_REGS->PIO_ODSR ^= (1UL<<0))
+
+
+/*** INPUT PIO Macros for ETH_INT ***/
+#define BSP_ETH_INT_PIN                    PIO_PIN_PA19
+#define BSP_ETH_INT_Get()                  ((PIOA_REGS->PIO_PDSR >> 19) & 0x1)
+#define BSP_ETH_INT_STATE_PRESSED          1
+#define BSP_ETH_INT_STATE_RELEASED         0
+#define BSP_ETH_INT_InterruptEnable()      (PIOA_REGS->PIO_IER = (1UL<<19))
+#define BSP_ETH_INT_InterruptDisable()     (PIOA_REGS->PIO_IDR = (1UL<<19))
+
+/*** INPUT PIO Macros for ETH_SIGDET ***/
+#define BSP_ETH_SIGDET_PIN                    PIO_PIN_PA29
+#define BSP_ETH_SIGDET_Get()                  ((PIOA_REGS->PIO_PDSR >> 29) & 0x1)
+#define BSP_ETH_SIGDET_STATE_PRESSED          1
+#define BSP_ETH_SIGDET_STATE_RELEASED         0
+#define BSP_ETH_SIGDET_InterruptEnable()      (PIOA_REGS->PIO_IER = (1UL<<29))
+#define BSP_ETH_SIGDET_InterruptDisable()     (PIOA_REGS->PIO_IDR = (1UL<<29))
 
 
 

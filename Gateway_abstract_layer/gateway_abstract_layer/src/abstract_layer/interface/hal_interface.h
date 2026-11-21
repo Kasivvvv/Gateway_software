@@ -11,6 +11,8 @@ extern "C" {
 
 void hal_time_init(void);
 void hal_time_deinit(void);
+/** Start the Tloop timer (call at the end of start-up). */
+void hal_time_start(void);
 
 /** True once per Tloop period; clears the pending flag (non-blocking). */
 bool hal_time_tick_take(void);
@@ -46,6 +48,11 @@ void hal_marker_pulse(hal_marker_id_t id, uint32_t minCycles);
 void hal_marker_enable(bool enabled);
 bool hal_marker_is_enabled(void);
 
+/* ---- Status LED (LED0) -------------------------------------------------- */
+
+void hal_led_set(bool on);
+void hal_led_toggle(void);
+
 /* ---- Console (USART1 / EDBG VCOM, non-blocking) ------------------------- */
 
 void hal_console_init(void);
@@ -59,6 +66,11 @@ size_t hal_console_write_str(const char *str);
 
 size_t hal_console_read(uint8_t *data, size_t len);
 size_t hal_console_tx_free(void);
+
+/** Once per Tloop: move queued TX bytes into the USART ring (non-blocking). */
+void     hal_console_poll(void);
+/** Bytes dropped because the TX queue was full. */
+uint32_t hal_console_tx_dropped(void);
 
 /* ---- CAN (MCAN1 / PLIB, non-blocking) ----------------------------------- */
 
@@ -76,6 +88,38 @@ uint32_t hal_can_rx_overflow_count(void);
 uint32_t hal_can_rx_high_water(void);
 uint32_t hal_can_tx_drop_count(void);
 bool     hal_can_is_bus_off(void);
+/** Error counters and last error code (reading clears the LEC). */
+void     hal_can_diag_get(hal_can_diag_t *diag);
+
+/* ---- Memory ------------------------------------------------------------- */
+
+/** True if the MPU makes the DMA window (hal_nocache.h) Normal non-cacheable. */
+bool hal_nocache_region_ok(void);
+
+/* ---- Ethernet (GMAC + KSZ8061 PHY, raw frames, non-blocking) ----------- */
+
+/** Clock, PHY reset, MAC and DMA rings. Blocks ~25 ms (init phase only). */
+void hal_eth_init(void);
+void hal_eth_deinit(void);
+
+/** Once per Tloop: PHY link state machine (MDIO), TX reclaim/restart. */
+void hal_eth_poll(void);
+
+/** Copy one frame into a free TX buffer and start DMA. */
+hal_eth_status_t hal_eth_tx(const uint8_t *frame, uint16_t len);
+
+/** Copy the oldest received frame out; HAL_ETH_ERR_EMPTY if none. */
+hal_eth_status_t hal_eth_rx(uint8_t *frame, uint16_t maxLen, uint16_t *len);
+
+void     hal_eth_link_get(hal_eth_link_t *link);
+uint32_t hal_eth_phy_id(void);
+bool     hal_eth_sigdet(void);
+uint32_t hal_eth_rx_count(void);
+uint32_t hal_eth_tx_count(void);
+uint32_t hal_eth_rx_drop_count(void);
+uint32_t hal_eth_tx_drop_count(void);
+uint32_t hal_eth_rx_isr_count(void);
+uint32_t hal_eth_link_change_count(void);
 
 #ifdef __cplusplus
 }

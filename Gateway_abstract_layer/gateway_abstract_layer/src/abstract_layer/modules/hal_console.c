@@ -4,23 +4,93 @@
 
 #include "peripheral/usart/plib_usart1.h"
 
+/*
+ * TX path: software queue -> USART1 plib ring buffer (128 B in MCC) -> wire.
+ * The plib ring alone is too small for one stats report, and USART1_Write()
+ * silently drops what does not fit. hal_console_write() only queues;
+ * hal_console_poll() (once per Tloop) moves as much as the plib ring accepts.
+ * Non-blocking; 115200 Bd drains ~11.5 B/ms. Main context only.
+ */
+#define HAL_CONSOLE_TXQ_SIZE  (2048U) /* power of two */
+#define HAL_CONSOLE_TXQ_MASK  (HAL_CONSOLE_TXQ_SIZE - 1U)
+
+_Static_assert((HAL_CONSOLE_TXQ_SIZE & HAL_CONSOLE_TXQ_MASK) == 0U,
+        "console queue size must be a power of two");
+
+static uint8_t  s_txq[HAL_CONSOLE_TXQ_SIZE];
+static uint32_t s_txqHead;    /* next write position (free-running) */
+static uint32_t s_txqTail;    /* next byte to hand to the plib */
+static uint32_t s_txqDropped;
+
 void hal_console_init(void)
 {
     /* USART1_Initialize() already called from SYS_Initialize(). */
+    s_txqHead = 0U;
+    s_txqTail = 0U;
+    s_txqDropped = 0U;
 }
 
 void hal_console_deinit(void)
 {
 }
 
+void hal_console_poll(void)
+{
+    uint32_t pass;
+
+    /* At most two passes: the queued data may wrap around the array end. */
+    for (pass = 0U; pass < 2U; pass++)
+    {
+        uint32_t queued = s_txqHead - s_txqTail;
+        uint32_t idx = s_txqTail & HAL_CONSOLE_TXQ_MASK;
+        uint32_t chunk = HAL_CONSOLE_TXQ_SIZE - idx;
+        size_t room = USART1_WriteFreeBufferCountGet();
+        size_t written;
+
+        if ((queued == 0U) || (room == 0U))
+        {
+            break;
+        }
+        if (chunk > queued)
+        {
+            chunk = queued;
+        }
+        if (chunk > room)
+        {
+            chunk = (uint32_t)room;
+        }
+
+        written = USART1_Write(&s_txq[idx], chunk);
+        s_txqTail += (uint32_t)written;
+        if (written < chunk)
+        {
+            break;
+        }
+    }
+}
+
 size_t hal_console_write(const uint8_t *data, size_t len)
 {
+    uint32_t space;
+    uint32_t n;
+    uint32_t i;
+
     if ((data == NULL) || (len == 0U))
     {
         return 0U;
     }
 
-    return USART1_Write((uint8_t *)data, len);
+    space = HAL_CONSOLE_TXQ_SIZE - (s_txqHead - s_txqTail);
+    n = (len < space) ? (uint32_t)len : space;
+    for (i = 0U; i < n; i++)
+    {
+        s_txq[(s_txqHead + i) & HAL_CONSOLE_TXQ_MASK] = data[i];
+    }
+    s_txqHead += n;
+    s_txqDropped += (uint32_t)len - n;
+
+    hal_console_poll();
+    return n;
 }
 
 size_t hal_console_write_str(const char *str)
@@ -45,7 +115,12 @@ size_t hal_console_read(uint8_t *data, size_t len)
 
 size_t hal_console_tx_free(void)
 {
-    return USART1_WriteFreeBufferCountGet();
+    return HAL_CONSOLE_TXQ_SIZE - (s_txqHead - s_txqTail);
+}
+
+uint32_t hal_console_tx_dropped(void)
+{
+    return s_txqDropped;
 }
 
 /*
@@ -108,7 +183,7 @@ void __assert_fail(const char *expr, const char *file, int line,
     hal_console_poll_str(expr);
     hal_console_poll_str("\r\n");
 
-    LED0_On();
+    hal_led_set(true);
     for (;;)
     {
     }

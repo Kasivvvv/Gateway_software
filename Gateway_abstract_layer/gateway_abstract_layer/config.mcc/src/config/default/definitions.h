@@ -48,34 +48,20 @@
 #include <stdint.h>
 #include <stddef.h>
 #include <stdbool.h>
-#include "driver/gmac/drv_gmac.h"
+#include "bsp/bsp.h"
 #include "peripheral/clk/plib_clk.h"
 #include "peripheral/pio/plib_pio.h"
 #include "peripheral/nvic/plib_nvic.h"
 #include "peripheral/mpu/plib_mpu.h"
-#include "peripheral/efc/plib_efc.h"
-#include "driver/miim/drv_miim.h"
-#include "peripheral/tc/plib_tc0.h"
-#include "bsp/bsp.h"
-#include "system/time/sys_time.h"
-#include "driver/ethphy/drv_ethphy.h"
-#include "driver/ethphy/drv_extphy_ksz8061.h"
-#include "bsp/bsp.h"
-#include "driver/at24/drv_at24.h"
 #include "peripheral/twihs/master/plib_twihs0_master.h"
 #include "peripheral/mcan/plib_mcan1.h"
+#include "peripheral/efc/plib_efc.h"
+#include "peripheral/tc/plib_tc0.h"
+#include "bsp/bsp.h"
 #include "peripheral/usart/plib_usart1.h"
-#include "library/tcpip/tcpip.h"
-#include "system/sys_time_h2_adapter.h"
-#include "system/sys_random_h2_adapter.h"
 #include "system/int/sys_int.h"
 #include "system/ports/sys_ports.h"
 #include "system/cache/sys_cache.h"
-#include "osal/osal.h"
-#include "system/debug/sys_debug.h"
-#include "app.h"
-
-
 
 // DOM-IGNORE-BEGIN
 #ifdef __cplusplus  // Provide C++ Compatibility
@@ -141,80 +127,8 @@ extern "C" {
 
 void SYS_Initialize( void *data );
 
-// *****************************************************************************
-/* System Tasks Function
-
-Function:
-    void SYS_Tasks ( void );
-
-Summary:
-    Function that performs all polled system tasks.
-
-Description:
-    This function performs all polled system tasks by calling the state machine
-    "tasks" functions for all polled modules in the system, including drivers,
-    services, middleware and applications.
-
-Precondition:
-    The SYS_Initialize function must have been called and completed.
-
-Parameters:
-    None.
-
-Returns:
-    None.
-
-Example:
-    <code>
-    SYS_Initialize ( NULL );
-
-    while ( true )
-    {
-        SYS_Tasks ( );
-    }
-    </code>
-
-Remarks:
-    If the module is interrupt driven, the system will call this routine from
-    an interrupt context.
-*/
-
-void SYS_Tasks ( void );
-
-// *****************************************************************************
-// *****************************************************************************
-// Section: Type Definitions
-// *****************************************************************************
-// *****************************************************************************
-
-// *****************************************************************************
-/* System Objects
-
-Summary:
-    Structure holding the system's object handles
-
-Description:
-    This structure contains the object handles for all objects in the
-    MPLAB Harmony project's system configuration.
-
-Remarks:
-    These handles are returned from the "Initialize" functions for each module
-    and must be passed into the "Tasks" function for each module.
-*/
-
-typedef struct
-{
-   SYS_MODULE_OBJ  drvMiim_0;
-
-    SYS_MODULE_OBJ  sysTime;
-    /* AT24 Driver Object */
-    SYS_MODULE_OBJ drvAT24;
-
-
-    SYS_MODULE_OBJ  tcpip;
-
-
-} SYSTEM_OBJECTS;
+/* Nullify SYS_Tasks() if only PLIBs are used. */
+#define     SYS_Tasks()
 
 // *****************************************************************************
 // *****************************************************************************
@@ -224,7 +138,6 @@ typedef struct
 
 
 
-extern SYSTEM_OBJECTS sysObj;
 
 //DOM-IGNORE-BEGIN
 #ifdef __cplusplus

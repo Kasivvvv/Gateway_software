@@ -6,8 +6,14 @@
 /*
  * Pin map from MCC (plib_pio.h):
  *   MARK_T1 PB3, MARK_T2 PB2, MARK_T3 PA0, MARK_T4 PC30,
- *   MARK_LOOP PC28, MARK_STATE PA5, MARK_BUFFER PA25 (used as BUSOFF).
+ *   MARK_LOOP PC13, MARK_STATE PA5, MARK_BUFFER PA25 (used as BUSOFF).
+ *
+ * Status LED0 = PA23, active low (SAM V71 Xplained Ultra user guide). The pin
+ * is configured by MCC (function LED_AL, initial level high = off); it is
+ * driven through the generic plib_pio API so the code does not depend on the
+ * BSP macro names, which changed between Harmony BSP versions.
  */
+#define HAL_LED0_PIN  PIO_PIN_PA23
 
 static bool s_markersEnabled = true;
 
@@ -119,4 +125,15 @@ void hal_marker_pulse(hal_marker_id_t id, uint32_t minCycles)
     {
     }
     hal_marker_clear(id);
+}
+
+void hal_led_set(bool on)
+{
+    /* Active low. */
+    PIO_PinWrite(HAL_LED0_PIN, !on);
+}
+
+void hal_led_toggle(void)
+{
+    PIO_PinToggle(HAL_LED0_PIN);
 }

@@ -17,6 +17,7 @@ set(GATEWAY_USER_INCLUDE_DIRS
     "${GATEWAY_SRC_ROOT}/software_core/interface"
     "${GATEWAY_SRC_ROOT}/software_core/core"
     "${GATEWAY_SRC_ROOT}/software_core/canopen"
+    "${GATEWAY_SRC_ROOT}/software_core/ethercat"
     "${GATEWAY_SRC_ROOT}/interface"
     "${LELY_ROOT}/include"
     "${LELY_CFG_DIR}"

@@ -40,7 +40,7 @@ data:
       children:
       - children:
         - attributes:
-            value: 'true'
+            value: 'false'
           type: User
         type: Values
       type: Boolean
@@ -4070,7 +4070,7 @@ data:
             id: readOnly
           children:
           - type: Value
-            value: 'true'
+            value: 'false'
           type: Boolean
         type: Attributes
       - children:
@@ -4088,8 +4088,11 @@ data:
       - children:
         - attributes:
             id: mcan1
-            value: '1'
+            value: '5'
           type: Dynamic
+        - attributes:
+            value: '4'
+          type: User
         type: Values
       type: Integer
     NBTP_NTSEG1:
@@ -4100,7 +4103,7 @@ data:
       - children:
         - attributes:
             id: mcan1
-            value: '38'
+            value: '34'
           type: Dynamic
         type: Values
       type: Integer
@@ -4112,7 +4115,7 @@ data:
       - children:
         - attributes:
             id: mcan1
-            value: '1'
+            value: '5'
           type: Dynamic
         type: Values
       type: Integer
@@ -4154,7 +4157,7 @@ data:
             id: readOnly
           children:
           - type: Value
-            value: 'true'
+            value: 'false'
           type: Boolean
         type: Attributes
       - children:
@@ -4162,6 +4165,9 @@ data:
             id: mcan1
             value: '97.5'
           type: Dynamic
+        - attributes:
+            value: '87.5'
+          type: User
         type: Values
       type: Float
     NOMINAL_TIME_QUANTA_PERIOD:

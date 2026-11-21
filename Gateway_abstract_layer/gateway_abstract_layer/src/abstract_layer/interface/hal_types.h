@@ -45,4 +45,34 @@ typedef enum
     HAL_CAN_ERR_BUSOFF
 } hal_can_status_t;
 
+/** MCAN error state (DS60001527 ch. 48: MCAN_ECR, MCAN_PSR). */
+typedef struct
+{
+    uint8_t tec;          /* transmit error counter */
+    uint8_t rec;          /* receive error counter */
+    uint8_t lec;          /* last error code since previous read, 7 = none */
+    bool    errorPassive;
+    bool    busOff;
+} hal_can_diag_t;
+
+/** Largest Ethernet frame handled (DA+SA+type+1500 payload, FCS stripped). */
+#define HAL_ETH_FRAME_MAX (1514U)
+
+typedef struct
+{
+    bool     up;
+    bool     fullDuplex;
+    uint16_t speedMbps;
+} hal_eth_link_t;
+
+typedef enum
+{
+    HAL_ETH_OK = 0,
+    HAL_ETH_ERR_PARAM,
+    HAL_ETH_ERR_LINK,
+    HAL_ETH_ERR_BUSY,
+    HAL_ETH_ERR_EMPTY,
+    HAL_ETH_ERR_SIZE
+} hal_eth_status_t;
+
 #endif /* HAL_TYPES_H */

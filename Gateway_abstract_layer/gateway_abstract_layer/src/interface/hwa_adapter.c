@@ -7,15 +7,28 @@ void hwa_init(void)
 {
     hal_marker_init();
     hal_console_init();
+    /* Before hal_time_init(): blocks ~20 ms (PHY reset), no Tloop overruns. */
+    hal_eth_init();
     hal_time_init();
     hal_can_init();
 }
 
 void hwa_deinit(void)
 {
+    hal_eth_deinit();
     hal_can_deinit();
     hal_time_deinit();
     hal_console_deinit();
+}
+
+bool hwa_mem_dma_nocache_ok(void)
+{
+    return hal_nocache_region_ok();
+}
+
+void hwa_time_start(void)
+{
+    hal_time_start();
 }
 
 bool hwa_time_tick_take(void)
@@ -63,6 +76,16 @@ void hwa_marker_toggle(hwa_marker_id_t id)
     hal_marker_toggle(id);
 }
 
+void hwa_led_set(bool on)
+{
+    hal_led_set(on);
+}
+
+void hwa_led_toggle(void)
+{
+    hal_led_toggle();
+}
+
 void hwa_marker_enable(bool enabled)
 {
     hal_marker_enable(enabled);
@@ -76,6 +99,11 @@ size_t hwa_console_write(const uint8_t *data, size_t len)
 size_t hwa_console_write_str(const char *str)
 {
     return hal_console_write_str(str);
+}
+
+void hwa_console_poll(void)
+{
+    hal_console_poll();
 }
 
 size_t hwa_console_read(uint8_t *data, size_t len)
@@ -155,4 +183,75 @@ uint32_t hwa_can_tx_drop_count(void)
 bool hwa_can_is_bus_off(void)
 {
     return hal_can_is_bus_off();
+}
+
+void hwa_can_diag_get(hwa_can_diag_t *diag)
+{
+    hal_can_diag_get(diag);
+}
+
+void hwa_eth_poll(void)
+{
+    hal_eth_poll();
+}
+
+bool hwa_eth_tx(const uint8_t *frame, uint16_t len)
+{
+    return hal_eth_tx(frame, len) == HAL_ETH_OK;
+}
+
+uint16_t hwa_eth_rx(uint8_t *frame, uint16_t maxLen)
+{
+    uint16_t len = 0U;
+
+    if (hal_eth_rx(frame, maxLen, &len) != HAL_ETH_OK)
+    {
+        return 0U;
+    }
+    return len;
+}
+
+void hwa_eth_link_get(hwa_eth_link_t *link)
+{
+    hal_eth_link_get(link);
+}
+
+uint32_t hwa_eth_phy_id(void)
+{
+    return hal_eth_phy_id();
+}
+
+bool hwa_eth_sigdet(void)
+{
+    return hal_eth_sigdet();
+}
+
+uint32_t hwa_eth_rx_count(void)
+{
+    return hal_eth_rx_count();
+}
+
+uint32_t hwa_eth_tx_count(void)
+{
+    return hal_eth_tx_count();
+}
+
+uint32_t hwa_eth_rx_drop_count(void)
+{
+    return hal_eth_rx_drop_count();
+}
+
+uint32_t hwa_eth_tx_drop_count(void)
+{
+    return hal_eth_tx_drop_count();
+}
+
+uint32_t hwa_eth_rx_isr_count(void)
+{
+    return hal_eth_rx_isr_count();
+}
+
+uint32_t hwa_eth_link_change_count(void)
+{
+    return hal_eth_link_change_count();
 }
